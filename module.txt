@@ -1,0 +1,18 @@
+{
+  "id": "CoreWorlds",
+  "version": "1.0.0",
+  "author": "",
+  "displayName": "CoreWorlds",
+  "description": "A basic set of world generators and facets.",
+  "dependencies": [
+    {
+      "id": "BiomesAPI",
+      "minVersion": "3.0.0"
+    },
+    {
+      "id": "CoreBlocks",
+      "minVersion": "1.0.0"
+    }
+  ],
+  "serverSideOnly": false
+}
