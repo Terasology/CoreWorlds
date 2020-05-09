@@ -34,8 +34,8 @@ public class GroundRasterizer implements WorldRasterizer {
     @Override
     public void initialize() {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
-        stone = blockManager.getBlock("CoreBlocks:Stone");
-        water = blockManager.getBlock("CoreBlocks:Water");
+        stone = blockManager.getBlock("CoreAssets:Stone");
+        water = blockManager.getBlock("CoreAssets:Water");
     }
 
     @Override

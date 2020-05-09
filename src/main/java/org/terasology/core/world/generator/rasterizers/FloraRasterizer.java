@@ -43,25 +43,25 @@ public class FloraRasterizer implements WorldRasterizer {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
         air = blockManager.getBlock(BlockManager.AIR_ID);
 
-        flora.put(FloraType.GRASS, ImmutableList.<Block>of(
-                blockManager.getBlock("CoreBlocks:TallGrass1"),
-                blockManager.getBlock("CoreBlocks:TallGrass2"),
-                blockManager.getBlock("CoreBlocks:TallGrass3")));
+        flora.put(FloraType.GRASS, ImmutableList.of(
+                blockManager.getBlock("CoreAssets:TallGrass1"),
+                blockManager.getBlock("CoreAssets:TallGrass2"),
+                blockManager.getBlock("CoreAssets:TallGrass3")));
 
-        flora.put(FloraType.FLOWER, ImmutableList.<Block>of(
-                blockManager.getBlock("CoreBlocks:Dandelion"),
-                blockManager.getBlock("CoreBlocks:Glowbell"),
-                blockManager.getBlock("CoreBlocks:Iris"),
-                blockManager.getBlock("CoreBlocks:Lavender"),
-                blockManager.getBlock("CoreBlocks:RedClover"),
-                blockManager.getBlock("CoreBlocks:RedFlower"),
-                blockManager.getBlock("CoreBlocks:Tulip"),
-                blockManager.getBlock("CoreBlocks:YellowFlower")));
+        flora.put(FloraType.FLOWER, ImmutableList.of(
+                blockManager.getBlock("CoreAssets:Dandelion"),
+                blockManager.getBlock("CoreAssets:Glowbell"),
+                blockManager.getBlock("CoreAssets:Iris"),
+                blockManager.getBlock("CoreAssets:Lavender"),
+                blockManager.getBlock("CoreAssets:RedClover"),
+                blockManager.getBlock("CoreAssets:RedFlower"),
+                blockManager.getBlock("CoreAssets:Tulip"),
+                blockManager.getBlock("CoreAssets:YellowFlower")));
 
-        flora.put(FloraType.MUSHROOM, ImmutableList.<Block>of(
-                blockManager.getBlock("CoreBlocks:BigBrownShroom"),
-                blockManager.getBlock("CoreBlocks:BrownShroom"),
-                blockManager.getBlock("CoreBlocks:RedShroom")));
+        flora.put(FloraType.MUSHROOM, ImmutableList.of(
+                blockManager.getBlock("CoreAssets:BigBrownShroom"),
+                blockManager.getBlock("CoreAssets:BrownShroom"),
+                blockManager.getBlock("CoreAssets:RedShroom")));
     }
 
     @Override

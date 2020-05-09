@@ -1,7 +1,7 @@
 {
   "id": "CoreWorlds",
   "version": "1.0.0",
-  "author": "",
+  "author": "The Terasology Foundation",
   "displayName": "CoreWorlds",
   "description": "A basic set of world generators and facets.",
   "dependencies": [
@@ -10,9 +10,10 @@
       "minVersion": "3.0.0"
     },
     {
-      "id": "CoreBlocks",
-      "minVersion": "1.0.0"
+      "id": "CoreAssets",
+      "minVersion": "2.0.0"
     }
   ],
-  "serverSideOnly": false
+  "serverSideOnly": false,
+  "isWorld": true
 }
