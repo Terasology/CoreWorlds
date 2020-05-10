@@ -16,6 +16,7 @@
 package org.terasology.core.world;
 
 import org.terasology.biomesAPI.Biome;
+import org.terasology.naming.Name;
 
 public enum CoreBiome implements Biome {
     MOUNTAINS("Mountains"),
@@ -26,27 +27,27 @@ public enum CoreBiome implements Biome {
     BEACH("Beach"),
     PLAINS("Plains");
 
-    private final String id;
-    private final String name;
+    private final Name id;
+    private final String displayName;
 
-    CoreBiome(String name) {
-        this.id = "Core:" + name().toLowerCase();
-        this.name = name;
+    CoreBiome(String displayName) {
+        this.id = new Name("CoreWorlds:" + name());
+        this.displayName = displayName;
     }
 
     @Override
-    public String getId() {
+    public Name getId() {
         return id;
     }
 
     @Override
-    public String getName() {
-        return this.name;
+    public String getDisplayName() {
+        return this.displayName;
     }
 
     @Override
     public String toString() {
-        return this.name;
+        return this.displayName;
     }
 
 }
