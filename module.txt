@@ -1,6 +1,7 @@
 {
   "id": "CoreWorlds",
   "version": "1.0.0",
+  "isReleaseManaged": true,
   "author": "The Terasology Foundation",
   "displayName": "CoreWorlds",
   "description": "A basic set of world generators and facets.",
