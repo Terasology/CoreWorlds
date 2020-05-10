@@ -1,6 +1,6 @@
 {
   "id": "CoreWorlds",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "isReleaseManaged": true,
   "author": "The Terasology Foundation",
   "displayName": "CoreWorlds",
@@ -8,7 +8,7 @@
   "dependencies": [
     {
       "id": "BiomesAPI",
-      "minVersion": "3.0.0"
+      "minVersion": "4.0.0"
     },
     {
       "id": "CoreAssets",
