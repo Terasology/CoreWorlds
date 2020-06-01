@@ -15,13 +15,11 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
-import java.util.Iterator;
-
 import org.terasology.entitySystem.Component;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Vector2f;
-import org.terasology.rendering.nui.properties.Range;
+import org.terasology.nui.properties.Range;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.PerlinNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
@@ -33,6 +31,8 @@ import org.terasology.world.generation.Updates;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.SurfaceHumidityFacet;
 import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
+
+import java.util.Iterator;
 
 /**
  * Adds surface height for hill and mountain regions. Mountain and hill regions are based off of temperature and humidity.

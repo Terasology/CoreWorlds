@@ -16,18 +16,11 @@
 
 package org.terasology.core.world.viewer.layers;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.DataBufferInt;
-import java.util.Map.Entry;
-import java.util.function.Function;
-
 import org.terasology.core.world.generator.facets.FloraFacet;
 import org.terasology.core.world.generator.rasterizers.FloraType;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector3i;
-import org.terasology.rendering.nui.Color;
+import org.terasology.nui.Color;
 import org.terasology.world.generation.Region;
 import org.terasology.world.viewer.color.ColorBlender;
 import org.terasology.world.viewer.color.ColorBlenders;
@@ -35,6 +28,13 @@ import org.terasology.world.viewer.color.ColorModels;
 import org.terasology.world.viewer.layers.AbstractFacetLayer;
 import org.terasology.world.viewer.layers.Renders;
 import org.terasology.world.viewer.layers.ZOrder;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.DataBufferInt;
+import java.util.Map.Entry;
+import java.util.function.Function;
 
 /**
  * Renders the flora coverage based on {@link FloraFacet}.
