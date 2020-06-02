@@ -18,6 +18,7 @@ package org.terasology.core.world.generator.trees;
 
 import java.util.Map;
 
+import com.google.common.primitives.Floats;
 import org.terasology.math.LSystemRule;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Matrix4f;
@@ -35,12 +36,18 @@ import org.terasology.world.chunks.CoreChunk;
 public class RecursiveTreeGeneratorLSystem {
     private int maxDepth;
     private float angle;
+    private float thickness;
     private Map<Character, LSystemRule> ruleSet;
 
-    public RecursiveTreeGeneratorLSystem(int maxDepth, float angle, Map<Character, LSystemRule> ruleSet) {
+    public RecursiveTreeGeneratorLSystem(int maxDepth, float angle, Map<Character, LSystemRule> ruleSet, float thickness) {
         this.angle = angle;
         this.maxDepth = maxDepth;
         this.ruleSet = ruleSet;
+        this.thickness = thickness;
+    }
+
+    public RecursiveTreeGeneratorLSystem(int maxDepth, float angle, Map<Character, LSystemRule> ruleSet) {
+        this(maxDepth, angle, ruleSet, 3);
     }
 
     public void recurse(CoreChunk view, Random rand, int posX, int posY, int posZ, float angleOffset,
@@ -54,10 +61,28 @@ public class RecursiveTreeGeneratorLSystem {
                 case 'F':
                     // Tree trunk
 
-                    treeGenerator.safelySetBlock(view, posX + (int) position.x + 1, posY + (int) position.y, posZ + (int) position.z, bark);
-                    treeGenerator.safelySetBlock(view, posX + (int) position.x - 1, posY + (int) position.y, posZ + (int) position.z, bark);
-                    treeGenerator.safelySetBlock(view, posX + (int) position.x, posY + (int) position.y, posZ + (int) position.z + 1, bark);
-                    treeGenerator.safelySetBlock(view, posX + (int) position.x, posY + (int) position.y, posZ + (int) position.z - 1, bark);
+                    for (int dx = 0; dx <= thickness / 2; dx++) {
+                        for (int dz = 0; dz < thickness / 2; dz++) {
+                            if (dx*dx * dz*dz < thickness*thickness + 0.0001) {
+                                treeGenerator.safelySetBlock(view,
+                                        posX + (int) position.x + dx,
+                                        posY + (int) position.y,
+                                        posZ + (int) position.z + dz,
+                                        bark);
+                                treeGenerator.safelySetBlock(view,
+                                        posX + (int) position.x - dx,
+                                        posY + (int) position.y,
+                                        posZ + (int) position.z - dz,
+                                        bark);
+                            }
+                        }
+                    }
+
+//                    treeGenerator.safelySetBlock(view, posX + (int) position.x, posY + (int) position.y, posZ + (int) position.z, bark);
+//                    treeGenerator.safelySetBlock(view, posX + (int) position.x + 1, posY + (int) position.y, posZ + (int) position.z, bark);
+//                    treeGenerator.safelySetBlock(view, posX + (int) position.x - 1, posY + (int) position.y, posZ + (int) position.z, bark);
+//                    treeGenerator.safelySetBlock(view, posX + (int) position.x, posY + (int) position.y, posZ + (int) position.z + 1, bark);
+//                    treeGenerator.safelySetBlock(view, posX + (int) position.x, posY + (int) position.y, posZ + (int) position.z - 1, bark);
 
                     // Generate leaves
                     if (depth > 1) {
