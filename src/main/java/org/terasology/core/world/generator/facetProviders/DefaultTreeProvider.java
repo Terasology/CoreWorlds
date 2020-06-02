@@ -15,6 +15,7 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.terasology.core.world.CoreBiome;
@@ -56,22 +57,25 @@ public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenera
     private Configuration configuration = new Configuration();
 
     public DefaultTreeProvider() {
-        register(CoreBiome.MOUNTAINS, Trees.oakTree(), 0.04f);
-        register(CoreBiome.MOUNTAINS, Trees.pineTree(), 0.02f);
 
-        register(CoreBiome.FOREST, Trees.oakTree(), 0.25f);
-        register(CoreBiome.FOREST, Trees.pineTree(), 0.10f);
-        register(CoreBiome.FOREST, Trees.birchTree(), 0.10f);
-        register(CoreBiome.FOREST, Trees.oakVariationTree(), 0.25f);
+        Arrays.stream(CoreBiome.values()).forEach(biome -> register(biome, Trees.pineTree(), 0.5f));
 
-        register(CoreBiome.SNOW, Trees.birchTree(), 0.02f);
-        register(CoreBiome.SNOW, Trees.pineTree(), 0.10f);
-
-        register(CoreBiome.PLAINS, Trees.redTree(), 0.01f);
-        register(CoreBiome.PLAINS, Trees.birchTree(), 0.01f);
-        register(CoreBiome.PLAINS, Trees.oakTree(), 0.02f);
-
-        register(CoreBiome.DESERT, Trees.cactus(), 0.04f);
+//        register(CoreBiome.MOUNTAINS, Trees.oakTree(), 0.04f);
+//        register(CoreBiome.MOUNTAINS, Trees.pineTree(), 0.02f);
+//
+//        register(CoreBiome.FOREST, Trees.oakTree(), 0.25f);
+//        register(CoreBiome.FOREST, Trees.pineTree(), 0.10f);
+//        register(CoreBiome.FOREST, Trees.birchTree(), 0.10f);
+//        register(CoreBiome.FOREST, Trees.oakVariationTree(), 0.25f);
+//
+//        register(CoreBiome.SNOW, Trees.birchTree(), 0.02f);
+//        register(CoreBiome.SNOW, Trees.pineTree(), 0.10f);
+//
+//        register(CoreBiome.PLAINS, Trees.redTree(), 0.01f);
+//        register(CoreBiome.PLAINS, Trees.birchTree(), 0.01f);
+//        register(CoreBiome.PLAINS, Trees.oakTree(), 0.02f);
+//
+//        register(CoreBiome.DESERT, Trees.cactus(), 0.04f);
     }
 
     /**
