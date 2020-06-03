@@ -51,14 +51,18 @@ public final class Trees {
 
     public static TreeGenerator pineTree() {
         return new TreeGeneratorLSystem(
-            "FBBBFFFFFFFFFDFFF[//FC]FFFA",
+            "FBBBBFFFFFFFDFFDFFF[//FC]FFF[XXYYYA][XXYYYA]F",
                 ImmutableMap.<Character, LSystemRule>builder()
-                    .put('A', new LSystemRule("F[*FFFA][/FFFA][++/FFFA][----/FFFA]", 0.8f))
+                    .put('A', new LSystemRule("F[XXFFFA][YYFFFA][UUUYYFFFA][VVVVYYFFFA]", 0.8f))
                     .put('B', new LSystemRule("FF", 0.6f))
                     .put('C', new LSystemRule("FFA", 0.2f))
-                    .put('D', new LSystemRule("[**C]", 0.2f))
+                    .put('D', new LSystemRule("[XXXC]", 0.2f))
+                    .put('U', new LSystemRule("+", 0.4f))
+                    .put('V', new LSystemRule("-", 0.4f))
+                    .put('X', new LSystemRule("&", 0.4f))
+                    .put('Y', new LSystemRule("^", 0.4f))
                     .build(),
-            4, (float) Math.toRadians(30), 1)
+            3, (float) Math.toRadians(30), 1)
             .setLeafType(new BlockUri("CoreAssets:DarkLeaf"))
             .setBarkType(new BlockUri("CoreAssets:PineTrunk"));
     }
