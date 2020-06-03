@@ -73,11 +73,17 @@ public final class Trees {
 
     public static TreeGenerator birchTree() {
         return new TreeGeneratorLSystem(
-            "FFFFAFFFFBFFFFAFFFFBFFFFAFFFFBFF", ImmutableMap.<Character, LSystemRule>builder()
-            .put('A', new LSystemRule("[&FFFAFFF]////[&FFAFFF]////[&FFFAFFF]", 1.0f))
-            .put('B', new LSystemRule("[&FAF]////[&FAF]////[&FAF]", 0.8f)).build(), 4, (float) Math.toRadians(35))
-            .setLeafType(new BlockUri("CoreAssets:DarkLeaf"))
-            .setBarkType(new BlockUri("CoreAssets:BirchTrunk"));
+                "FEEFFFAFFFFBFFFFAFFFFBFFFFAFFFFBFF",
+                ImmutableMap.<Character, LSystemRule>builder()
+                        .put('x', new LSystemRule("/", 0.33f))
+                        .put('y', new LSystemRule("&", 0.33f))
+                        .put('A', new LSystemRule("[yFFFAFE]xxxx[yFFAFE]xxxx[yFEAFE]", 1.0f))
+                        .put('B', new LSystemRule("[yFAF]xxxx[yFAF]xxxx[yFAF]", 0.8f))
+                        .put('E', new LSystemRule("FF", 0.5f))
+                        .build(),
+                4, (float) Math.toRadians(35), 1)
+                .setLeafType(new BlockUri("CoreAssets:LightLeaf"))
+                .setBarkType(new BlockUri("CoreAssets:BirchTrunk"));
     }
 
     public static TreeGenerator redTree() {
