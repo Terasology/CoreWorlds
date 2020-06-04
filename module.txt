@@ -7,7 +7,7 @@
     "description": "A basic set of world generators and facets.",
     "dependencies": [
         { "id": "BiomesAPI", "minVersion": "4.0.0" },
-        { "id": "CoreAssets", "minVersion": "2.2.0-SNAPSHOT" }
+        { "id": "CoreAssets", "minVersion": "2.1.0-SNAPSHOT" }
     ],
     "serverSideOnly": false,
     "isWorld": true
