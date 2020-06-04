@@ -15,8 +15,9 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
-import java.util.List;
-
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+import org.terasology.biomesAPI.Biome;
 import org.terasology.core.world.CoreBiome;
 import org.terasology.core.world.generator.facets.BiomeFacet;
 import org.terasology.core.world.generator.facets.TreeFacet;
@@ -27,7 +28,6 @@ import org.terasology.math.geom.Vector3i;
 import org.terasology.rendering.nui.properties.Range;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
-import org.terasology.biomesAPI.Biome;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.Facet;
@@ -38,8 +38,7 @@ import org.terasology.world.generation.Requires;
 import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
+import java.util.List;
 
 /**
  * Determines where trees can be placed.  Will put trees one block above the surface.
@@ -57,19 +56,20 @@ public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenera
 
     public DefaultTreeProvider() {
         register(CoreBiome.MOUNTAINS, Trees.oakTree(), 0.04f);
-        register(CoreBiome.MOUNTAINS, Trees.pineTree(), 0.02f);
+        register(CoreBiome.MOUNTAINS, Trees.pineTree(), 0.06f);
 
         register(CoreBiome.FOREST, Trees.oakTree(), 0.25f);
+        register(CoreBiome.FOREST, Trees.oakVariationTree(), 0.25f);
+        register(CoreBiome.FOREST, Trees.redTree(), 0.05f);
         register(CoreBiome.FOREST, Trees.pineTree(), 0.10f);
         register(CoreBiome.FOREST, Trees.birchTree(), 0.10f);
-        register(CoreBiome.FOREST, Trees.oakVariationTree(), 0.25f);
 
         register(CoreBiome.SNOW, Trees.birchTree(), 0.02f);
         register(CoreBiome.SNOW, Trees.pineTree(), 0.10f);
 
         register(CoreBiome.PLAINS, Trees.redTree(), 0.01f);
-        register(CoreBiome.PLAINS, Trees.birchTree(), 0.01f);
-        register(CoreBiome.PLAINS, Trees.oakTree(), 0.02f);
+        register(CoreBiome.PLAINS, Trees.birchTree(), 0.03f);
+        register(CoreBiome.PLAINS, Trees.oakTree(), 0.01f);
 
         register(CoreBiome.DESERT, Trees.cactus(), 0.04f);
     }
