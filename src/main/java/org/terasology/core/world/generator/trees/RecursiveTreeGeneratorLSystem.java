@@ -16,9 +16,6 @@
 
 package org.terasology.core.world.generator.trees;
 
-import java.util.Map;
-
-import com.google.common.primitives.Floats;
 import org.terasology.math.LSystemRule;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Matrix4f;
@@ -29,6 +26,8 @@ import org.terasology.utilities.collection.CharSequenceIterator;
 import org.terasology.utilities.random.Random;
 import org.terasology.world.block.Block;
 import org.terasology.world.chunks.CoreChunk;
+
+import java.util.Map;
 
 /**
  * Encapsulates the recursive algorithm for the generation of trees
