@@ -17,7 +17,6 @@ package org.terasology.core.world.generator.rasterizers;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
-
 import org.terasology.core.world.generator.facets.FloraFacet;
 import org.terasology.math.geom.BaseVector3i;
 import org.terasology.registry.CoreRegistry;
@@ -30,8 +29,11 @@ import org.terasology.world.generation.WorldRasterizer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
+ * Places {@link FloraType} blocks based on the {@link FloraFacet}.
  */
 public class FloraRasterizer implements WorldRasterizer {
 
@@ -67,18 +69,40 @@ public class FloraRasterizer implements WorldRasterizer {
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
         FloraFacet facet = chunkRegion.getFacet(FloraFacet.class);
-
         WhiteNoise noise = new WhiteNoise(chunk.getPosition().hashCode());
 
-        Map<BaseVector3i, FloraType> entries = facet.getRelativeEntries();
-        // check if some other rasterizer has already placed something here
-        entries.keySet().stream().filter(pos -> chunk.getBlock(pos).equals(air)).forEach(pos -> {
+        facet.getRelativeEntries().entrySet().stream()
+                .filter(isPlacementAllowed(chunk))
+                .forEach(setBlock(chunk, noise));
+    }
 
-            FloraType type = entries.get(pos);
-            List<Block> list = flora.get(type);
+    /**
+     * A predicate that checks whether - some other rasterizer has already placed something here - block is "supported"
+     * by block below
+     */
+    private Predicate<Map.Entry<BaseVector3i, FloraType>> isPlacementAllowed(CoreChunk chunk) {
+        return entry -> {
+            BaseVector3i pos = entry.getKey();
+            return hasSupport(chunk, pos) && isFree(chunk, pos);
+        };
+    }
+
+    private boolean isFree(CoreChunk chunk, BaseVector3i pos) {
+        return chunk.getBlock(pos).equals(air);
+    }
+
+    private boolean hasSupport(CoreChunk chunk, BaseVector3i pos) {
+        // cannot check block below if on lower chunk bound, assume pos to be supported
+        return pos.y() < 1 || chunk.getBlock(pos.x(), pos.y() - 1, pos.z()).isAttachmentAllowed();
+    }
+
+    private Consumer<Map.Entry<BaseVector3i, FloraType>> setBlock(CoreChunk chunk, WhiteNoise noise) {
+        return entry -> {
+            List<Block> list = flora.get(entry.getValue());
+            BaseVector3i pos = entry.getKey();
             int blockIdx = Math.abs(noise.intNoise(pos.x(), pos.y(), pos.z())) % list.size();
             Block block = list.get(blockIdx);
             chunk.setBlock(pos, block);
-        });
+        };
     }
 }
