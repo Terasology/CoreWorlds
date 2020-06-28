@@ -50,4 +50,37 @@ public enum CoreBiome implements Biome {
         return this.displayName;
     }
 
+    @Override
+    public float getHumidity() {
+        if (displayName.equals("Ocean") || displayName.equals("Snow")) {
+            return .9f;
+        } else if (displayName.equals("Beach")) {
+            return .8f;
+        } else if (displayName.equals("Forest")) {
+            return .7f;
+        } else if (displayName.equals("Plains")) {
+            return .55f;
+        } else if (displayName.equals("Mountains")) {
+            return .3f;
+        } else if (displayName.equals("Desert")) {
+            return .15f;
+        } else {
+            return .3f;
+        }
+    }
+
+    @Override
+    public float getTemperature() {
+        if (displayName.equals("Ocean") || displayName.equals("Snow")) {
+            return .13f;
+        } else if (displayName.equals("Beach")) {
+            return .28f;
+        } else if (displayName.equals("Mountains")) {
+            return .09f;
+        } else if (displayName.equals("Desert")) {
+            return .27f;
+        } else {
+            return .22f;
+        }
+    }
 }
