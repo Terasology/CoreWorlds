@@ -19,20 +19,24 @@ import org.terasology.biomesAPI.Biome;
 import org.terasology.naming.Name;
 
 public enum CoreBiome implements Biome {
-    MOUNTAINS("Mountains"),
-    SNOW("Snow"),
-    DESERT("Desert"),
-    FOREST("Forest"),
-    OCEAN("Ocean"),
-    BEACH("Beach"),
-    PLAINS("Plains");
+    MOUNTAINS("Mountains", .3f, .09f),
+    SNOW("Snow", .85f, .05f),
+    DESERT("Desert", .15f, .26f),
+    FOREST("Forest", .65f, .22f),
+    OCEAN("Ocean", .9f, .13f),
+    BEACH("Beach", .8f, .28f),
+    PLAINS("Plains", .55f, .22f);
 
     private final Name id;
     private final String displayName;
+    private final float humidity;
+    private final float temperature;
 
-    CoreBiome(String displayName) {
+    CoreBiome(String displayName, float humidity, float temperature) {
         this.id = new Name("CoreWorlds:" + name());
         this.displayName = displayName;
+        this.humidity = humidity;
+        this.temperature = temperature;
     }
 
     @Override
@@ -52,35 +56,11 @@ public enum CoreBiome implements Biome {
 
     @Override
     public float getHumidity() {
-        if (displayName.equals("Ocean") || displayName.equals("Snow")) {
-            return .9f;
-        } else if (displayName.equals("Beach")) {
-            return .8f;
-        } else if (displayName.equals("Forest")) {
-            return .7f;
-        } else if (displayName.equals("Plains")) {
-            return .55f;
-        } else if (displayName.equals("Mountains")) {
-            return .3f;
-        } else if (displayName.equals("Desert")) {
-            return .15f;
-        } else {
-            return .3f;
-        }
+        return this.humidity;
     }
 
     @Override
     public float getTemperature() {
-        if (displayName.equals("Ocean") || displayName.equals("Snow")) {
-            return .13f;
-        } else if (displayName.equals("Beach")) {
-            return .28f;
-        } else if (displayName.equals("Mountains")) {
-            return .09f;
-        } else if (displayName.equals("Desert")) {
-            return .27f;
-        } else {
-            return .22f;
-        }
+        return this.temperature;
     }
 }
