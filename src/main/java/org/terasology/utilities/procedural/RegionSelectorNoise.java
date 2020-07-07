@@ -9,17 +9,17 @@ import org.terasology.math.geom.Vector2f;
 /**
  * Uses Simplex Noise to select an amoeba-shaped(or perhaps a wobbly-circle-shaped) area
  * The Noise value returned gives a sense of distance from the center and can be
- * used for further manipulation
+ * used for further manipulation <br/>
  * Guarantees that the noise value will be zero for input point having distance
  * greater than maxDistance and always > 0 for distance less than minDistance
  * Usages could be selecting regions for standalone terrain features like
- * lakes, star shaped islands, mountains etc.
+ * lakes, star shaped islands, mountains etc. <br/><br/>
  *
- * Examples-
- * gridSize = 5, minDistance = 20, maxDistance = 30 and noise value is multiplied by 30 and set as surface height
- * <img src="https://i.imgur.com/lC9hv1A.jpg" />
- * gridSize = 15, rest same
- * <img src="https://i.imgur.com/h4u3YUe.jpg" />
+ * Examples-<br/>
+ * gridSize = 5, minDistance = 20, maxDistance = 30 and noise value is multiplied by 30 and set as surface height<br/>
+ * <img src="../../../../../../../doc-files/5.jpg" /><br/><br/>
+ * gridSize = 15, rest same<br/>
+ * <img src="../../../../../../../doc-files/15.jpg" />
  *
  */
 public class RegionSelectorNoise {
