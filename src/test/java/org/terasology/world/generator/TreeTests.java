@@ -21,11 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.terasology.config.Config;
 import org.terasology.context.internal.ContextImpl;
-import org.terasology.context.internal.MockContext;
 import org.terasology.core.world.generator.trees.TreeGenerator;
 import org.terasology.core.world.generator.trees.Trees;
 import org.terasology.math.geom.BaseVector2i;
@@ -42,12 +38,9 @@ import org.terasology.world.chunks.ChunkConstants;
 import org.terasology.world.chunks.blockdata.ExtraBlockDataManager;
 import org.terasology.world.chunks.internal.ChunkImpl;
 
-/**
- * TODO: more flexibility for estimated extents
- */
-public class TreeTests {
+import java.util.stream.IntStream;
 
-    private static final Logger logger = LoggerFactory.getLogger(TreeTests.class);
+public class TreeTests {
 
     private BlockManager blockManager;
     private ExtraBlockDataManager extraDataManager;
@@ -57,12 +50,9 @@ public class TreeTests {
         ContextImpl context = new ContextImpl();
         CoreRegistry.setContext(context);
 
-        // Needed only as long as #1536 is unresolved
-        context.put(Config.class, new Config(new MockContext()));
-
         blockManager = Mockito.mock(BlockManager.class);
         Block air = blockManager.getBlock(BlockManager.AIR_ID);
-        
+
         extraDataManager = new ExtraBlockDataManager();
 
         Mockito.when(blockManager.getBlock(ArgumentMatchers.<BlockUri>any())).thenReturn(air);
@@ -73,38 +63,33 @@ public class TreeTests {
 
     @Test
     public void testBirchDims() {
-        Assert.assertEquals(new Vector3i(22, 32, 22), estimateExtent(Trees.birchTree()));
+        assertIsLessOrEqual(estimateExtent(Trees.birchTree()), new Vector3i(22, 34, 22));
     }
 
     @Test
     public void testOakDims() {
-        Assert.assertEquals(new Vector3i(14, 14, 14), estimateExtent(Trees.oakTree()));
+        assertIsLessOrEqual(estimateExtent(Trees.oakTree()), new Vector3i(14, 14, 14));
     }
 
     @Test
     public void testOakVariationDims() {
-        Assert.assertEquals(new Vector3i(21, 19, 20), estimateExtent(Trees.oakVariationTree()));
+        assertIsLessOrEqual(estimateExtent(Trees.oakVariationTree()), new Vector3i(21, 19, 20));
     }
 
     @Test
     public void testPineDims() {
-        Assert.assertEquals(new Vector3i(25, 28, 26), estimateExtent(Trees.pineTree()));
+        assertIsLessOrEqual(estimateExtent(Trees.pineTree()), new Vector3i(25, 32, 26));
     }
 
     @Test
     public void testRedTreeDims() {
-        Assert.assertEquals(new Vector3i(14, 14, 14), estimateExtent(Trees.redTree()));
+        assertIsLessOrEqual(estimateExtent(Trees.redTree()), new Vector3i(14, 14, 14));
     }
 
     private Vector3i estimateExtent(TreeGenerator treeGen) {
-        Vector3i maxExt = new Vector3i();
-
-        for (int i = 0; i < 100; i++) {
-            Vector3i ext = computeAABB(treeGen, i * 37);
-            maximize(maxExt, ext);
-        }
-
-        return maxExt;
+        return IntStream.range(0, 100)
+                .mapToObj(i -> computeAABB(treeGen, i * 37))
+                .reduce(new Vector3i(), this::maximize);
     }
 
     private Vector3i computeAABB(TreeGenerator treeGen, long seed) {
@@ -119,8 +104,8 @@ public class TreeTests {
                 @Override
                 public Block setBlock(int x, int y, int z, Block block) {
                     Vector3i world = chunkToWorldPosition(x, y, z);
-                    minimize(min, world);
-                    maximize(max, world);
+                    min.min(world);
+                    max.max(world);
 
                     return null;
                 }
@@ -132,21 +117,17 @@ public class TreeTests {
             treeGen.generate(blockManagerLocal, chunk, random, relPos.x, relPos.y, relPos.z);
         }
 
-        Vector3i ext = new Vector3i(max).sub(min);
-//        logger.info(String.format("Min: %12s  Max: %12s  Extent: %s", min, max, ext));
-
-        return ext;
+        return new Vector3i(max).sub(min);
     }
 
-    private void minimize(Vector3i v, Vector3i other) {
-        v.x = Math.min(v.x, other.x);
-        v.y = Math.min(v.y, other.y);
-        v.z = Math.min(v.z, other.z);
+    private Vector3i maximize(Vector3i v, final Vector3i other) {
+        v.max(other);
+        return v;
     }
 
-    private void maximize(Vector3i v, Vector3i other) {
-        v.x = Math.max(v.x, other.x);
-        v.y = Math.max(v.y, other.y);
-        v.z = Math.max(v.z, other.z);
+    private void assertIsLessOrEqual(final Vector3i actual, final Vector3i maximum) {
+        Assert.assertTrue("Maximum extent " + actual + " should be less or equal to " + maximum,
+                actual.x <= maximum.x && actual.y <= maximum.y && actual.z <= maximum.z);
     }
+
 }
