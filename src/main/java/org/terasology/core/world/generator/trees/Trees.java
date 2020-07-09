@@ -73,7 +73,7 @@ public final class Trees {
 
     public static TreeGenerator birchTree() {
         return new TreeGeneratorLSystem(
-                "FEEFFFAFFFFBFFFFAFFFFBFFFFAFFFFBFF",
+                "FEEFFFAFFFBFFFFAFFFFBFFFFAFFFFBFF",
                 ImmutableMap.<Character, LSystemRule>builder()
                         .put('x', new LSystemRule("/", 0.33f))
                         .put('y', new LSystemRule("&", 0.33f))
