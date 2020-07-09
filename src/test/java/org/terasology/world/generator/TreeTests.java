@@ -21,11 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.terasology.config.Config;
 import org.terasology.context.internal.ContextImpl;
-import org.terasology.context.internal.MockContext;
 import org.terasology.core.world.generator.trees.TreeGenerator;
 import org.terasology.core.world.generator.trees.Trees;
 import org.terasology.math.geom.BaseVector2i;
@@ -44,12 +40,7 @@ import org.terasology.world.chunks.internal.ChunkImpl;
 
 import java.util.stream.IntStream;
 
-/**
- * TODO: more flexibility for estimated extents
- */
 public class TreeTests {
-
-    private static final Logger logger = LoggerFactory.getLogger(TreeTests.class);
 
     private BlockManager blockManager;
     private ExtraBlockDataManager extraDataManager;
@@ -58,10 +49,6 @@ public class TreeTests {
     public void setup() {
         ContextImpl context = new ContextImpl();
         CoreRegistry.setContext(context);
-
-        // Needed only as long as #1536 is unresolved
-        //TODO(skaldarnar): MovingBlocks/Terasology#1536 is closed by now, maybe this can be simplified
-        context.put(Config.class, new Config(new MockContext()));
 
         blockManager = Mockito.mock(BlockManager.class);
         Block air = blockManager.getBlock(BlockManager.AIR_ID);
@@ -76,7 +63,7 @@ public class TreeTests {
 
     @Test
     public void testBirchDims() {
-        assertIsLessOrEqual(estimateExtent(Trees.birchTree()), new Vector3i(22, 32, 22));
+        assertIsLessOrEqual(estimateExtent(Trees.birchTree()), new Vector3i(22, 34, 22));
     }
 
     @Test
@@ -91,7 +78,7 @@ public class TreeTests {
 
     @Test
     public void testPineDims() {
-        assertIsLessOrEqual(estimateExtent(Trees.pineTree()), new Vector3i(25, 28, 26));
+        assertIsLessOrEqual(estimateExtent(Trees.pineTree()), new Vector3i(25, 32, 26));
     }
 
     @Test
@@ -130,8 +117,7 @@ public class TreeTests {
             treeGen.generate(blockManagerLocal, chunk, random, relPos.x, relPos.y, relPos.z);
         }
 
-        Vector3i ext = new Vector3i(max).sub(min);
-        return ext;
+        return new Vector3i(max).sub(min);
     }
 
     private Vector3i maximize(Vector3i v, final Vector3i other) {

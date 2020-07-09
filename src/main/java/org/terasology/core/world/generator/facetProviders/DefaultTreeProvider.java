@@ -101,7 +101,7 @@ public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenera
         // and Pine has 13 radius.
         // These values must be identical in the class annotations.
         int maxRad = 13;
-        int maxHeight = 32;
+        int maxHeight = 34;
         Border3D borderForTreeFacet = region.getBorderForFacet(TreeFacet.class);
         TreeFacet facet = new TreeFacet(region.getRegion(), borderForTreeFacet.extendBy(0, maxHeight, maxRad));
 
