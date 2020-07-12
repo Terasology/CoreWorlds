@@ -18,6 +18,7 @@ package org.terasology.core.world.generator.worldGenerators;
 import org.terasology.core.world.generator.facetProviders.BiomeProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultFloraProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultTreeProvider;
+import org.terasology.core.world.generator.facetProviders.HumidityProvider;
 import org.terasology.core.world.generator.facetProviders.PlateauProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexBaseSurfaceProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexHillsAndMountainsProvider;
@@ -27,6 +28,7 @@ import org.terasology.core.world.generator.facetProviders.SimplexRiverProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexSurfaceTemperatureProvider;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
+import org.terasology.core.world.generator.facetProviders.TemperatureProvider;
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
@@ -74,6 +76,8 @@ public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new SimplexRiverProvider())
                 .addProvider(new SimplexOceanProvider())
                 .addProvider(new SimplexHillsAndMountainsProvider())
+                .addProvider(new TemperatureProvider())
+                .addProvider(new HumidityProvider())
                 .addProvider(new BiomeProvider())
                 .addProvider(new SurfaceToDensityProvider())
                 .addProvider(new DefaultFloraProvider())

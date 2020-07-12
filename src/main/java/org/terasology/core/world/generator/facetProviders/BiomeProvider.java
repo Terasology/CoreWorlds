@@ -15,9 +15,11 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
+import org.slf4j.LoggerFactory;
 import org.terasology.core.world.CoreBiome;
 import org.terasology.core.world.generator.facets.BiomeFacet;
 import org.terasology.math.geom.BaseVector2i;
+import org.terasology.rendering.nui.properties.Range;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
@@ -28,6 +30,8 @@ import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.SurfaceHumidityFacet;
 import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
+
+import java.awt.Component;
 
 /**
  * Determines the biome based on temperature and humidity
@@ -61,17 +65,17 @@ public class BiomeProvider implements FacetProvider {
             float hum = temp * humidityFacet.get(pos);
             float height = heightFacet.get(pos);
 
-            if (height <= seaLevel) {
+            if (height <= seaLevel || hum >= .85) { // TODO: remove hum qualifier here and for ocean?
                  biomeFacet.set(pos, CoreBiome.OCEAN);
-            } else if (height <= seaLevel + 2) {
+            } else if (height <= seaLevel + 2 || hum >= .75) {
                 biomeFacet.set(pos, CoreBiome.BEACH);
-            } else if (temp >= 0.5f && hum < 0.3f) {
+            } else if (hum <= 0.3f) {
                 biomeFacet.set(pos, CoreBiome.DESERT);
-            } else if (hum >= 0.3f && hum <= 0.6f && temp >= 0.5f) {
+            } else if (hum <= 0.65f && temp >= 0.25f) {
                 biomeFacet.set(pos, CoreBiome.PLAINS);
-            } else if (temp <= 0.3f && hum > 0.5f) {
+            } else if (hum >= .55f && temp <= 0.05f) {
                 biomeFacet.set(pos, CoreBiome.SNOW);
-            } else if (hum >= 0.2f && hum <= 0.6f && temp < 0.5f) {
+            } else if (hum <= .55f && temp <= .15f) {
                 biomeFacet.set(pos, CoreBiome.MOUNTAINS);
             } else {
                 biomeFacet.set(pos, CoreBiome.FOREST);
