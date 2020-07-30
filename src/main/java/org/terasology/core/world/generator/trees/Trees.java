@@ -25,6 +25,13 @@ import com.google.common.collect.ImmutableMap;
  */
 public final class Trees {
 
+    // these value are derived from the maximum tree extents as
+    // computed by the TreeTests class. Birch is the highest with 32
+    // and Pine has 13 radius.
+    // These values must be identical in the class annotations.
+    public static final int MAXRADIUS = 13;
+    public static final int MAXHEIGHT = 32;
+
     private Trees() {
         // no instances!
     }
