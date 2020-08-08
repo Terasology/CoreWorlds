@@ -39,7 +39,7 @@ public class HumidityProvider implements FacetProvider {
         Rect2i processRegion = facet.getWorldRegion();
         for (BaseVector2i position : processRegion.contents()) {
             // modify initial noise so that it lies between 0 and 1
-            facet.setWorld(position, TeraMath.clamp(facet.getWorld(position.x(), position.y()) / 2 + 1, 0, 1));
+            facet.setWorld(position, TeraMath.clamp(facet.getWorld(position.x(), position.y()), 0, 1));
         }
     }
 }

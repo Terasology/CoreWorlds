@@ -67,15 +67,15 @@ public class BiomeProvider implements FacetProvider {
 
             if (height <= seaLevel || hum >= .85) { // TODO: remove hum qualifier here and for ocean?
                  biomeFacet.set(pos, CoreBiome.OCEAN);
-            } else if (height <= seaLevel + 2 || hum >= .75) {
+            } else if (height <= seaLevel + 2 || hum >= .8) {
                 biomeFacet.set(pos, CoreBiome.BEACH);
-            } else if (hum <= 0.3f) {
+            } else if (hum <= 0.15f) {
                 biomeFacet.set(pos, CoreBiome.DESERT);
-            } else if (hum <= 0.65f && temp >= 0.25f) {
+            } else if (hum <= 0.6f && temp >= 0.20f) {
                 biomeFacet.set(pos, CoreBiome.PLAINS);
             } else if (hum >= .55f && temp <= 0.05f) {
                 biomeFacet.set(pos, CoreBiome.SNOW);
-            } else if (hum <= .55f && temp <= .15f) {
+            } else if (hum <= .45f && temp <= .15f) {
                 biomeFacet.set(pos, CoreBiome.MOUNTAINS);
             } else {
                 biomeFacet.set(pos, CoreBiome.FOREST);

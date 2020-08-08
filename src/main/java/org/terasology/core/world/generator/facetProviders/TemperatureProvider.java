@@ -16,6 +16,7 @@
 
 package org.terasology.core.world.generator.facetProviders;
 
+import org.slf4j.LoggerFactory;
 import org.terasology.core.world.generator.facets.TreeFacet;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.TeraMath;
@@ -38,6 +39,7 @@ import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.SurfaceHumidityFacet;
 import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
+import sun.rmi.runtime.Log;
 
 @Updates(@Facet(SurfaceTemperatureFacet.class))
 
@@ -75,10 +77,10 @@ public class TemperatureProvider implements ConfigurableFacetProvider {
         Rect2i processRegion = facet.getWorldRegion();
         for (BaseVector2i position : processRegion.contents()) {
             // modify initial noise so that it falls (almost always) in range and its average is approximately temperatureBase
-            float noiseAdjusted = temperatureNoise.noise(position.x(), position.y()) / 4 + temperatureBase;
+            float noiseAdjusted = temperatureNoise.noise(position.x(), position.y()) / 5 + temperatureBase;
             noiseAdjusted += -(heightFacet.getWorld(position) - seaLevelFacet.getSeaLevel()) * .00006f + .07f;
 
-            // clamp to reasonable values
+            // clamp to reasonable values, just in case
             noiseAdjusted = TeraMath.clamp(noiseAdjusted, -.6f, .5f);
             facet.setWorld(position, noiseAdjusted);
         }
@@ -86,8 +88,8 @@ public class TemperatureProvider implements ConfigurableFacetProvider {
 
     private static class TemperatureConfiguration implements Component
     {
-        @Range(min = -.4f, max = .4f, increment = .001f, precision = 1, description = "Mountain Height")
-        private float temperatureBase = .22f;
+        @Range(min = -.4f, max = .4f, increment = .001f, precision = 1, description = "Temperature Base")
+        private float temperatureBase = .20f;
     }
 
 }
