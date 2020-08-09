@@ -15,7 +15,10 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
+import org.slf4j.LoggerFactory;
 import org.terasology.math.TeraMath;
+import org.terasology.math.geom.BaseVector2i;
+import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.SimplexNoise;
@@ -23,6 +26,8 @@ import org.terasology.utilities.procedural.SubSampledNoise;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
+import org.terasology.world.generation.facets.SeaLevelFacet;
+import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
 
 /**
@@ -30,6 +35,7 @@ import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
 @Produces(SurfaceTemperatureFacet.class)
 public class SimplexSurfaceTemperatureProvider implements FacetProvider {
     private static final int SAMPLE_RATE = 4;
+    private static final float TEMPERATURE_BASE = .25f;
 
     private SubSampledNoise temperatureNoise;
 
@@ -41,13 +47,22 @@ public class SimplexSurfaceTemperatureProvider implements FacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         SurfaceTemperatureFacet facet = new SurfaceTemperatureFacet(region.getRegion(), region.getBorderForFacet(SurfaceTemperatureFacet.class));
+        SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         float[] noise = this.temperatureNoise.noise(facet.getWorldRegion());
+        Rect2i processRegion = facet.getWorldRegion();
 
         for (int i = 0; i < noise.length; ++i) {
             noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);
+            for (BaseVector2i position : processRegion.contents()) {
+                // modify initial noise
+                float noiseAdjusted = noise[i] / 5 + TEMPERATURE_BASE;
+
+                // clamp to reasonable values, just in case
+                noiseAdjusted = TeraMath.clamp(noiseAdjusted, -.6f, .5f);
+                facet.setWorld(position, noiseAdjusted);
+            }
         }
 
-        facet.set(noise);
         region.setRegionFacet(SurfaceTemperatureFacet.class, facet);
     }
 }

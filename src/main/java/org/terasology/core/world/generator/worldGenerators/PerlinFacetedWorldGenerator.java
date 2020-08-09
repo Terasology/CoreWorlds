@@ -70,8 +70,6 @@ public class PerlinFacetedWorldGenerator extends BaseFacetedWorldGenerator {
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 .setSeaLevel(seaLevel)
                 .addProvider(new SeaLevelProvider(seaLevel))
-                .addProvider(new PerlinHumidityProvider())
-                .addProvider(new PerlinSurfaceTemperatureProvider())
                 .addProvider(new PerlinBaseSurfaceProvider())
                 .addProvider(new PerlinRiverProvider())
                 .addProvider(new PerlinOceanProvider())

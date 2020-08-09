@@ -76,8 +76,6 @@ public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new SimplexRiverProvider())
                 .addProvider(new SimplexOceanProvider())
                 .addProvider(new SimplexHillsAndMountainsProvider())
-                .addProvider(new TemperatureProvider())
-                .addProvider(new HumidityProvider())
                 .addProvider(new BiomeProvider())
                 .addProvider(new SurfaceToDensityProvider())
                 .addProvider(new DefaultFloraProvider())

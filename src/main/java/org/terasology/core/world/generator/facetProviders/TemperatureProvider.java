@@ -23,12 +23,14 @@ import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
+import org.terasology.registry.CoreRegistry;
 import org.terasology.rendering.nui.properties.Range;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.PerlinNoise;
 import org.terasology.utilities.procedural.SimplexNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
+import org.terasology.world.WorldProvider;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.Facet;
@@ -46,6 +48,13 @@ import sun.rmi.runtime.Log;
 public class TemperatureProvider implements ConfigurableFacetProvider {
     private TemperatureConfiguration configuration = new TemperatureConfiguration();
     private Noise temperatureNoise;
+
+    private WorldProvider worldProvider;
+
+    @Override
+    public void initialize() {
+        worldProvider = CoreRegistry.get(WorldProvider.class);
+    }
 
     @Override
     public void setSeed(long seed) {
@@ -70,7 +79,6 @@ public class TemperatureProvider implements ConfigurableFacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         SurfaceTemperatureFacet facet = region.getRegionFacet(SurfaceTemperatureFacet.class);
-        SurfaceHeightFacet heightFacet = region.getRegionFacet(SurfaceHeightFacet.class);
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         float temperatureBase = configuration.temperatureBase;
 
@@ -78,7 +86,6 @@ public class TemperatureProvider implements ConfigurableFacetProvider {
         for (BaseVector2i position : processRegion.contents()) {
             // modify initial noise so that it falls (almost always) in range and its average is approximately temperatureBase
             float noiseAdjusted = temperatureNoise.noise(position.x(), position.y()) / 5 + temperatureBase;
-            noiseAdjusted += -(heightFacet.getWorld(position) - seaLevelFacet.getSeaLevel()) * .00006f + .07f;
 
             // clamp to reasonable values, just in case
             noiseAdjusted = TeraMath.clamp(noiseAdjusted, -.6f, .5f);
@@ -89,7 +96,7 @@ public class TemperatureProvider implements ConfigurableFacetProvider {
     private static class TemperatureConfiguration implements Component
     {
         @Range(min = -.4f, max = .4f, increment = .001f, precision = 1, description = "Temperature Base")
-        private float temperatureBase = .20f;
+        private float temperatureBase = .25f;
     }
 
 }

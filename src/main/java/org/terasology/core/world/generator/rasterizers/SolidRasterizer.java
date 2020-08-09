@@ -56,8 +56,6 @@ public class SolidRasterizer implements WorldRasterizer {
     @Override
     public void initialize() {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
-        worldProvider = CoreRegistry.get(WorldProvider.class);
-        biomeRegistry = CoreRegistry.get(BiomeRegistry.class);
         stone = blockManager.getBlock("CoreAssets:Stone");
         water = blockManager.getBlock("CoreAssets:Water");
         ice = blockManager.getBlock("CoreAssets:Ice");
@@ -65,6 +63,9 @@ public class SolidRasterizer implements WorldRasterizer {
         grass = blockManager.getBlock("CoreAssets:Grass");
         snow = blockManager.getBlock("CoreAssets:Snow");
         dirt = blockManager.getBlock("CoreAssets:Dirt");
+
+        worldProvider = CoreRegistry.get(WorldProvider.class);
+        biomeRegistry = CoreRegistry.get(BiomeRegistry.class);
     }
 
     @Override
@@ -113,7 +114,7 @@ public class SolidRasterizer implements WorldRasterizer {
             }
 
             // extra data has to be an int, so multiply by 1000, convert to int, and
-            // convert to float/divide by 1000 once using the block data
+            // then convert to float/divide by 1000 once using the block data
             worldProvider.setExtraData("coreWorlds.temperature", pos.x, pos.y, pos.z, (int) (surfaceTemperatureFacet.get(pos.x, pos.z) * 1000));
             worldProvider.setExtraData("coreWorlds.humidity", pos.x, pos.y, pos.z, (int) (surfaceHumidityFacet.get(pos.x, pos.z) * 1000));
         }

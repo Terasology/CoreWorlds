@@ -17,21 +17,30 @@ package org.terasology.core.world.generator.facetProviders;
 
 import org.terasology.entitySystem.Component;
 import org.terasology.math.TeraMath;
+import org.terasology.math.geom.BaseVector2i;
+import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
+import org.terasology.registry.CoreRegistry;
 import org.terasology.rendering.nui.properties.Range;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.SimplexNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
+import org.terasology.world.WorldProvider;
+import org.terasology.world.block.Block;
+import org.terasology.world.chunks.blockdata.ExtraDataSystem;
+import org.terasology.world.chunks.blockdata.RegisterExtraData;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
+import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.SurfaceHumidityFacet;
 
 /**
  * Defines surface humidity in the range [0..1] based on random noise.
  */
 @Produces(SurfaceHumidityFacet.class)
+@ExtraDataSystem
 public class SimplexHumidityProvider implements ConfigurableFacetProvider {
     private static final int SAMPLE_RATE = 4;
 
@@ -66,8 +75,14 @@ public class SimplexHumidityProvider implements ConfigurableFacetProvider {
         float[] noise = humidityNoise.noise(facet.getWorldRegion());
         for (int i = 0; i < noise.length; ++i) {
             noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);
+
+            Rect2i processRegion = facet.getWorldRegion();
+            for (BaseVector2i position : processRegion.contents()) {
+                // clamp to reasonable values, just in case
+                float noiseAdjusted = TeraMath.clamp(noise[i], 0f,1f);
+                facet.setWorld(position, noiseAdjusted);
+            }
         }
-        facet.set(noise);
         region.setRegionFacet(SurfaceHumidityFacet.class, facet);
     }
 

@@ -51,8 +51,6 @@ public class FlatWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new SeaLevelProvider(32))
                         // height of 40 so that it is far enough from sea level so that it doesnt just create beachfront
                 .addProvider(new FlatSurfaceHeightProvider(40))
-                .addProvider(new PerlinHumidityProvider())
-                .addProvider(new PerlinSurfaceTemperatureProvider())
                 .addProvider(new TemperatureProvider())
                 .addProvider(new HumidityProvider())
                 .addProvider(new BiomeProvider())

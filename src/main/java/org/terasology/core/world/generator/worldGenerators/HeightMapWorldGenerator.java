@@ -53,8 +53,6 @@ public class HeightMapWorldGenerator extends BaseFacetedWorldGenerator {
                 .setSeaLevel(16)
                 .addProvider(new SeaLevelProvider(16))
                 .addProvider(new HeightMapSurfaceHeightProvider())
-                .addProvider(new PerlinHumidityProvider())
-                .addProvider(new PerlinSurfaceTemperatureProvider())
                 .addProvider(new TemperatureProvider())
                 .addProvider(new HumidityProvider())
                 .addProvider(new BiomeProvider())

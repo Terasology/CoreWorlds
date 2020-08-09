@@ -19,6 +19,8 @@ package org.terasology.core.world.generator.facetProviders;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
+import org.terasology.registry.CoreRegistry;
+import org.terasology.world.WorldProvider;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
@@ -27,6 +29,13 @@ import org.terasology.world.generation.facets.SurfaceHumidityFacet;
 
 @Updates(@Facet(SurfaceHumidityFacet.class))
 public class HumidityProvider implements FacetProvider {
+
+    private WorldProvider worldProvider;
+
+    @Override
+    public void initialize() {
+        worldProvider = CoreRegistry.get(WorldProvider.class);
+    }
 
     @Override
     public void setSeed(long seed) {
