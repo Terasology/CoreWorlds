@@ -53,9 +53,13 @@ public class TreeGeneratorLSystem extends AbstractTreeGenerator {
      * @param angle        The angle
      */
     public TreeGeneratorLSystem(String initialAxiom, Map<Character, LSystemRule> ruleSet, int maxDepth, float angle) {
+        this(initialAxiom, ruleSet, maxDepth, angle, 3f);
+    }
+
+    public TreeGeneratorLSystem(String initialAxiom, Map<Character, LSystemRule> ruleSet, int maxDepth, float angle, float thickness) {
         this.initialAxiom = initialAxiom;
-    
-        recursiveGenerator = new RecursiveTreeGeneratorLSystem(maxDepth, angle, ruleSet);
+
+        recursiveGenerator = new RecursiveTreeGeneratorLSystem(maxDepth, angle, ruleSet, thickness);
     }
 
     @Override

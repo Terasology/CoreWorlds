@@ -45,9 +45,9 @@ import java.util.List;
  */
 @Produces(TreeFacet.class)
 @Requires({
-        @Facet(value = SeaLevelFacet.class, border = @FacetBorder(sides = 13)),
-        @Facet(value = SurfaceHeightFacet.class, border = @FacetBorder(sides = 13 + 1)),
-        @Facet(value = BiomeFacet.class, border = @FacetBorder(sides = 13))
+        @Facet(value = SeaLevelFacet.class, border = @FacetBorder(sides = Trees.MAXRADIUS)),
+        @Facet(value = SurfaceHeightFacet.class, border = @FacetBorder(sides = Trees.MAXRADIUS + 1)),
+        @Facet(value = BiomeFacet.class, border = @FacetBorder(sides = Trees.MAXRADIUS))
 })
 public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenerator> implements ConfigurableFacetProvider {
 
@@ -56,19 +56,20 @@ public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenera
 
     public DefaultTreeProvider() {
         register(CoreBiome.MOUNTAINS, Trees.oakTree(), 0.04f);
-        register(CoreBiome.MOUNTAINS, Trees.pineTree(), 0.02f);
+        register(CoreBiome.MOUNTAINS, Trees.pineTree(), 0.06f);
 
         register(CoreBiome.FOREST, Trees.oakTree(), 0.25f);
+        register(CoreBiome.FOREST, Trees.oakVariationTree(), 0.25f);
+        register(CoreBiome.FOREST, Trees.redTree(), 0.05f);
         register(CoreBiome.FOREST, Trees.pineTree(), 0.10f);
         register(CoreBiome.FOREST, Trees.birchTree(), 0.10f);
-        register(CoreBiome.FOREST, Trees.oakVariationTree(), 0.25f);
 
         register(CoreBiome.SNOW, Trees.birchTree(), 0.02f);
         register(CoreBiome.SNOW, Trees.pineTree(), 0.10f);
 
         register(CoreBiome.PLAINS, Trees.redTree(), 0.01f);
-        register(CoreBiome.PLAINS, Trees.birchTree(), 0.01f);
-        register(CoreBiome.PLAINS, Trees.oakTree(), 0.02f);
+        register(CoreBiome.PLAINS, Trees.birchTree(), 0.03f);
+        register(CoreBiome.PLAINS, Trees.oakTree(), 0.01f);
 
         register(CoreBiome.DESERT, Trees.cactus(), 0.04f);
     }
@@ -95,14 +96,8 @@ public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenera
 
         List<Predicate<Vector3i>> filters = getFilters(region);
 
-        // these value are derived from the maximum tree extents as
-        // computed by the TreeTests class. Birch is the highest with 32
-        // and Pine has 13 radius.
-        // These values must be identical in the class annotations.
-        int maxRad = 13;
-        int maxHeight = 32;
         Border3D borderForTreeFacet = region.getBorderForFacet(TreeFacet.class);
-        TreeFacet facet = new TreeFacet(region.getRegion(), borderForTreeFacet.extendBy(0, maxHeight, maxRad));
+        TreeFacet facet = new TreeFacet(region.getRegion(), borderForTreeFacet.extendBy(0, Trees.MAXHEIGHT, Trees.MAXRADIUS));
 
         populateFacet(facet, surface, biome, filters);
 
