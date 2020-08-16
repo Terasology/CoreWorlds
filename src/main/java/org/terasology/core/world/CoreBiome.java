@@ -19,24 +19,20 @@ import org.terasology.biomesAPI.Biome;
 import org.terasology.naming.Name;
 
 public enum CoreBiome implements Biome {
-    MOUNTAINS("Mountains", .3f, .09f),
-    SNOW("Snow", .85f, .05f),
-    DESERT("Desert", .15f, .26f),
-    FOREST("Forest", .65f, .22f),
-    OCEAN("Ocean", .9f, .13f),
-    BEACH("Beach", .8f, .28f),
-    PLAINS("Plains", .55f, .22f);
+    MOUNTAINS("Mountains"),
+    SNOW("Snow"),
+    DESERT("Desert"),
+    FOREST("Forest"),
+    OCEAN("Ocean"),
+    BEACH("Beach"),
+    PLAINS("Plains");
 
     private final Name id;
     private final String displayName;
-    private final float humidity;
-    private final float temperature;
 
-    CoreBiome(String displayName, float humidity, float temperature) {
+    CoreBiome(String displayName) {
         this.id = new Name("CoreWorlds:" + name());
         this.displayName = displayName;
-        this.humidity = humidity;
-        this.temperature = temperature;
     }
 
     @Override
@@ -52,15 +48,5 @@ public enum CoreBiome implements Biome {
     @Override
     public String toString() {
         return this.displayName;
-    }
-
-    @Override
-    public float getHumidity() {
-        return this.humidity;
-    }
-
-    @Override
-    public float getTemperature() {
-        return this.temperature;
     }
 }

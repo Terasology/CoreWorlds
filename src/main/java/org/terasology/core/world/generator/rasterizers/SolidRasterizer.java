@@ -15,7 +15,6 @@
  */
 package org.terasology.core.world.generator.rasterizers;
 
-import org.slf4j.LoggerFactory;
 import org.terasology.biomesAPI.Biome;
 import org.terasology.biomesAPI.BiomeRegistry;
 import org.terasology.core.world.CoreBiome;
@@ -24,11 +23,11 @@ import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Vector2i;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
-import org.terasology.world.WorldProvider;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.ChunkConstants;
 import org.terasology.world.chunks.CoreChunk;
+import org.terasology.world.chunks.blockdata.ExtraBlockDataManager;
 import org.terasology.world.chunks.blockdata.ExtraDataSystem;
 import org.terasology.world.chunks.blockdata.RegisterExtraData;
 import org.terasology.world.generation.Region;
@@ -51,11 +50,12 @@ public class SolidRasterizer implements WorldRasterizer {
     private Block snow;
     private Block dirt;
     private BiomeRegistry biomeRegistry;
-    private WorldProvider worldProvider;
+    private ExtraBlockDataManager extraBlockDataManager;
 
     @Override
     public void initialize() {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
+        biomeRegistry = CoreRegistry.get(BiomeRegistry.class);
         stone = blockManager.getBlock("CoreAssets:Stone");
         water = blockManager.getBlock("CoreAssets:Water");
         ice = blockManager.getBlock("CoreAssets:Ice");
@@ -64,12 +64,14 @@ public class SolidRasterizer implements WorldRasterizer {
         snow = blockManager.getBlock("CoreAssets:Snow");
         dirt = blockManager.getBlock("CoreAssets:Dirt");
 
-        worldProvider = CoreRegistry.get(WorldProvider.class);
-        biomeRegistry = CoreRegistry.get(BiomeRegistry.class);
+        extraBlockDataManager = CoreRegistry.get(ExtraBlockDataManager.class);
     }
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
+        int temperatureSlot = extraBlockDataManager.getSlotNumber("coreWorlds.temperature");
+        int humiditySlot = extraBlockDataManager.getSlotNumber("coreWorlds.humidity");
+
         DensityFacet solidityFacet = chunkRegion.getFacet(DensityFacet.class);
         SurfaceHeightFacet surfaceFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
         SurfaceDepthFacet surfaceDepthFacet = chunkRegion.getFacet(SurfaceDepthFacet.class);
@@ -115,8 +117,8 @@ public class SolidRasterizer implements WorldRasterizer {
 
             // extra data has to be an int, so multiply by 1000, convert to int, and
             // then convert to float/divide by 1000 once using the block data
-            worldProvider.setExtraData("coreWorlds.temperature", pos.x, pos.y, pos.z, (int) (surfaceTemperatureFacet.get(pos.x, pos.z) * 1000));
-            worldProvider.setExtraData("coreWorlds.humidity", pos.x, pos.y, pos.z, (int) (surfaceHumidityFacet.get(pos.x, pos.z) * 1000));
+            chunk.setExtraData(temperatureSlot, pos.x, pos.y, pos.z, (int) (surfaceTemperatureFacet.get(pos.x, pos.z) * 1000));
+            chunk.setExtraData(humiditySlot, pos.x, pos.y, pos.z, (int) (surfaceHumidityFacet.get(pos.x, pos.z) * 1000));
         }
     }
 
