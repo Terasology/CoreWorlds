@@ -15,20 +15,18 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-import java.util.Objects;
-
+import com.google.common.math.IntMath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.terasology.utilities.Assets;
 import org.terasology.assets.ResourceUrn;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
+import org.terasology.nui.properties.OneOf.Enum;
+import org.terasology.nui.properties.OneOf.List;
+import org.terasology.nui.properties.Range;
 import org.terasology.rendering.assets.texture.Texture;
-import org.terasology.rendering.nui.properties.OneOf.List;
-import org.terasology.rendering.nui.properties.Range;
+import org.terasology.utilities.Assets;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.Facet;
@@ -37,9 +35,10 @@ import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
 import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
-import org.terasology.rendering.nui.properties.OneOf.Enum;
 
-import com.google.common.math.IntMath;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import java.util.Objects;
 
 @Produces(SurfaceHeightFacet.class)
 @Requires(@Facet(SeaLevelFacet.class))
