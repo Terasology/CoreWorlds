@@ -47,20 +47,15 @@ public class SimplexSurfaceTemperatureProvider implements FacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         SurfaceTemperatureFacet facet = new SurfaceTemperatureFacet(region.getRegion(), region.getBorderForFacet(SurfaceTemperatureFacet.class));
-        SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
-        float[] noise = this.temperatureNoise.noise(facet.getWorldRegion());
         Rect2i processRegion = facet.getWorldRegion();
 
-        for (int i = 0; i < noise.length; ++i) {
-            noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);
-            for (BaseVector2i position : processRegion.contents()) {
-                // modify initial noise
-                float noiseAdjusted = noise[i] / 5 + TEMPERATURE_BASE;
+        for (BaseVector2i position : processRegion.contents()) {
+            // modify initial noise
+            float noiseAdjusted = this.temperatureNoise.noise(position.x(), position.y()) / 5 + TEMPERATURE_BASE;
 
-                // clamp to reasonable values, just in case
-                noiseAdjusted = TeraMath.clamp(noiseAdjusted, -.6f, .5f);
-                facet.setWorld(position, noiseAdjusted);
-            }
+            // clamp to more reasonable base values, just in case
+            noiseAdjusted = TeraMath.clamp(noiseAdjusted, -.1f, .45f);
+            facet.setWorld(position, noiseAdjusted);
         }
 
         region.setRegionFacet(SurfaceTemperatureFacet.class, facet);

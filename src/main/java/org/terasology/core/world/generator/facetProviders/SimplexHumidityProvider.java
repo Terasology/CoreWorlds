@@ -15,6 +15,7 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
+import org.slf4j.LoggerFactory;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
@@ -71,17 +72,13 @@ public class SimplexHumidityProvider implements ConfigurableFacetProvider {
         Border3D border = region.getBorderForFacet(SurfaceHumidityFacet.class);
         SurfaceHumidityFacet facet = new SurfaceHumidityFacet(region.getRegion(), border);
 
-        float[] noise = humidityNoise.noise(facet.getWorldRegion());
-        for (int i = 0; i < noise.length; ++i) {
-            noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);
-
-            Rect2i processRegion = facet.getWorldRegion();
-            for (BaseVector2i position : processRegion.contents()) {
-                // clamp to reasonable values, just in case
-                float noiseAdjusted = TeraMath.clamp(noise[i], 0f,1f);
-                facet.setWorld(position, noiseAdjusted);
-            }
+        Rect2i processRegion = facet.getWorldRegion();
+        for (BaseVector2i position : processRegion.contents()) {
+            // clamp to reasonable values, just in case
+            float noiseAdjusted = TeraMath.clamp(humidityNoise.noise(position.x(), position.y()) + .6f, 0f,1f);
+            facet.setWorld(position, noiseAdjusted);
         }
+
         region.setRegionFacet(SurfaceHumidityFacet.class, facet);
     }
 
