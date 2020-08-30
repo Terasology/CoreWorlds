@@ -54,7 +54,7 @@ public class SimplexSurfaceTemperatureProvider implements FacetProvider {
             float noiseAdjusted = this.temperatureNoise.noise(position.x(), position.y()) / 5 + TEMPERATURE_BASE;
 
             // clamp to more reasonable base values, just in case
-            noiseAdjusted = TeraMath.clamp(noiseAdjusted, -.1f, .45f);
+            noiseAdjusted = TeraMath.clamp(noiseAdjusted, -.45f, .45f);
             facet.setWorld(position, noiseAdjusted);
         }
 

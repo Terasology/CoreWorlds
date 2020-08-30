@@ -15,11 +15,9 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
-import org.slf4j.LoggerFactory;
 import org.terasology.core.world.CoreBiome;
 import org.terasology.core.world.generator.facets.BiomeFacet;
 import org.terasology.math.geom.BaseVector2i;
-import org.terasology.rendering.nui.properties.Range;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
@@ -30,8 +28,6 @@ import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.SurfaceHumidityFacet;
 import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
-
-import java.awt.Component;
 
 /**
  * Determines the biome based on temperature and humidity
