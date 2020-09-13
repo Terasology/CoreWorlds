@@ -15,7 +15,6 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
-import org.slf4j.LoggerFactory;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
@@ -25,22 +24,16 @@ import org.terasology.nui.properties.Range;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.SimplexNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
-import org.terasology.world.WorldProvider;
-import org.terasology.world.block.Block;
-import org.terasology.world.chunks.blockdata.ExtraDataSystem;
-import org.terasology.world.chunks.blockdata.RegisterExtraData;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.SurfaceHumidityFacet;
 
 /**
  * Defines surface humidity in the range [0..1] based on random noise.
  */
 @Produces(SurfaceHumidityFacet.class)
-@ExtraDataSystem
 public class SimplexHumidityProvider implements ConfigurableFacetProvider {
     private static final int SAMPLE_RATE = 4;
 
@@ -74,8 +67,8 @@ public class SimplexHumidityProvider implements ConfigurableFacetProvider {
 
         Rect2i processRegion = facet.getWorldRegion();
         for (BaseVector2i position : processRegion.contents()) {
-            // clamp to reasonable values, just in case
-            float noiseAdjusted = TeraMath.clamp(humidityNoise.noise(position.x(), position.y()) + .6f, 0f,1f);
+            // clamp to reasonable values (between 0 and 1, since it's relative humidity), just in case
+            float noiseAdjusted = TeraMath.clamp(humidityNoise.noise(position.x(), position.y()) + .6f, 0f, 1f);
             facet.setWorld(position, noiseAdjusted);
         }
 

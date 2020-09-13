@@ -15,7 +15,6 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
-import org.slf4j.LoggerFactory;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
@@ -26,8 +25,6 @@ import org.terasology.utilities.procedural.SubSampledNoise;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.facets.SeaLevelFacet;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
 
 /**
@@ -50,10 +47,10 @@ public class SimplexSurfaceTemperatureProvider implements FacetProvider {
         Rect2i processRegion = facet.getWorldRegion();
 
         for (BaseVector2i position : processRegion.contents()) {
-            // modify initial noise
+            // modify initial noise to make it closer to temperature base
             float noiseAdjusted = this.temperatureNoise.noise(position.x(), position.y()) / 5 + TEMPERATURE_BASE;
 
-            // clamp to more reasonable base values, just in case
+            // clamp to more reasonable base values, where each value is a Celsuis temperature / 100
             noiseAdjusted = TeraMath.clamp(noiseAdjusted, -.45f, .45f);
             facet.setWorld(position, noiseAdjusted);
         }

@@ -69,8 +69,8 @@ public class SolidRasterizer implements WorldRasterizer {
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
-        int temperatureSlot = extraBlockDataManager.getSlotNumber("coreWorlds.temperature");
-        int humiditySlot = extraBlockDataManager.getSlotNumber("coreWorlds.humidity");
+        int temperatureSlot = extraBlockDataManager.getSlotNumber("climateConditions.temperature");
+        int humiditySlot = extraBlockDataManager.getSlotNumber("climateConditions.humidity");
 
         DensityFacet solidityFacet = chunkRegion.getFacet(DensityFacet.class);
         SurfaceHeightFacet surfaceFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
@@ -175,11 +175,11 @@ public class SolidRasterizer implements WorldRasterizer {
         return dirt;
     }
 
-    @RegisterExtraData(name="coreWorlds.humidity", bitSize=16)
+    @RegisterExtraData(name="climateConditions.humidity", bitSize=16)
     public static boolean humidityByBlock(Block block) {
         return true;
     }
-    @RegisterExtraData(name="coreWorlds.temperature", bitSize=16)
+    @RegisterExtraData(name="climateConditions.temperature", bitSize=16)
     public static boolean temperatureByBlock(Block block) {
         return true;
     }
