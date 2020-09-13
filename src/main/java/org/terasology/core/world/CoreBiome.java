@@ -49,5 +49,4 @@ public enum CoreBiome implements Biome {
     public String toString() {
         return this.displayName;
     }
-
 }

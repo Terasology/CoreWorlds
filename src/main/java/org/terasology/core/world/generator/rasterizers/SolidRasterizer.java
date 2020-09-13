@@ -27,13 +27,19 @@ import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.ChunkConstants;
 import org.terasology.world.chunks.CoreChunk;
+import org.terasology.world.chunks.blockdata.ExtraBlockDataManager;
+import org.terasology.world.chunks.blockdata.ExtraDataSystem;
+import org.terasology.world.chunks.blockdata.RegisterExtraData;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
 import org.terasology.world.generation.facets.DensityFacet;
 import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generation.facets.SurfaceDepthFacet;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.SurfaceHumidityFacet;
+import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
 
+@ExtraDataSystem
 public class SolidRasterizer implements WorldRasterizer {
 
     private Block water;
@@ -44,6 +50,7 @@ public class SolidRasterizer implements WorldRasterizer {
     private Block snow;
     private Block dirt;
     private BiomeRegistry biomeRegistry;
+    private ExtraBlockDataManager extraBlockDataManager;
 
     @Override
     public void initialize() {
@@ -56,16 +63,24 @@ public class SolidRasterizer implements WorldRasterizer {
         grass = blockManager.getBlock("CoreAssets:Grass");
         snow = blockManager.getBlock("CoreAssets:Snow");
         dirt = blockManager.getBlock("CoreAssets:Dirt");
+
+        extraBlockDataManager = CoreRegistry.get(ExtraBlockDataManager.class);
     }
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
+        int temperatureSlot = extraBlockDataManager.getSlotNumber("climateConditions.temperature");
+        int humiditySlot = extraBlockDataManager.getSlotNumber("climateConditions.humidity");
+
         DensityFacet solidityFacet = chunkRegion.getFacet(DensityFacet.class);
         SurfaceHeightFacet surfaceFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
         SurfaceDepthFacet surfaceDepthFacet = chunkRegion.getFacet(SurfaceDepthFacet.class);
         BiomeFacet biomeFacet = chunkRegion.getFacet(BiomeFacet.class);
         SeaLevelFacet seaLevelFacet = chunkRegion.getFacet(SeaLevelFacet.class);
         int seaLevel = seaLevelFacet.getSeaLevel();
+
+        SurfaceHumidityFacet surfaceHumidityFacet = chunkRegion.getFacet(SurfaceHumidityFacet.class);
+        SurfaceTemperatureFacet surfaceTemperatureFacet = chunkRegion.getFacet(SurfaceTemperatureFacet.class);
 
         Vector2i pos2d = new Vector2i();
         for (Vector3i pos : ChunkConstants.CHUNK_REGION) {
@@ -99,6 +114,11 @@ public class SolidRasterizer implements WorldRasterizer {
 //                }
                 }
             }
+
+            // extra data has to be an int, so multiply by 1000, convert to int, and
+            // then convert to float/divide by 1000 once using the block data
+            chunk.setExtraData(temperatureSlot, pos.x, pos.y, pos.z, (int) (surfaceTemperatureFacet.get(pos.x, pos.z) * 1000));
+            chunk.setExtraData(humiditySlot, pos.x, pos.y, pos.z, (int) (surfaceHumidityFacet.get(pos.x, pos.z) * 1000));
         }
     }
 
@@ -153,5 +173,14 @@ public class SolidRasterizer implements WorldRasterizer {
             }
         }
         return dirt;
+    }
+
+    @RegisterExtraData(name="climateConditions.humidity", bitSize=16)
+    public static boolean humidityByBlock(Block block) {
+        return true;
+    }
+    @RegisterExtraData(name="climateConditions.temperature", bitSize=16)
+    public static boolean temperatureByBlock(Block block) {
+        return true;
     }
 }

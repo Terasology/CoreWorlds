@@ -16,6 +16,8 @@
 package org.terasology.core.world.generator.facetProviders;
 
 import org.terasology.math.TeraMath;
+import org.terasology.math.geom.BaseVector2i;
+import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.SimplexNoise;
@@ -30,6 +32,7 @@ import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
 @Produces(SurfaceTemperatureFacet.class)
 public class SimplexSurfaceTemperatureProvider implements FacetProvider {
     private static final int SAMPLE_RATE = 4;
+    private static final float TEMPERATURE_BASE = .25f;
 
     private SubSampledNoise temperatureNoise;
 
@@ -41,13 +44,17 @@ public class SimplexSurfaceTemperatureProvider implements FacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         SurfaceTemperatureFacet facet = new SurfaceTemperatureFacet(region.getRegion(), region.getBorderForFacet(SurfaceTemperatureFacet.class));
-        float[] noise = this.temperatureNoise.noise(facet.getWorldRegion());
+        Rect2i processRegion = facet.getWorldRegion();
 
-        for (int i = 0; i < noise.length; ++i) {
-            noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);
+        for (BaseVector2i position : processRegion.contents()) {
+            // modify initial noise to make it closer to temperature base
+            float noiseAdjusted = this.temperatureNoise.noise(position.x(), position.y()) / 5 + TEMPERATURE_BASE;
+
+            // clamp to more reasonable base values, where each value is a Celsuis temperature / 100
+            noiseAdjusted = TeraMath.clamp(noiseAdjusted, -.45f, .45f);
+            facet.setWorld(position, noiseAdjusted);
         }
 
-        facet.set(noise);
         region.setRegionFacet(SurfaceTemperatureFacet.class, facet);
     }
 }

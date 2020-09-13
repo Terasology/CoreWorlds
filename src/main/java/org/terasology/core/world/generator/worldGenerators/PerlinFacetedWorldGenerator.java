@@ -18,14 +18,14 @@ package org.terasology.core.world.generator.worldGenerators;
 import org.terasology.core.world.generator.facetProviders.BiomeProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultFloraProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultTreeProvider;
-import org.terasology.core.world.generator.facetProviders.PlateauProvider;
 import org.terasology.core.world.generator.facetProviders.PerlinBaseSurfaceProvider;
 import org.terasology.core.world.generator.facetProviders.PerlinHillsAndMountainsProvider;
-import org.terasology.core.world.generator.facetProviders.PerlinHumidityProvider;
 import org.terasology.core.world.generator.facetProviders.PerlinOceanProvider;
 import org.terasology.core.world.generator.facetProviders.PerlinRiverProvider;
-import org.terasology.core.world.generator.facetProviders.PerlinSurfaceTemperatureProvider;
+import org.terasology.core.world.generator.facetProviders.PlateauProvider;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexHumidityProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexSurfaceTemperatureProvider;
 import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
@@ -68,12 +68,12 @@ public class PerlinFacetedWorldGenerator extends BaseFacetedWorldGenerator {
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 .setSeaLevel(seaLevel)
                 .addProvider(new SeaLevelProvider(seaLevel))
-                .addProvider(new PerlinHumidityProvider())
-                .addProvider(new PerlinSurfaceTemperatureProvider())
                 .addProvider(new PerlinBaseSurfaceProvider())
                 .addProvider(new PerlinRiverProvider())
                 .addProvider(new PerlinOceanProvider())
                 .addProvider(new PerlinHillsAndMountainsProvider())
+                .addProvider(new SimplexSurfaceTemperatureProvider())
+                .addProvider(new SimplexHumidityProvider())
                 .addProvider(new BiomeProvider())
                 .addProvider(new SurfaceToDensityProvider())
                 .addProvider(new DefaultFloraProvider())
