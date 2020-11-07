@@ -24,7 +24,7 @@ import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Updates;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.ElevationFacet;
 
 import com.google.common.base.Preconditions;
 
@@ -40,7 +40,7 @@ import com.google.common.base.Preconditions;
  *    ~~~~~  outer rad.  ~~~~~
  * </pre>
  */
-@Updates(@Facet(SurfaceHeightFacet.class))
+@Updates(@Facet(ElevationFacet.class))
 public class PlateauProvider implements FacetProvider {
 
     private final ImmutableVector2i centerPos;
@@ -70,7 +70,7 @@ public class PlateauProvider implements FacetProvider {
         Rect2i rc = Rect2i.createFromMinAndMax(reg.minX(), reg.minZ(), reg.maxX(), reg.maxZ());
 
         if (rc.distanceSquared(centerPos.x(), centerPos.y()) <= outerRadius * outerRadius) {
-            SurfaceHeightFacet facet = region.getRegionFacet(SurfaceHeightFacet.class);
+            ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
 
             // update the surface height
             for (BaseVector2i pos : facet.getWorldRegion().contents()) {

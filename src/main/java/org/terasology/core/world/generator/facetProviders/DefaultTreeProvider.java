@@ -35,8 +35,8 @@ import org.terasology.world.generation.FacetBorder;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
+import org.terasology.world.generation.facets.SurfacesFacet;
 import org.terasology.world.generation.facets.SeaLevelFacet;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ import java.util.List;
 @Produces(TreeFacet.class)
 @Requires({
         @Facet(value = SeaLevelFacet.class, border = @FacetBorder(sides = Trees.MAXRADIUS)),
-        @Facet(value = SurfaceHeightFacet.class, border = @FacetBorder(sides = Trees.MAXRADIUS + 1)),
+        @Facet(value = SurfacesFacet.class, border = @FacetBorder(sides = Trees.MAXRADIUS + 1, bottom = Trees.MAXHEIGHT + 1)),
         @Facet(value = BiomeFacet.class, border = @FacetBorder(sides = Trees.MAXRADIUS))
 })
 public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenerator> implements ConfigurableFacetProvider {
@@ -91,7 +91,7 @@ public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenera
 
     @Override
     public void process(GeneratingRegion region) {
-        SurfaceHeightFacet surface = region.getRegionFacet(SurfaceHeightFacet.class);
+        SurfacesFacet surfaces = region.getRegionFacet(SurfacesFacet.class);
         BiomeFacet biome = region.getRegionFacet(BiomeFacet.class);
 
         List<Predicate<Vector3i>> filters = getFilters(region);
@@ -99,7 +99,7 @@ public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenera
         Border3D borderForTreeFacet = region.getBorderForFacet(TreeFacet.class);
         TreeFacet facet = new TreeFacet(region.getRegion(), borderForTreeFacet.extendBy(0, Trees.MAXHEIGHT, Trees.MAXRADIUS));
 
-        populateFacet(facet, surface, biome, filters);
+        populateFacet(facet, surfaces, biome, filters);
 
         region.setRegionFacet(TreeFacet.class, facet);
     }
@@ -112,7 +112,7 @@ public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenera
 
         filters.add(PositionFilters.probability(densityNoiseGen, configuration.density * 0.05f));
 
-        SurfaceHeightFacet surface = region.getRegionFacet(SurfaceHeightFacet.class);
+        SurfacesFacet surface = region.getRegionFacet(SurfacesFacet.class);
         filters.add(PositionFilters.flatness(surface, 1, 0));
 
         return filters;

@@ -26,14 +26,14 @@ import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
+import org.terasology.world.generation.facets.ElevationFacet;
 import org.terasology.world.generation.facets.SeaLevelFacet;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
 /**
  * @deprecated Prefer using {@link SimplexBaseSurfaceProvider}.
  */
 @Deprecated
-@Produces(SurfaceHeightFacet.class)
+@Produces(ElevationFacet.class)
 @Requires(@Facet(SeaLevelFacet.class))
 public class PerlinBaseSurfaceProvider implements FacetProvider {
     private static final int SAMPLE_RATE = 4;
@@ -48,8 +48,8 @@ public class PerlinBaseSurfaceProvider implements FacetProvider {
 
     @Override
     public void process(GeneratingRegion region) {
-        Border3D border = region.getBorderForFacet(SurfaceHeightFacet.class);
-        SurfaceHeightFacet facet = new SurfaceHeightFacet(region.getRegion(), border);
+        Border3D border = region.getBorderForFacet(ElevationFacet.class);
+        ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         float seaLevel = seaLevelFacet.getSeaLevel();
         Rect2i processRegion = facet.getWorldRegion();
@@ -60,6 +60,6 @@ public class PerlinBaseSurfaceProvider implements FacetProvider {
         }
 
         facet.set(noise);
-        region.setRegionFacet(SurfaceHeightFacet.class, facet);
+        region.setRegionFacet(ElevationFacet.class, facet);
     }
 }
