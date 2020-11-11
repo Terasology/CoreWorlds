@@ -17,11 +17,13 @@
 package org.terasology.core.world.generator.facetProviders;
 
 import com.google.common.base.Predicate;
-import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.utilities.procedural.Noise;
+import org.terasology.world.generation.facets.SurfacesFacet;
 import org.terasology.world.generation.facets.DensityFacet;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
+
+import java.util.Set;
 
 /**
  * A collection of filters that restrict the placement of objects
@@ -67,19 +69,66 @@ public final class PositionFilters {
      * Filters based on the density
      *
      * @param density the density facet that contains all tested coords.
-     * @return a predicate that returns true if (density &ge; 0) and (density &lt; 0) for the block at (y - 1)
+     * @return a predicate that returns true if (density <= 0) and (density > 0) for the block at (y - 1)
      */
     public static Predicate<Vector3i> density(final DensityFacet density) {
         return input -> {
             // pass if the block on the surface is dense enough
             float densBelow = density.getWorld(input.getX(), input.getY() - 1, input.getZ());
             float densThis = density.getWorld(input);
-            return (densBelow >= 0 && densThis < 0);
+            return (densBelow > 0 && densThis <= 0);
         };
     }
 
     /**
      * Filters based on surface flatness
+     *
+     * @param surfaceFacet the surface facet that contains all tested coords.
+     * @return a predicate that returns true only if there is a level surface in adjacent directions
+     */
+    public static Predicate<Vector3i> flatness(final SurfacesFacet surfaceFacet) {
+        return flatness(surfaceFacet, 0, 0);
+    }
+
+    /**
+     * Filters based on surface flatness
+     *
+     * @param surfaceFacet the surface facet that contains all tested coords.
+     * @param divUp        surface can be higher up to <code>divUp</code>.
+     * @param divDown      surface can be lower up to <code>divDown</code>.
+     * @return a predicate that returns true only if there is a level surface in adjacent directions
+     */
+    public static Predicate<Vector3i> flatness(final SurfacesFacet surfaceFacet, final int divUp, final int divDown) {
+
+        return new Predicate<Vector3i>() {
+
+            @Override
+            public boolean apply(Vector3i input) {
+                int x = input.getX();
+                int z = input.getZ();
+                int level = input.getY() - 1;
+                int min = level - divDown;
+                int max = level + divUp;
+
+                return inBounds(surfaceFacet.getWorldColumn(x - 1, z), min, max)
+                        && inBounds(surfaceFacet.getWorldColumn(x + 1, z), min, max)
+                        && inBounds(surfaceFacet.getWorldColumn(x, z - 1), min, max)
+                        && inBounds(surfaceFacet.getWorldColumn(x, z + 1), min, max);
+            }
+
+            private boolean inBounds(Set<Integer> heights, int min, int max) {
+                for (int height : heights) {
+                    if (height >= min && height <= max) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+    }
+
+    /**
+     * Filters based on surface flatness using the deprecated SurfaceHeightFacet
      *
      * @param surfaceFacet the surface height facet that contains all tested coords.
      * @return a predicate that returns true only if there is a level surface in adjacent directions
@@ -89,7 +138,7 @@ public final class PositionFilters {
     }
 
     /**
-     * Filters based on surface flatness
+     * Filters based on surface flatness using the deprecated SurfaceHeightFacet
      *
      * @param surfaceFacet the surface height facet that contains all tested coords.
      * @param divUp        surface can be higher up to <code>divUp</code>.
@@ -119,7 +168,7 @@ public final class PositionFilters {
             }
 
             private int blockHeightAt(int x, int z) {
-                return TeraMath.floorToInt(surfaceFacet.getWorld(x, z));
+                return (int) Math.floor(surfaceFacet.getWorld(x, z));
             }
         };
     }

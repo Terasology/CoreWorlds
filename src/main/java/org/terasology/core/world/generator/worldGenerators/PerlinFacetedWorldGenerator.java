@@ -37,6 +37,7 @@ import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
+import org.terasology.world.generation.SurfaceHeightCompatibilityProvider;
 import org.terasology.world.generation.WorldBuilder;
 import org.terasology.world.generator.RegisterWorldGenerator;
 import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
@@ -79,7 +80,7 @@ public class PerlinFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new DefaultFloraProvider())
                 .addProvider(new DefaultTreeProvider())
                 .addProvider(new PlateauProvider(spawnPos, seaLevel + 4, 10, 30))
-                        //.addRasterizer(new GroundRasterizer(blockManager))
+                .addProvider(new SurfaceHeightCompatibilityProvider())
                 .addRasterizer(new SolidRasterizer())
                 .addPlugins()
                 .addRasterizer(new FloraRasterizer())

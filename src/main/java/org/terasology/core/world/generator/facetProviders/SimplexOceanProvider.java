@@ -26,12 +26,12 @@ import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Updates;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.ElevationFacet;
 
 /**
  * Applies an amount of the max depth for regions that are oceans
  */
-@Updates(@Facet(SurfaceHeightFacet.class))
+@Updates(@Facet(ElevationFacet.class))
 public class SimplexOceanProvider implements ConfigurableFacetProvider {
     private static final int SAMPLE_RATE = 4;
 
@@ -45,7 +45,7 @@ public class SimplexOceanProvider implements ConfigurableFacetProvider {
 
     @Override
     public void process(GeneratingRegion region) {
-        SurfaceHeightFacet facet = region.getRegionFacet(SurfaceHeightFacet.class);
+        ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
         float[] noise = oceanNoise.noise(facet.getWorldRegion());
 
         float[] surfaceHeights = facet.getInternal();

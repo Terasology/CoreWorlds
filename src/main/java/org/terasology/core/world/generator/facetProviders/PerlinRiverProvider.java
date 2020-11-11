@@ -27,14 +27,14 @@ import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Updates;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.ElevationFacet;
 
 /**
  * Applies an amount of the max depth for regions that are rivers
  * @deprecated Prefer using {@link SimplexRiverProvider}.
  */
 @Deprecated
-@Updates(@Facet(SurfaceHeightFacet.class))
+@Updates(@Facet(ElevationFacet.class))
 public class PerlinRiverProvider implements FacetProvider, ConfigurableFacetProvider {
     private static final int SAMPLE_RATE = 4;
 
@@ -48,7 +48,7 @@ public class PerlinRiverProvider implements FacetProvider, ConfigurableFacetProv
 
     @Override
     public void process(GeneratingRegion region) {
-        SurfaceHeightFacet facet = region.getRegionFacet(SurfaceHeightFacet.class);
+        ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
         float[] noise = riverNoise.noise(facet.getWorldRegion());
 
         float[] surfaceHeights = facet.getInternal();

@@ -25,9 +25,8 @@ import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
-import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.Requires;
+import org.terasology.world.generation.facets.SurfacesFacet;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.base.ObjectFacet2D;
 import org.terasology.world.generation.facets.base.ObjectFacet3D;
@@ -40,7 +39,6 @@ import java.util.Map;
  * for a environmental variable (e.g. biome).
  *
  */
-@Requires(@Facet(SurfaceHeightFacet.class))
 public abstract class SurfaceObjectProvider<B, T> implements FacetProvider {
 
     private Noise typeNoiseGen;
@@ -54,6 +52,48 @@ public abstract class SurfaceObjectProvider<B, T> implements FacetProvider {
 
     /**
      * Populates a given facet based on filters and population densities
+     *
+     * @param facet        the facet to populate
+     * @param surfaceFacet the surface height facet
+     * @param typeFacet    the facet that provides the environment
+     * @param filters      a set of filters
+     */
+    protected void populateFacet(ObjectFacet3D<T> facet, SurfacesFacet surfaceFacet, ObjectFacet2D<? extends B> typeFacet, List<Predicate<Vector3i>> filters) {
+
+        Region3i worldRegion = facet.getWorldRegion();
+
+        int minY = worldRegion.minY();
+        int maxY = worldRegion.maxY();
+
+        Vector3i pos = new Vector3i();
+
+        for (int z = worldRegion.minZ(); z <= worldRegion.maxZ(); z++) {
+            for (int x = worldRegion.minX(); x <= worldRegion.maxX(); x++) {
+                for (int surface : surfaceFacet.getWorldColumn(x, z)) {
+
+                    int height = surface + 1;
+                    // if the surface is in range
+                    if (height >= minY && height <= maxY) {
+
+                        pos.set(x, height, z);
+
+                        // if all predicates match
+                        if (applyAll(filters, pos)) {
+                            B biome = typeFacet.getWorld(x, z);
+                            Map<T, Float> plantProb = probsTable.row(biome);
+                            T type = getType(x, z, plantProb);
+                            if (type != null) {
+                                facet.setWorld(x, height, z, type);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Populates a given facet based on filters and population densities using the deprecated SurfaceHeightFacet
      *
      * @param facet        the facet to populate
      * @param surfaceFacet the surface height facet
@@ -90,7 +130,6 @@ public abstract class SurfaceObjectProvider<B, T> implements FacetProvider {
                 }
             }
         }
-
     }
 
     private boolean applyAll(List<Predicate<Vector3i>> components, Vector3i pos) {

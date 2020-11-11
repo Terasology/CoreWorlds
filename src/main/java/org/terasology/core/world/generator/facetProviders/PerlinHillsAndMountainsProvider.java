@@ -28,7 +28,7 @@ import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Requires;
 import org.terasology.world.generation.Updates;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.ElevationFacet;
 import org.terasology.world.generation.facets.SurfaceHumidityFacet;
 import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
 
@@ -40,7 +40,7 @@ import java.util.Iterator;
  */
 @Deprecated
 @Requires({@Facet(SurfaceTemperatureFacet.class), @Facet(SurfaceHumidityFacet.class)})
-@Updates(@Facet(SurfaceHeightFacet.class))
+@Updates(@Facet(ElevationFacet.class))
 public class PerlinHillsAndMountainsProvider implements ConfigurableFacetProvider {
 
     private SubSampledNoise mountainNoise;
@@ -56,7 +56,7 @@ public class PerlinHillsAndMountainsProvider implements ConfigurableFacetProvide
 
     @Override
     public void process(GeneratingRegion region) {
-        SurfaceHeightFacet facet = region.getRegionFacet(SurfaceHeightFacet.class);
+        ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
 
         float[] mountainData = mountainNoise.noise(facet.getWorldRegion());
         float[] hillData = hillNoise.noise(facet.getWorldRegion());

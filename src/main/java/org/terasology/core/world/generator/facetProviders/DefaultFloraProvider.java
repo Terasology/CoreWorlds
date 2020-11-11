@@ -30,11 +30,12 @@ import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.Facet;
+import org.terasology.world.generation.FacetBorder;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
+import org.terasology.world.generation.facets.SurfacesFacet;
 import org.terasology.world.generation.facets.SeaLevelFacet;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
 import java.util.List;
 import java.util.Map;
@@ -45,9 +46,8 @@ import java.util.Map;
 @Produces(FloraFacet.class)
 @Requires({
         @Facet(SeaLevelFacet.class),
-        @Facet(SurfaceHeightFacet.class),
+        @Facet(value = SurfacesFacet.class, border = @FacetBorder(bottom = 1)),
         @Facet(BiomeFacet.class)
-//    @Facet(value = DensityFacet.class, border = @FacetBorder(bottom = 1))
 })
 public class DefaultFloraProvider extends SurfaceObjectProvider<Biome, FloraType> implements ConfigurableFacetProvider {
 
@@ -103,13 +103,13 @@ public class DefaultFloraProvider extends SurfaceObjectProvider<Biome, FloraType
 
     @Override
     public void process(GeneratingRegion region) {
-        SurfaceHeightFacet surface = region.getRegionFacet(SurfaceHeightFacet.class);
+        SurfacesFacet surfaces = region.getRegionFacet(SurfacesFacet.class);
         BiomeFacet biomeFacet = region.getRegionFacet(BiomeFacet.class);
 
         FloraFacet facet = new FloraFacet(region.getRegion(), region.getBorderForFacet(FloraFacet.class));
 
         List<Predicate<Vector3i>> filters = getFilters(region);
-        populateFacet(facet, surface, biomeFacet, filters);
+        populateFacet(facet, surfaces, biomeFacet, filters);
 
         region.setRegionFacet(FloraFacet.class, facet);
     }

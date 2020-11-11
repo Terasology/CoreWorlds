@@ -29,19 +29,15 @@ import org.terasology.rendering.assets.texture.Texture;
 import org.terasology.utilities.Assets;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
-import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.facets.SeaLevelFacet;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.ElevationFacet;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.Objects;
 
-@Produces(SurfaceHeightFacet.class)
-@Requires(@Facet(SeaLevelFacet.class))
+@Produces(ElevationFacet.class)
 public class HeightMapSurfaceHeightProvider implements ConfigurableFacetProvider {
 
     public enum WrapMode {
@@ -91,8 +87,8 @@ public class HeightMapSurfaceHeightProvider implements ConfigurableFacetProvider
 
     @Override
     public void process(GeneratingRegion region) {
-        Border3D border = region.getBorderForFacet(SurfaceHeightFacet.class);
-        SurfaceHeightFacet facet = new SurfaceHeightFacet(region.getRegion(), border);
+        Border3D border = region.getBorderForFacet(ElevationFacet.class);
+        ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
 
         for (BaseVector2i pos : facet.getWorldRegion().contents()) {
             int xzScale = configuration.terrainScale;
@@ -132,7 +128,7 @@ public class HeightMapSurfaceHeightProvider implements ConfigurableFacetProvider
             facet.setWorld(pos, height);
         }
 
-        region.setRegionFacet(SurfaceHeightFacet.class, facet);
+        region.setRegionFacet(ElevationFacet.class, facet);
 
     }
 

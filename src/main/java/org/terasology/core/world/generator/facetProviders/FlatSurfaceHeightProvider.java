@@ -16,16 +16,12 @@
 package org.terasology.core.world.generator.facetProviders;
 
 import org.terasology.math.geom.BaseVector2i;
-import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.facets.SeaLevelFacet;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.ElevationFacet;
 
-@Produces(SurfaceHeightFacet.class)
-@Requires(@Facet(SeaLevelFacet.class))
+@Produces(ElevationFacet.class)
 public class FlatSurfaceHeightProvider implements FacetProvider {
     private int height;
 
@@ -39,12 +35,12 @@ public class FlatSurfaceHeightProvider implements FacetProvider {
 
     @Override
     public void process(GeneratingRegion region) {
-        SurfaceHeightFacet facet = new SurfaceHeightFacet(region.getRegion(), region.getBorderForFacet(SurfaceHeightFacet.class));
+        ElevationFacet facet = new ElevationFacet(region.getRegion(), region.getBorderForFacet(ElevationFacet.class));
 
         for (BaseVector2i pos : facet.getRelativeRegion().contents()) {
             facet.set(pos, height);
         }
 
-        region.setRegionFacet(SurfaceHeightFacet.class, facet);
+        region.setRegionFacet(ElevationFacet.class, facet);
     }
 }
