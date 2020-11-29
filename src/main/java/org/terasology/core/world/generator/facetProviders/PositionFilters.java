@@ -19,9 +19,8 @@ package org.terasology.core.world.generator.facetProviders;
 import com.google.common.base.Predicate;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.utilities.procedural.Noise;
-import org.terasology.world.generation.facets.SurfacesFacet;
 import org.terasology.world.generation.facets.DensityFacet;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.facets.SurfacesFacet;
 
 import java.util.Set;
 
@@ -123,52 +122,6 @@ public final class PositionFilters {
                     }
                 }
                 return false;
-            }
-        };
-    }
-
-    /**
-     * Filters based on surface flatness using the deprecated SurfaceHeightFacet
-     *
-     * @param surfaceFacet the surface height facet that contains all tested coords.
-     * @return a predicate that returns true only if there is a level surface in adjacent directions
-     */
-    public static Predicate<Vector3i> flatness(final SurfaceHeightFacet surfaceFacet) {
-        return flatness(surfaceFacet, 0, 0);
-    }
-
-    /**
-     * Filters based on surface flatness using the deprecated SurfaceHeightFacet
-     *
-     * @param surfaceFacet the surface height facet that contains all tested coords.
-     * @param divUp        surface can be higher up to <code>divUp</code>.
-     * @param divDown      surface can be lower up to <code>divDown</code>.
-     * @return a predicate that returns true only if there is a level surface in adjacent directions
-     */
-    public static Predicate<Vector3i> flatness(final SurfaceHeightFacet surfaceFacet, final int divUp, final int divDown) {
-
-        return new Predicate<Vector3i>() {
-
-            @Override
-            public boolean apply(Vector3i input) {
-                int x = input.getX();
-                int z = input.getZ();
-                int level = input.getY() - 1;
-                int min = level - divDown;
-                int max = level + divUp;
-
-                return inBounds(blockHeightAt(x - 1, z), min, max)
-                        && inBounds(blockHeightAt(x + 1, z), min, max)
-                        && inBounds(blockHeightAt(x, z - 1), min, max)
-                        && inBounds(blockHeightAt(x, z + 1), min, max);
-            }
-
-            private boolean inBounds(int height, int min, int max) {
-                return height >= min && height <= max;
-            }
-
-            private int blockHeightAt(int x, int z) {
-                return (int) Math.floor(surfaceFacet.getWorld(x, z));
             }
         };
     }
