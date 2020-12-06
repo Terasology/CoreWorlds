@@ -1,26 +1,13 @@
-/*
- * Copyright 2015 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 
 package org.terasology.core.world.generator.trees;
 
+import org.joml.AxisAngle4f;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.terasology.math.LSystemRule;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.Matrix4f;
-import org.terasology.math.geom.Quat4f;
-import org.terasology.math.geom.Vector3f;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.utilities.collection.CharSequenceIterator;
 import org.terasology.utilities.random.Random;
@@ -55,13 +42,13 @@ public class RecursiveTreeGeneratorLSystem {
                         int posX, int posY, int posZ,
                         float angleOffset,
                         CharSequenceIterator axiomIterator,
-                        Vector3f position,
-                        Matrix4f rotation,
+                        org.joml.Vector3f position,
+                        Quaternionf rotation,
                         Block bark,
                         Block leaf,
                         int depth,
                         AbstractTreeGenerator treeGenerator) {
-        Matrix4f tempRotation = new Matrix4f();
+        Quaternionf tempRotation = new Quaternionf();
         while (axiomIterator.hasNext()) {
             char c = axiomIterator.nextChar();
             switch (c) {
@@ -110,43 +97,40 @@ public class RecursiveTreeGeneratorLSystem {
                         }
                     }
 
-                    Vector3f dir = new Vector3f(1f, 0f, 0f);
-                    rotation.transformVector(dir);
+                    Vector3f dir = new Vector3f(1, 0, 0);
+                    rotation.transform(dir);
 
                     position.add(dir);
                     break;
                 case '[':
                     recurse(view, rand, posX, posY, posZ, angleOffset, axiomIterator, new Vector3f(position),
-                            new Matrix4f(rotation), bark, leaf, depth, treeGenerator);
+                            new Quaternionf(rotation), bark, leaf, depth, treeGenerator);
                     break;
                 case ']':
                     return;
                 case '+':
-                    tempRotation = new Matrix4f(new Quat4f(new Vector3f(0f, 0f, 1f), angle + angleOffset),
-                            Vector3f.ZERO, 1.0f);
+                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 0, 0, 1));
                     rotation.mul(tempRotation);
                     break;
                 case '-':
-                    tempRotation = new Matrix4f(new Quat4f(new Vector3f(0f, 0f, -1f), angle + angleOffset),
-                            Vector3f.ZERO, 1.0f);
+                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 0, 0, -1));
                     rotation.mul(tempRotation);
                     break;
                 case '&':
-                    tempRotation = new Matrix4f(new Quat4f(new Vector3f(0f, 1f, 0f), angle + angleOffset),
-                            Vector3f.ZERO, 1.0f);
+                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 0, 1, 0));
                     rotation.mul(tempRotation);
                     break;
                 case '^':
-                    tempRotation = new Matrix4f(new Quat4f(new Vector3f(0f, -1f, 0f), angle + angleOffset),
-                            Vector3f.ZERO, 1.0f);
+                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 0, -1, 0));
+
                     rotation.mul(tempRotation);
                     break;
                 case '*':
-                    tempRotation = new Matrix4f(new Quat4f(new Vector3f(1f, 0f, 0f), angle), Vector3f.ZERO, 1.0f);
+                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 1, 0, 0));
                     rotation.mul(tempRotation);
                     break;
                 case '/':
-                    tempRotation = new Matrix4f(new Quat4f(new Vector3f(-1f, 0f, 0f), angle), Vector3f.ZERO, 1.0f);
+                    tempRotation.set(new AxisAngle4f(angle + angleOffset, -1, 0, 0));
                     rotation.mul(tempRotation);
                     break;
                 default:
