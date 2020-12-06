@@ -13,6 +13,7 @@ import org.terasology.core.world.generator.facetProviders.SimplexOceanProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexRiverProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexSurfaceTemperatureProvider;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
+import org.terasology.core.world.generator.facetProviders.SpawnPlateauProvider;
 import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
@@ -68,7 +69,7 @@ public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new SurfaceToDensityProvider())
                 .addProvider(new DefaultFloraProvider())
                 .addProvider(new DefaultTreeProvider())
-                .addProvider(new PlateauProvider(SPAWN_POS, 4, 10))
+                .addProvider(new SpawnPlateauProvider(SPAWN_POS))
                 .addProvider(new SurfaceHeightCompatibilityProvider())
                 .addRasterizer(new SolidRasterizer())
                 .addPlugins()
