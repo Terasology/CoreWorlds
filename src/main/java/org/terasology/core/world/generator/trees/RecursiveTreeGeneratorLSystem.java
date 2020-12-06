@@ -42,7 +42,7 @@ public class RecursiveTreeGeneratorLSystem {
                         int posX, int posY, int posZ,
                         float angleOffset,
                         CharSequenceIterator axiomIterator,
-                        org.joml.Vector3f position,
+                        Vector3f position,
                         Quaternionf rotation,
                         Block bark,
                         Block leaf,
