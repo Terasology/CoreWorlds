@@ -80,7 +80,7 @@ public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new SurfaceToDensityProvider())
                 .addProvider(new DefaultFloraProvider())
                 .addProvider(new DefaultTreeProvider())
-                .addProvider(new PlateauProvider(spawnPos, seaLevel + 4, 10, 30))
+                .addProvider(new PlateauProvider(spawnPos, 10, 30))
                 .addProvider(new SurfaceHeightCompatibilityProvider())
                 .addRasterizer(new SolidRasterizer())
                 .addPlugins()
