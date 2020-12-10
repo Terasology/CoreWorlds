@@ -6,13 +6,13 @@ import org.terasology.core.world.generator.facetProviders.BiomeProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultFloraProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultTreeProvider;
 import org.terasology.core.world.generator.facetProviders.PlateauProvider;
+import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexBaseSurfaceProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexHillsAndMountainsProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexHumidityProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexOceanProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexRiverProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexSurfaceTemperatureProvider;
-import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.core.world.generator.facetProviders.SpawnPlateauProvider;
 import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
@@ -26,7 +26,6 @@ import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
-import org.terasology.world.generation.SurfaceHeightCompatibilityProvider;
 import org.terasology.world.generation.WorldBuilder;
 import org.terasology.world.generator.RegisterWorldGenerator;
 import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
@@ -70,7 +69,6 @@ public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new DefaultFloraProvider())
                 .addProvider(new DefaultTreeProvider())
                 .addProvider(new SpawnPlateauProvider(SPAWN_POS))
-                .addProvider(new SurfaceHeightCompatibilityProvider())
                 .addRasterizer(new SolidRasterizer())
                 .addPlugins()
                 .addRasterizer(new FloraRasterizer())

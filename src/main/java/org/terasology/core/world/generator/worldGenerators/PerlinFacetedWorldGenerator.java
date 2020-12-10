@@ -11,6 +11,7 @@ import org.terasology.core.world.generator.facetProviders.PerlinHumidityProvider
 import org.terasology.core.world.generator.facetProviders.PerlinOceanProvider;
 import org.terasology.core.world.generator.facetProviders.PerlinRiverProvider;
 import org.terasology.core.world.generator.facetProviders.PerlinSurfaceTemperatureProvider;
+import org.terasology.core.world.generator.facetProviders.PlateauProvider;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.core.world.generator.facetProviders.SpawnPlateauProvider;
 import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
@@ -25,7 +26,6 @@ import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
-import org.terasology.world.generation.SurfaceHeightCompatibilityProvider;
 import org.terasology.world.generation.WorldBuilder;
 import org.terasology.world.generator.RegisterWorldGenerator;
 import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
@@ -70,7 +70,6 @@ public class PerlinFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new DefaultFloraProvider())
                 .addProvider(new DefaultTreeProvider())
                 .addProvider(new SpawnPlateauProvider(SPAWN_POS))
-                .addProvider(new SurfaceHeightCompatibilityProvider())
                 .addRasterizer(new SolidRasterizer())
                 .addPlugins()
                 .addRasterizer(new FloraRasterizer())
