@@ -51,7 +51,7 @@ public class SimplexRiverProvider implements FacetProvider, ConfigurableFacetPro
 
         float[] surfaceHeights = facet.getInternal();
         for (int i = 0; i < noise.length; ++i) {
-            surfaceHeights[i] += configuration.maxDepth * TeraMath.clamp(7f * (TeraMath.sqrt(Math.abs(noise[i] * 2.11f)) - 0.1f) + 0.25f);
+            surfaceHeights[i] += configuration.maxDepth * Math.min(0, Math.abs(noise[i]) * 20f - 1);
         }
     }
 

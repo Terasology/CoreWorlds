@@ -36,7 +36,6 @@ import java.util.Iterator;
 
 /**
  * Adds surface height for hill and mountain regions. Mountain and hill regions are based off of temperature and humidity.
- * @deprecated Prefer using {@link SimplexHillsAndMountainsProvider}.
  */
 @Deprecated
 @Requires({@Facet(SurfaceTemperatureFacet.class), @Facet(SurfaceHumidityFacet.class)})

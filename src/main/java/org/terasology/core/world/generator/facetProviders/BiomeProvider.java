@@ -17,6 +17,7 @@ package org.terasology.core.world.generator.facetProviders;
 
 import org.terasology.core.world.CoreBiome;
 import org.terasology.core.world.generator.facets.BiomeFacet;
+import org.terasology.core.world.generator.facets.SurfaceRoughnessFacet;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.Facet;
@@ -36,6 +37,7 @@ import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
 @Requires({
     @Facet(SeaLevelFacet.class),
     @Facet(ElevationFacet.class),
+    @Facet(SurfaceRoughnessFacet.class),
     @Facet(SurfaceTemperatureFacet.class),
     @Facet(SurfaceHumidityFacet.class)})
 public class BiomeProvider implements FacetProvider {
@@ -48,6 +50,7 @@ public class BiomeProvider implements FacetProvider {
     public void process(GeneratingRegion region) {
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         ElevationFacet elevationFacet = region.getRegionFacet(ElevationFacet.class);
+        SurfaceRoughnessFacet roughnessFacet = region.getRegionFacet(SurfaceRoughnessFacet.class);
         SurfaceTemperatureFacet temperatureFacet = region.getRegionFacet(SurfaceTemperatureFacet.class);
         SurfaceHumidityFacet humidityFacet = region.getRegionFacet(SurfaceHumidityFacet.class);
 
@@ -60,6 +63,7 @@ public class BiomeProvider implements FacetProvider {
             float temp = temperatureFacet.get(pos);
             float hum = temp * humidityFacet.get(pos);
             float height = elevationFacet.get(pos);
+            float roughness = roughnessFacet.get(pos);
 
             if (height <= seaLevel) {
                  biomeFacet.set(pos, CoreBiome.OCEAN);
@@ -67,11 +71,11 @@ public class BiomeProvider implements FacetProvider {
                 biomeFacet.set(pos, CoreBiome.BEACH);
             } else if (temp >= 0.5f && hum < 0.3f) {
                 biomeFacet.set(pos, CoreBiome.DESERT);
-            } else if (hum >= 0.3f && hum <= 0.6f && temp >= 0.5f) {
-                biomeFacet.set(pos, CoreBiome.PLAINS);
             } else if (temp <= 0.3f && hum > 0.5f) {
                 biomeFacet.set(pos, CoreBiome.SNOW);
-            } else if (hum >= 0.2f && hum <= 0.6f && temp < 0.5f) {
+            } else if (roughness < 0.1 && hum < 0.5f) {
+                biomeFacet.set(pos, CoreBiome.PLAINS);
+            } else if ((height - seaLevel) / 60 + roughness >= 2) {
                 biomeFacet.set(pos, CoreBiome.MOUNTAINS);
             } else {
                 biomeFacet.set(pos, CoreBiome.FOREST);
