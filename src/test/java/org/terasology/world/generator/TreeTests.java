@@ -1,21 +1,9 @@
-/*
- * Copyright 2015 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 
 package org.terasology.world.generator;
 
+import org.joml.Vector3i;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +14,6 @@ import org.terasology.core.world.generator.trees.TreeGenerator;
 import org.terasology.core.world.generator.trees.Trees;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
-import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.random.MersenneRandom;
 import org.terasology.utilities.random.Random;
@@ -63,12 +50,12 @@ public class TreeTests {
 
     @Test
     public void testBirchDims() {
-        assertIsLessOrEqual(estimateExtent(Trees.birchTree()), new Vector3i(22, 34, 22));
+        assertIsLessOrEqual(estimateExtent(Trees.birchTree()), new Vector3i(22, 35, 22));
     }
 
     @Test
     public void testOakDims() {
-        assertIsLessOrEqual(estimateExtent(Trees.oakTree()), new Vector3i(14, 14, 14));
+        assertIsLessOrEqual(estimateExtent(Trees.oakTree()), new Vector3i(15, 14, 15));
     }
 
     @Test
@@ -89,7 +76,7 @@ public class TreeTests {
     private Vector3i estimateExtent(TreeGenerator treeGen) {
         return IntStream.range(0, 100)
                 .mapToObj(i -> computeAABB(treeGen, i * 37))
-                .reduce(new Vector3i(), this::maximize);
+                .reduce(new Vector3i(), Vector3i::max);
     }
 
     private Vector3i computeAABB(TreeGenerator treeGen, long seed) {
@@ -103,7 +90,7 @@ public class TreeTests {
             Chunk chunk = new ChunkImpl(chunkPos.getX(), 0, chunkPos.getY(), blockManager, extraDataManager) {
                 @Override
                 public Block setBlock(int x, int y, int z, Block block) {
-                    Vector3i world = chunkToWorldPosition(x, y, z);
+                    Vector3i world = chunkToWorldPosition(x, y, z, new Vector3i());
                     min.min(world);
                     max.max(world);
 
@@ -113,16 +100,11 @@ public class TreeTests {
 
             Random random = new MersenneRandom(seed);
             BlockManager blockManagerLocal = CoreRegistry.get(BlockManager.class);
-            Vector3i relPos = chunk.chunkToWorldPosition(0, 0, 0).sub(pos).invert();
+            Vector3i relPos = chunk.chunkToWorldPosition(0, 0, 0, new Vector3i()).sub(pos).negate();
             treeGen.generate(blockManagerLocal, chunk, random, relPos.x, relPos.y, relPos.z);
         }
 
         return new Vector3i(max).sub(min);
-    }
-
-    private Vector3i maximize(Vector3i v, final Vector3i other) {
-        v.max(other);
-        return v;
     }
 
     private void assertIsLessOrEqual(final Vector3i actual, final Vector3i maximum) {
