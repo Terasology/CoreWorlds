@@ -21,13 +21,11 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import org.terasology.math.Region3i;
-import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.facets.SurfacesFacet;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generation.facets.base.ObjectFacet2D;
 import org.terasology.world.generation.facets.base.ObjectFacet3D;
 
@@ -85,46 +83,6 @@ public abstract class SurfaceObjectProvider<B, T> implements FacetProvider {
                             if (type != null) {
                                 facet.setWorld(x, height, z, type);
                             }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Populates a given facet based on filters and population densities using the deprecated SurfaceHeightFacet
-     *
-     * @param facet        the facet to populate
-     * @param surfaceFacet the surface height facet
-     * @param typeFacet    the facet that provides the environment
-     * @param filters      a set of filters
-     */
-    protected void populateFacet(ObjectFacet3D<T> facet, SurfaceHeightFacet surfaceFacet, ObjectFacet2D<? extends B> typeFacet, List<Predicate<Vector3i>> filters) {
-
-        Region3i worldRegion = facet.getWorldRegion();
-
-        int minY = worldRegion.minY();
-        int maxY = worldRegion.maxY();
-
-        Vector3i pos = new Vector3i();
-
-        for (int z = worldRegion.minZ(); z <= worldRegion.maxZ(); z++) {
-            for (int x = worldRegion.minX(); x <= worldRegion.maxX(); x++) {
-                int height = TeraMath.floorToInt(surfaceFacet.getWorld(x, z)) + 1;
-
-                // if the surface is in range
-                if (height >= minY && height <= maxY) {
-
-                    pos.set(x, height, z);
-
-                    // if all predicates match
-                    if (applyAll(filters, pos)) {
-                        B biome = typeFacet.getWorld(x, z);
-                        Map<T, Float> plantProb = probsTable.row(biome);
-                        T type = getType(x, z, plantProb);
-                        if (type != null) {
-                            facet.setWorld(x, height, z, type);
                         }
                     }
                 }
