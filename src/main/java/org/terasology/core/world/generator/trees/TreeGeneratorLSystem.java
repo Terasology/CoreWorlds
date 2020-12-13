@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 package org.terasology.core.world.generator.trees;
 
-import org.joml.AxisAngle4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.terasology.math.LSystemRule;
@@ -52,7 +51,7 @@ public class TreeGeneratorLSystem extends AbstractTreeGenerator {
     @Override
     public void generate(BlockManager blockManager, CoreChunk view, Random rand, int posX, int posY, int posZ) {
 
-        final Quaternionf rotation = new Quaternionf(new AxisAngle4f((float) Math.PI / 2f, 0, 0, 1));
+        final Quaternionf rotation = new Quaternionf().setAngleAxis(Math.PI / 2f, 0, 0, 1);
 
         float angleOffset = rand.nextFloat(-MAX_ANGLE_OFFSET, MAX_ANGLE_OFFSET);
 

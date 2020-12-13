@@ -3,7 +3,6 @@
 
 package org.terasology.core.world.generator.trees;
 
-import org.joml.AxisAngle4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.terasology.math.LSystemRule;
@@ -21,10 +20,10 @@ import java.util.Map;
  */
 
 public class RecursiveTreeGeneratorLSystem {
-    private int maxDepth;
-    private float angle;
-    private float thickness;
-    private Map<Character, LSystemRule> ruleSet;
+    private final int maxDepth;
+    private final float angle;
+    private final float thickness;
+    private final Map<Character, LSystemRule> ruleSet;
 
     public RecursiveTreeGeneratorLSystem(int maxDepth, float angle, Map<Character, LSystemRule> ruleSet,
                                          float thickness) {
@@ -109,28 +108,28 @@ public class RecursiveTreeGeneratorLSystem {
                 case ']':
                     return;
                 case '+':
-                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 0, 0, 1));
+                    tempRotation.setAngleAxis(angle + angleOffset, 0, 0, 1);
                     rotation.mul(tempRotation);
                     break;
                 case '-':
-                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 0, 0, -1));
+                    tempRotation.setAngleAxis(angle + angleOffset, 0, 0, -1);
                     rotation.mul(tempRotation);
                     break;
                 case '&':
-                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 0, 1, 0));
+                    tempRotation.setAngleAxis(angle + angleOffset, 0, 1, 0);
                     rotation.mul(tempRotation);
                     break;
                 case '^':
-                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 0, -1, 0));
+                    tempRotation.setAngleAxis(angle + angleOffset, 0, -1, 0);
 
                     rotation.mul(tempRotation);
                     break;
                 case '*':
-                    tempRotation.set(new AxisAngle4f(angle + angleOffset, 1, 0, 0));
+                    tempRotation.setAngleAxis(angle + angleOffset, 1, 0, 0);
                     rotation.mul(tempRotation);
                     break;
                 case '/':
-                    tempRotation.set(new AxisAngle4f(angle + angleOffset, -1, 0, 0));
+                    tempRotation.setAngleAxis(angle + angleOffset, -1, 0, 0);
                     rotation.mul(tempRotation);
                     break;
                 default:
