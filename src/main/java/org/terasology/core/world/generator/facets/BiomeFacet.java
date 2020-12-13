@@ -15,15 +15,15 @@
  */
 package org.terasology.core.world.generator.facets;
 
-import org.terasology.math.Region3i;
 import org.terasology.biomesAPI.Biome;
+import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.facets.base.BaseObjectFacet2D;
 
 /**
  */
 public class BiomeFacet extends BaseObjectFacet2D<Biome> {
-    public BiomeFacet(Region3i targetRegion, Border3D border) {
+    public BiomeFacet(BlockRegion targetRegion, Border3D border) {
         super(targetRegion, border, Biome.class);
     }
 }

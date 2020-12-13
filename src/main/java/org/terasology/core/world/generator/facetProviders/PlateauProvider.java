@@ -8,6 +8,7 @@ import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.math.geom.Rect2i;
+import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
@@ -58,8 +59,8 @@ public class PlateauProvider implements FacetProvider {
 
     @Override
     public void process(GeneratingRegion region) {
-        Region3i reg = region.getRegion();
-        Rect2i rc = Rect2i.createFromMinAndMax(reg.minX(), reg.minZ(), reg.maxX(), reg.maxZ());
+        BlockRegion reg = region.getRegion();
+        Rect2i rc = Rect2i.createFromMinAndMax(reg.getMinX(), reg.getMinZ(), reg.getMaxX(), reg.getMaxZ());
 
         if (rc.distanceSquared(centerPos.x(), centerPos.y()) <= outerRadius * outerRadius) {
             ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);

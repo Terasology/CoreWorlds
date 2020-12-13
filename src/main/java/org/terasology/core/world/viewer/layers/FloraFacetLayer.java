@@ -16,11 +16,13 @@
 
 package org.terasology.core.world.viewer.layers;
 
+import org.joml.Vector3ic;
 import org.terasology.core.world.generator.facets.FloraFacet;
 import org.terasology.core.world.generator.rasterizers.FloraType;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector3i;
 import org.terasology.nui.Color;
+import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Region;
 import org.terasology.world.viewer.color.ColorBlender;
 import org.terasology.world.viewer.color.ColorBlenders;
@@ -55,10 +57,10 @@ public class FloraFacetLayer extends AbstractFacetLayer {
         ColorBlender blender = ColorBlenders.forColorModel(ColorModels.RGBA, colorModel);
         DataBufferInt dataBuffer = (DataBufferInt) img.getRaster().getDataBuffer();
 
-        for (Entry<BaseVector3i, FloraType> entry : treeFacet.getRelativeEntries().entrySet()) {
+        for (Entry<Vector3ic, FloraType> entry : treeFacet.getRelativeEntries().entrySet()) {
             FloraType treeGen = entry.getValue();
-            int wx = entry.getKey().getX();
-            int wz = entry.getKey().getZ();
+            int wx = entry.getKey().x();
+            int wz = entry.getKey().z();
             Color color = colorFunc.apply(treeGen);
 
             int src = color.rgba();
@@ -75,16 +77,16 @@ public class FloraFacetLayer extends AbstractFacetLayer {
     public String getWorldText(Region region, int wx, int wy) {
         FloraFacet floraFacet = region.getFacet(FloraFacet.class);
 
-        Region3i worldRegion = floraFacet.getWorldRegion();
-        Region3i relativeRegion = floraFacet.getRelativeRegion();
+        BlockRegion worldRegion = floraFacet.getWorldRegion();
+        BlockRegion relativeRegion = floraFacet.getRelativeRegion();
 
-        int rx = wx - worldRegion.minX() + relativeRegion.minX();
-        int rz = wy - worldRegion.minZ() + relativeRegion.minZ();
+        int rx = wx - worldRegion.getMinX() + relativeRegion.getMinX();
+        int rz = wy - worldRegion.getMinZ() + relativeRegion.getMinZ();
 
-        for (Entry<BaseVector3i, FloraType> entry : floraFacet.getRelativeEntries().entrySet()) {
-            BaseVector3i treePos = entry.getKey();
+        for (Entry<Vector3ic, FloraType> entry : floraFacet.getRelativeEntries().entrySet()) {
+            Vector3ic treePos = entry.getKey();
 
-            if (treePos.getX() == rx && treePos.getZ() == rz) {
+            if (treePos.x() == rx && treePos.z() == rz) {
                 FloraType flora = entry.getValue();
                 return labelFunc.apply(flora);
             }
