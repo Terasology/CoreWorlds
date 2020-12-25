@@ -60,13 +60,13 @@ public abstract class SurfaceObjectProvider<B, T> implements FacetProvider {
 
         BlockRegion worldRegion = facet.getWorldRegion();
 
-        int minY = worldRegion.getMinY();
-        int maxY = worldRegion.getMaxY();
+        int minY = worldRegion.minY();
+        int maxY = worldRegion.maxY();
 
         Vector3i pos = new Vector3i();
 
-        for (int z = worldRegion.getMinZ(); z <= worldRegion.getMaxZ(); z++) {
-            for (int x = worldRegion.getMinX(); x <= worldRegion.getMaxX(); x++) {
+        for (int z = worldRegion.minZ(); z <= worldRegion.maxZ(); z++) {
+            for (int x = worldRegion.minX(); x <= worldRegion.maxX(); x++) {
                 for (int surface : surfaceFacet.getWorldColumn(x, z)) {
 
                     int height = surface + 1;

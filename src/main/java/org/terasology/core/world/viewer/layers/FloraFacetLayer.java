@@ -80,8 +80,8 @@ public class FloraFacetLayer extends AbstractFacetLayer {
         BlockRegion worldRegion = floraFacet.getWorldRegion();
         BlockRegion relativeRegion = floraFacet.getRelativeRegion();
 
-        int rx = wx - worldRegion.getMinX() + relativeRegion.getMinX();
-        int rz = wy - worldRegion.getMinZ() + relativeRegion.getMinZ();
+        int rx = wx - worldRegion.minX() + relativeRegion.minX();
+        int rz = wy - worldRegion.minZ() + relativeRegion.minZ();
 
         for (Entry<Vector3ic, FloraType> entry : floraFacet.getRelativeEntries().entrySet()) {
             Vector3ic treePos = entry.getKey();

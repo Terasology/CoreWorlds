@@ -84,8 +84,8 @@ public class TreeFacetLayer extends AbstractFacetLayer {
         BlockRegion worldRegion = treeFacet.getWorldRegion();
         BlockRegion relativeRegion = treeFacet.getRelativeRegion();
 
-        int rx = wx - worldRegion.getMinX() + relativeRegion.getMinX();
-        int rz = wy - worldRegion.getMinZ() + relativeRegion.getMinZ();
+        int rx = wx - worldRegion.minX() + relativeRegion.minX();
+        int rz = wy - worldRegion.minZ() + relativeRegion.minZ();
 
         Vector2f relCursor = new Vector2f(rx, rz);
         CirclePicker<TreeGenerator> picker = new CirclePickerAll<>(relCursor, radiusFunc);

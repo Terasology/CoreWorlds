@@ -60,7 +60,7 @@ public class PlateauProvider implements FacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         BlockRegion reg = region.getRegion();
-        Rect2i rc = Rect2i.createFromMinAndMax(reg.getMinX(), reg.getMinZ(), reg.getMaxX(), reg.getMaxZ());
+        Rect2i rc = Rect2i.createFromMinAndMax(reg.minX(), reg.minZ(), reg.maxX(), reg.maxZ());
 
         if (rc.distanceSquared(centerPos.x(), centerPos.y()) <= outerRadius * outerRadius) {
             ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
