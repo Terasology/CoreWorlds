@@ -7,6 +7,7 @@ import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.math.geom.Rect2i;
+import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetBorder;
 import org.terasology.world.generation.FacetProvider;
@@ -50,7 +51,7 @@ public class SpawnPlateauProvider implements FacetProvider {
 
     @Override
     public void process(GeneratingRegion region) {
-        Region3i reg = region.getRegion();
+        BlockRegion reg = region.getRegion();
         Rect2i rc = Rect2i.createFromMinAndMax(reg.minX(), reg.minZ(), reg.maxX(), reg.maxZ());
 
         if (rc.distanceSquared(centerPos.x(), centerPos.y()) <= OUTER_RADIUS_SQUARED) {

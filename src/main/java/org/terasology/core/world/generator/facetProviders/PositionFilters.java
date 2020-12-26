@@ -17,7 +17,7 @@
 package org.terasology.core.world.generator.facetProviders;
 
 import com.google.common.base.Predicate;
-import org.terasology.math.geom.Vector3i;
+import org.joml.Vector3i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.world.generation.facets.DensityFacet;
 import org.terasology.world.generation.facets.SurfacesFacet;
@@ -59,7 +59,7 @@ public final class PositionFilters {
      */
     public static Predicate<Vector3i> heightRange(final int minHeight, final int maxHeight) {
         return input -> {
-            int y = input.getY();
+            int y = input.y();
             return y > minHeight && y < maxHeight;
         };
     }
@@ -73,7 +73,7 @@ public final class PositionFilters {
     public static Predicate<Vector3i> density(final DensityFacet density) {
         return input -> {
             // pass if the block on the surface is dense enough
-            float densBelow = density.getWorld(input.getX(), input.getY() - 1, input.getZ());
+            float densBelow = density.getWorld(input.x(), input.y() - 1, input.z());
             float densThis = density.getWorld(input);
             return (densBelow > 0 && densThis <= 0);
         };
@@ -103,9 +103,9 @@ public final class PositionFilters {
 
             @Override
             public boolean apply(Vector3i input) {
-                int x = input.getX();
-                int z = input.getZ();
-                int level = input.getY() - 1;
+                int x = input.x();
+                int z = input.z();
+                int level = input.y() - 1;
                 int min = level - divDown;
                 int max = level + divUp;
 
@@ -134,7 +134,7 @@ public final class PositionFilters {
      * @return true if the noise value is <b>below</b> the threshold
      */
     public static Predicate<Vector3i> probability(final Noise noiseGen, final float density) {
-        return input -> Math.abs(noiseGen.noise(input.getX(), input.getY(), input.getZ())) < density;
+        return input -> Math.abs(noiseGen.noise(input.x(), input.y(), input.z())) < density;
     }
 
 }
