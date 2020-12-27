@@ -17,6 +17,7 @@ package org.terasology.core.world.generator.facetProviders;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import org.joml.Vector3i;
 import org.terasology.biomesAPI.Biome;
 import org.terasology.core.world.CoreBiome;
 import org.terasology.core.world.generator.facets.BiomeFacet;
@@ -24,7 +25,6 @@ import org.terasology.core.world.generator.facets.TreeFacet;
 import org.terasology.core.world.generator.trees.TreeGenerator;
 import org.terasology.core.world.generator.trees.Trees;
 import org.terasology.entitySystem.Component;
-import org.terasology.math.geom.Vector3i;
 import org.terasology.nui.properties.Range;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
@@ -35,8 +35,8 @@ import org.terasology.world.generation.FacetBorder;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.facets.SurfacesFacet;
 import org.terasology.world.generation.facets.SeaLevelFacet;
+import org.terasology.world.generation.facets.SurfacesFacet;
 
 import java.util.List;
 

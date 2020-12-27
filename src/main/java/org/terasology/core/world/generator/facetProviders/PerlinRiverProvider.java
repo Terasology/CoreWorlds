@@ -15,9 +15,9 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
+import org.joml.Vector2f;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.Vector2f;
 import org.terasology.nui.properties.Range;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.PerlinNoise;
