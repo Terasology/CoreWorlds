@@ -105,13 +105,13 @@ public class SolidRasterizer implements WorldRasterizer {
                 case MOUNTAINS:
                     if (heightAboveSea > 96) {
                         return snow;
-                    } else if (heightAboveSea > 0) {
+                    } else if (heightAboveSea >= 0) {
                         return grass;
                     } else {
                         return dirt;
                     }
                 case SNOW:
-                    if (heightAboveSea > 0) {
+                    if (heightAboveSea >= 0) {
                         return snow;
                     } else {
                         return dirt;

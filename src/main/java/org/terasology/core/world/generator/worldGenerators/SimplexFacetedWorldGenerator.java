@@ -5,13 +5,12 @@ package org.terasology.core.world.generator.worldGenerators;
 import org.terasology.core.world.generator.facetProviders.BiomeProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultFloraProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultTreeProvider;
-import org.terasology.core.world.generator.facetProviders.PlateauProvider;
+import org.terasology.core.world.generator.facetProviders.DensityNoiseProvider;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexBaseSurfaceProvider;
-import org.terasology.core.world.generator.facetProviders.SimplexHillsAndMountainsProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexHumidityProvider;
-import org.terasology.core.world.generator.facetProviders.SimplexOceanProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexRiverProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexRoughnessProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexSurfaceTemperatureProvider;
 import org.terasology.core.world.generator.facetProviders.SpawnPlateauProvider;
 import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
@@ -53,7 +52,7 @@ public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
 
     @Override
     protected WorldBuilder createWorld() {
-        int seaLevel = 32;
+        int seaLevel = 15;
 
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 .setSeaLevel(seaLevel)
@@ -62,10 +61,10 @@ public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new SimplexSurfaceTemperatureProvider())
                 .addProvider(new SimplexBaseSurfaceProvider())
                 .addProvider(new SimplexRiverProvider())
-                .addProvider(new SimplexOceanProvider())
-                .addProvider(new SimplexHillsAndMountainsProvider())
+                .addProvider(new SimplexRoughnessProvider())
                 .addProvider(new BiomeProvider())
                 .addProvider(new SurfaceToDensityProvider())
+                .addProvider(new DensityNoiseProvider())
                 .addProvider(new DefaultFloraProvider())
                 .addProvider(new DefaultTreeProvider())
                 .addProvider(new SpawnPlateauProvider(SPAWN_POS))
