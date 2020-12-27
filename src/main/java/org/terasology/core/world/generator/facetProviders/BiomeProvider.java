@@ -71,7 +71,7 @@ public class BiomeProvider implements FacetProvider {
                 biomeFacet.set(pos, CoreBiome.BEACH);
             } else if (temp >= 0.5f && hum < 0.3f) {
                 biomeFacet.set(pos, CoreBiome.DESERT);
-            } else if (temp <= 0.3f && hum > 0.5f) {
+            } else if (temp <= 0.3f) {
                 biomeFacet.set(pos, CoreBiome.SNOW);
             } else if (roughness < 0.1 && hum < 0.5f) {
                 biomeFacet.set(pos, CoreBiome.PLAINS);
