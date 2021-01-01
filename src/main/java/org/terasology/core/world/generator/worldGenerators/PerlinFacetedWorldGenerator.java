@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 package org.terasology.core.world.generator.worldGenerators;
 
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
 import org.terasology.core.world.generator.facetProviders.BiomeProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultFloraProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultTreeProvider;
@@ -38,7 +40,7 @@ import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
         "perlin")
 public class PerlinFacetedWorldGenerator extends BaseFacetedWorldGenerator {
 
-    private static final ImmutableVector2i SPAWN_POS = new ImmutableVector2i(0, 0);
+    private static final Vector2ic SPAWN_POS = new Vector2i(0, 0);
     private final FixedSpawner spawner = new FixedSpawner(SPAWN_POS.x(), SPAWN_POS.y());
 
     @In
