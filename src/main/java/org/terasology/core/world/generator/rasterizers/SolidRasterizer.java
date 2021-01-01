@@ -15,17 +15,17 @@
  */
 package org.terasology.core.world.generator.rasterizers;
 
+import org.joml.Vector2i;
+import org.joml.Vector3ic;
 import org.terasology.biomesAPI.Biome;
 import org.terasology.biomesAPI.BiomeRegistry;
 import org.terasology.core.world.CoreBiome;
 import org.terasology.core.world.generator.facets.BiomeFacet;
-import org.terasology.math.JomlUtil;
-import org.terasology.math.geom.Vector2i;
-import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.ChunkConstants;
+import org.terasology.world.chunks.Chunks;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
@@ -68,9 +68,9 @@ public class SolidRasterizer implements WorldRasterizer {
         int seaLevel = seaLevelFacet.getSeaLevel();
 
         Vector2i pos2d = new Vector2i();
-        for (Vector3i pos : ChunkConstants.CHUNK_REGION) {
-            pos2d.set(pos.x, pos.z);
-            int posY = pos.y + chunk.getChunkWorldOffsetY();
+        for (Vector3ic pos : Chunks.CHUNK_REGION) {
+            pos2d.set(pos.x(), pos.z());
+            int posY = pos.y() + chunk.getChunkWorldOffsetY();
 
             // Check for an optional depth for this layer - if defined stop generating below that level
             if (surfaceDepthFacet != null && posY < surfaceDepthFacet.get(pos2d)) {
@@ -78,12 +78,12 @@ public class SolidRasterizer implements WorldRasterizer {
             }
 
             Biome biome = biomeFacet.get(pos2d);
-            biomeRegistry.setBiome(biome, chunk, pos.x, pos.y, pos.z);
+            biomeRegistry.setBiome(biome, chunk, pos.x(), pos.y(), pos.z());
 
-            float density = solidityFacet.get(JomlUtil.from(pos));
+            float density = solidityFacet.get(pos);
 
-            if (density > 0 && surfacesFacet.get(JomlUtil.from(pos))) {
-                chunk.setBlock(pos, getSurfaceBlock(biome, posY-seaLevel));
+            if (density > 0 && surfacesFacet.get(pos)) {
+                chunk.setBlock(pos, getSurfaceBlock(biome, posY - seaLevel));
             } else if (density > 0) {
                 chunk.setBlock(pos, getBelowSurfaceBlock(density, biome));
             } else {
@@ -119,7 +119,7 @@ public class SolidRasterizer implements WorldRasterizer {
                 case DESERT:
                 case OCEAN:
                 case BEACH:
-                        return sand;
+                    return sand;
             }
         }
         return dirt;

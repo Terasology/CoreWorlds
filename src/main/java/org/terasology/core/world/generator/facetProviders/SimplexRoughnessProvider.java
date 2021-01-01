@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 package org.terasology.core.world.generator.facetProviders;
 
+import org.joml.Vector2ic;
 import org.terasology.core.world.generator.facets.SurfaceRoughnessFacet;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.utilities.procedural.BrownianNoise;
@@ -39,7 +40,7 @@ public class SimplexRoughnessProvider implements FacetProvider {
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         SurfaceRoughnessFacet facet = new SurfaceRoughnessFacet(region.getRegion(), region.getBorderForFacet(SurfaceRoughnessFacet.class));
 
-        for (BaseVector2i pos : facet.getWorldRegion().contents()) {
+        for (Vector2ic pos : facet.getWorldRegion()) {
             float height = elevationFacet.getWorld(pos) - seaLevelFacet.getSeaLevel();
             float value = 0.25f + height * 0.007f + noise.noise(pos.x() / 500f, pos.y() / 500f) * 1.5f;
             facet.setWorld(pos, value);
