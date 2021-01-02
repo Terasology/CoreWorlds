@@ -68,20 +68,20 @@ public class SpawnPlateauProvider implements FacetProvider {
             float targetHeight = Math.max(facet.getWorld(centerPos), seaLevel.getSeaLevel() + 3);
 
             // update the surface height
-            for (Vector2ic pos : facet.getWorldRegion()) {
+            for (Vector2ic pos : facet.getWorldArea()) {
                 float originalValue = facet.getWorld(pos);
                 long distSq = pos.distanceSquared(centerPos);
 
                 if (distSq <= INNER_RADIUS * INNER_RADIUS) {
                     facet.setWorld(pos, targetHeight);
-                    if (roughnessFacet.getWorldRegion().contains(pos)) {
+                    if (roughnessFacet.getWorldArea().contains(pos)) {
                         roughnessFacet.setWorld(pos, 0);
                     }
                 } else if (distSq <= OUTER_RADIUS_SQUARED) {
                     double dist = pos.distance(centerPos) - INNER_RADIUS;
                     float norm = (float) dist / (OUTER_RADIUS - INNER_RADIUS);
                     facet.setWorld(pos, TeraMath.lerp(targetHeight, originalValue, norm));
-                    if (roughnessFacet.getWorldRegion().contains(pos)) {
+                    if (roughnessFacet.getWorldArea().contains(pos)) {
                         roughnessFacet.setWorld(pos, roughnessFacet.getWorld(pos) * norm);
                     }
                 }

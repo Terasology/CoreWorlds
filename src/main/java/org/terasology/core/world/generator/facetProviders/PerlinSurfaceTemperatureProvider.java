@@ -43,7 +43,7 @@ public class PerlinSurfaceTemperatureProvider implements FacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         SurfaceTemperatureFacet facet = new SurfaceTemperatureFacet(region.getRegion(), region.getBorderForFacet(SurfaceTemperatureFacet.class));
-        float[] noise = this.temperatureNoise.noise(facet.getWorldRegion());
+        float[] noise = this.temperatureNoise.noise(facet.getWorldArea());
 
         for (int i = 0; i < noise.length; ++i) {
             noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);

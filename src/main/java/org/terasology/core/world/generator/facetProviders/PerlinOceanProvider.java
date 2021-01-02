@@ -47,7 +47,7 @@ public class PerlinOceanProvider implements ConfigurableFacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
-        float[] noise = oceanNoise.noise(facet.getWorldRegion());
+        float[] noise = oceanNoise.noise(facet.getWorldArea());
 
         float[] surfaceHeights = facet.getInternal();
         for (int i = 0; i < noise.length; ++i) {

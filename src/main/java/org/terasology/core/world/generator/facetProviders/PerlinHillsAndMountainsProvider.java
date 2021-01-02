@@ -57,13 +57,13 @@ public class PerlinHillsAndMountainsProvider implements ConfigurableFacetProvide
     public void process(GeneratingRegion region) {
         ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
 
-        float[] mountainData = mountainNoise.noise(facet.getWorldRegion());
-        float[] hillData = hillNoise.noise(facet.getWorldRegion());
+        float[] mountainData = mountainNoise.noise(facet.getWorldArea());
+        float[] hillData = hillNoise.noise(facet.getWorldArea());
         SurfaceTemperatureFacet temperatureData = region.getRegionFacet(SurfaceTemperatureFacet.class);
         SurfaceHumidityFacet humidityData = region.getRegionFacet(SurfaceHumidityFacet.class);
 
         float[] heightData = facet.getInternal();
-        Iterator<Vector2ic> positionIterator = facet.getRelativeRegion().iterator();
+        Iterator<Vector2ic> positionIterator = facet.getRelativeArea().iterator();
         for (int i = 0; i < heightData.length; ++i) {
             Vector2ic pos = positionIterator.next();
             float temp = temperatureData.get(pos);

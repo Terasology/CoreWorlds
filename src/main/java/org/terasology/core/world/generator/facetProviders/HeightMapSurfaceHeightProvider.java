@@ -91,7 +91,7 @@ public class HeightMapSurfaceHeightProvider implements ConfigurableFacetProvider
         Border3D border = region.getBorderForFacet(ElevationFacet.class);
         ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
 
-        for (Vector2ic pos : facet.getWorldRegion()) {
+        for (Vector2ic pos : facet.getWorldArea()) {
             int xzScale = configuration.terrainScale;
 
             int mapX0;

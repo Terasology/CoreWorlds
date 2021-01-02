@@ -52,7 +52,7 @@ public class PerlinBaseSurfaceProvider implements FacetProvider {
         ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         float seaLevel = seaLevelFacet.getSeaLevel();
-        BlockAreac processRegion = facet.getWorldRegion();
+        BlockAreac processRegion = facet.getWorldArea();
         float[] noise = surfaceNoise.noise(processRegion);
 
         for (int i = 0; i < noise.length; ++i) {

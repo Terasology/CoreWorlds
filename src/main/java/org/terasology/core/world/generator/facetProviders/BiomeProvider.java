@@ -60,7 +60,7 @@ public class BiomeProvider implements FacetProvider {
 
         int seaLevel = seaLevelFacet.getSeaLevel();
 
-        for (Vector2ic pos : biomeFacet.getRelativeRegion()) {
+        for (Vector2ic pos : biomeFacet.getRelativeArea()) {
             float temp = temperatureFacet.get(pos);
             float hum = temp * humidityFacet.get(pos);
             float height = elevationFacet.get(pos);

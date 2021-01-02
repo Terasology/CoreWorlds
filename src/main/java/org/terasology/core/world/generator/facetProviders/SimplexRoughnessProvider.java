@@ -40,7 +40,7 @@ public class SimplexRoughnessProvider implements FacetProvider {
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         SurfaceRoughnessFacet facet = new SurfaceRoughnessFacet(region.getRegion(), region.getBorderForFacet(SurfaceRoughnessFacet.class));
 
-        for (Vector2ic pos : facet.getWorldRegion()) {
+        for (Vector2ic pos : facet.getWorldArea()) {
             float height = elevationFacet.getWorld(pos) - seaLevelFacet.getSeaLevel();
             float value = 0.25f + height * 0.007f + noise.noise(pos.x() / 500f, pos.y() / 500f) * 1.5f;
             facet.setWorld(pos, value);

@@ -63,7 +63,7 @@ public class SimplexHumidityProvider implements ConfigurableFacetProvider {
         Border3D border = region.getBorderForFacet(SurfaceHumidityFacet.class);
         SurfaceHumidityFacet facet = new SurfaceHumidityFacet(region.getRegion(), border);
 
-        float[] noise = humidityNoise.noise(facet.getWorldRegion());
+        float[] noise = humidityNoise.noise(facet.getWorldArea());
         for (int i = 0; i < noise.length; ++i) {
             noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);
         }

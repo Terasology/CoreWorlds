@@ -59,8 +59,7 @@ public class SimplexBaseSurfaceProvider implements FacetProvider {
         ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         float seaLevel = seaLevelFacet.getSeaLevel();
-        BlockAreac processRegion = facet.getWorldRegion();
-        float[] noise = surfaceNoise.noise(processRegion);
+        float[] noise = surfaceNoise.noise(facet.getWorldArea());
 
         for (int i = 0; i < noise.length; ++i) {
             if (noise[i] > 0) {
