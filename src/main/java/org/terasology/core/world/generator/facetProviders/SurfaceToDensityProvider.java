@@ -15,9 +15,11 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
+import org.joml.Vector2ic;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
 import org.terasology.math.Region3i;
+import org.terasology.world.block.BlockArea;
 import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
@@ -48,9 +50,9 @@ public class SurfaceToDensityProvider implements FacetProvider {
         SurfacesFacet surfacesFacet = new SurfacesFacet(region.getRegion(), region.getBorderForFacet(SurfacesFacet.class));
 
         BlockRegion area = region.getRegion();
-        Rect2i densityRect = Rect2i.createFromMinAndMax(densityFacet.getRelativeRegion().minX(), densityFacet.getRelativeRegion().minZ(),
+        BlockArea densityRect = new BlockArea(densityFacet.getRelativeRegion().minX(), densityFacet.getRelativeRegion().minZ(),
                 densityFacet.getRelativeRegion().maxX(), densityFacet.getRelativeRegion().maxZ());
-        for (BaseVector2i pos : densityRect.contents()) {
+        for (Vector2ic pos : densityRect) {
             float height = elevation.get(pos);
             for (int y = densityFacet.getRelativeRegion().minY(); y <= densityFacet.getRelativeRegion().maxY(); ++y) {
                 densityFacet.set(pos.x(), y, pos.y(), height - area.minY() - y);
@@ -58,9 +60,9 @@ public class SurfaceToDensityProvider implements FacetProvider {
         }
         region.setRegionFacet(DensityFacet.class, densityFacet);
 
-        Rect2i surfaceRect = Rect2i.createFromMinAndMax(surfacesFacet.getWorldRegion().minX(), surfacesFacet.getWorldRegion().minZ(),
+        BlockArea surfaceRect = new BlockArea(surfacesFacet.getWorldRegion().minX(), surfacesFacet.getWorldRegion().minZ(),
                 surfacesFacet.getWorldRegion().maxX(), surfacesFacet.getWorldRegion().maxZ());
-        for (BaseVector2i pos : surfaceRect.contents()) {
+        for (Vector2ic pos : surfaceRect) {
             // Round in this odd way because if the elevation is precisely an integer, the block at that level has density 0, so it's air.
             int height = (int) Math.ceil(elevation.getWorld(pos)) - 1;
             if (height >= surfacesFacet.getWorldRegion().minY() && height <= surfacesFacet.getWorldRegion().maxY()) {

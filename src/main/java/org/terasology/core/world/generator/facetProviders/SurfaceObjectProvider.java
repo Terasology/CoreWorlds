@@ -24,6 +24,7 @@ import org.joml.Vector3i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.block.BlockRegion;
+import org.terasology.world.block.BlockRegionc;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.facets.SurfacesFacet;
 import org.terasology.world.generation.facets.base.ObjectFacet2D;
@@ -58,7 +59,7 @@ public abstract class SurfaceObjectProvider<B, T> implements FacetProvider {
      */
     protected void populateFacet(ObjectFacet3D<T> facet, SurfacesFacet surfaceFacet, ObjectFacet2D<? extends B> typeFacet, List<Predicate<Vector3i>> filters) {
 
-        BlockRegion worldRegion = facet.getWorldRegion();
+        BlockRegionc worldRegion = facet.getWorldRegion();
 
         int minY = worldRegion.minY();
         int maxY = worldRegion.maxY();

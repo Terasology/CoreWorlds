@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 package org.terasology.core.world.generator.facetProviders;
 
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
 import org.terasology.core.world.generator.facets.SurfaceRoughnessFacet;
 import org.terasology.math.Region3i;
 import org.terasology.math.TeraMath;
@@ -44,13 +46,13 @@ public class SpawnPlateauProvider implements FacetProvider {
     public static final int OUTER_RADIUS_SQUARED = OUTER_RADIUS * OUTER_RADIUS;
     public static final int INNER_RADIUS = 4;
 
-    private final ImmutableVector2i centerPos;
+    private final Vector2ic centerPos;
 
     /**
      * @param center the center of the circle-shaped plateau
      */
-    public SpawnPlateauProvider(BaseVector2i center) {
-        this.centerPos = ImmutableVector2i.createOrUse(center);
+    public SpawnPlateauProvider(Vector2ic center) {
+        this.centerPos = new Vector2i(center);
     }
 
     @Override
@@ -66,20 +68,20 @@ public class SpawnPlateauProvider implements FacetProvider {
             float targetHeight = Math.max(facet.getWorld(centerPos), seaLevel.getSeaLevel() + 3);
 
             // update the surface height
-            for (BaseVector2i pos : facet.getWorldRegion().contents()) {
+            for (Vector2ic pos : facet.getWorldArea()) {
                 float originalValue = facet.getWorld(pos);
-                int distSq = pos.distanceSquared(centerPos);
+                long distSq = pos.distanceSquared(centerPos);
 
                 if (distSq <= INNER_RADIUS * INNER_RADIUS) {
                     facet.setWorld(pos, targetHeight);
-                    if (roughnessFacet.getWorldRegion().contains(pos)) {
+                    if (roughnessFacet.getWorldArea().contains(pos)) {
                         roughnessFacet.setWorld(pos, 0);
                     }
                 } else if (distSq <= OUTER_RADIUS_SQUARED) {
                     double dist = pos.distance(centerPos) - INNER_RADIUS;
                     float norm = (float) dist / (OUTER_RADIUS - INNER_RADIUS);
                     facet.setWorld(pos, TeraMath.lerp(targetHeight, originalValue, norm));
-                    if (roughnessFacet.getWorldRegion().contains(pos)) {
+                    if (roughnessFacet.getWorldArea().contains(pos)) {
                         roughnessFacet.setWorld(pos, roughnessFacet.getWorld(pos) * norm);
                     }
                 }

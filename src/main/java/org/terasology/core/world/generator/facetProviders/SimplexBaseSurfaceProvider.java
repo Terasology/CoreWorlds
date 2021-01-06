@@ -20,6 +20,7 @@ import org.terasology.math.geom.Rect2i;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.SimplexNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
+import org.terasology.world.block.BlockAreac;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
@@ -58,8 +59,7 @@ public class SimplexBaseSurfaceProvider implements FacetProvider {
         ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         float seaLevel = seaLevelFacet.getSeaLevel();
-        Rect2i processRegion = facet.getWorldRegion();
-        float[] noise = surfaceNoise.noise(processRegion);
+        float[] noise = surfaceNoise.noise(facet.getWorldArea());
 
         for (int i = 0; i < noise.length; ++i) {
             if (noise[i] > 0) {
