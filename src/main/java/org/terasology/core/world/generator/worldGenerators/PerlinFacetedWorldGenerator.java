@@ -4,6 +4,7 @@ package org.terasology.core.world.generator.worldGenerators;
 
 import org.joml.Vector2i;
 import org.joml.Vector2ic;
+import org.joml.Vector3f;
 import org.terasology.core.world.generator.facetProviders.BiomeProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultFloraProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultTreeProvider;
@@ -13,7 +14,6 @@ import org.terasology.core.world.generator.facetProviders.PerlinHumidityProvider
 import org.terasology.core.world.generator.facetProviders.PerlinOceanProvider;
 import org.terasology.core.world.generator.facetProviders.PerlinRiverProvider;
 import org.terasology.core.world.generator.facetProviders.PerlinSurfaceTemperatureProvider;
-import org.terasology.core.world.generator.facetProviders.PlateauProvider;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexRoughnessProvider;
 import org.terasology.core.world.generator.facetProviders.SpawnPlateauProvider;
@@ -24,9 +24,6 @@ import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.logic.spawner.FixedSpawner;
-import org.terasology.math.JomlUtil;
-import org.terasology.math.geom.ImmutableVector2i;
-import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
 import org.terasology.world.generation.WorldBuilder;
@@ -52,7 +49,7 @@ public class PerlinFacetedWorldGenerator extends BaseFacetedWorldGenerator {
 
     @Override
     public Vector3f getSpawnPosition(EntityRef entity) {
-        return JomlUtil.from(spawner.getSpawnPosition(getWorld(), entity));
+        return spawner.getSpawnPosition(getWorld(), entity);
     }
 
     @Override
