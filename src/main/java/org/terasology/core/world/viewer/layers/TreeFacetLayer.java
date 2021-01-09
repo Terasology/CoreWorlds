@@ -16,6 +16,18 @@
 
 package org.terasology.core.world.viewer.layers;
 
+import org.joml.Vector2f;
+import org.joml.Vector3ic;
+import org.terasology.core.world.generator.facets.TreeFacet;
+import org.terasology.core.world.generator.trees.TreeGenerator;
+import org.terasology.world.block.BlockRegion;
+import org.terasology.world.generation.Region;
+import org.terasology.world.viewer.layers.AbstractFacetLayer;
+import org.terasology.world.viewer.layers.Renders;
+import org.terasology.world.viewer.layers.ZOrder;
+import org.terasology.world.viewer.picker.CirclePicker;
+import org.terasology.world.viewer.picker.CirclePickerAll;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -26,20 +38,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.joml.Vector3ic;
-import org.terasology.core.world.generator.facets.TreeFacet;
-import org.terasology.core.world.generator.trees.TreeGenerator;
-import org.terasology.math.Region3i;
-import org.terasology.math.geom.BaseVector3i;
-import org.terasology.math.geom.Vector2f;
-import org.terasology.world.block.BlockRegion;
-import org.terasology.world.generation.Region;
-import org.terasology.world.viewer.layers.AbstractFacetLayer;
-import org.terasology.world.viewer.layers.Renders;
-import org.terasology.world.viewer.layers.ZOrder;
-import org.terasology.world.viewer.picker.CirclePicker;
-import org.terasology.world.viewer.picker.CirclePickerAll;
 
 /**
  * Renders the tree coverage based on {@link TreeFacet}
@@ -87,8 +85,7 @@ public class TreeFacetLayer extends AbstractFacetLayer {
         int rx = wx - worldRegion.minX() + relativeRegion.minX();
         int rz = wy - worldRegion.minZ() + relativeRegion.minZ();
 
-        Vector2f relCursor = new Vector2f(rx, rz);
-        CirclePicker<TreeGenerator> picker = new CirclePickerAll<>(relCursor, radiusFunc);
+        CirclePicker<TreeGenerator> picker = new CirclePickerAll<>(new Vector2f(rx, rz), radiusFunc);
 
         for (Entry<Vector3ic, TreeGenerator> entry : treeFacet.getRelativeEntries().entrySet()) {
             TreeGenerator treeGen = entry.getValue();
