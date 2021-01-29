@@ -15,10 +15,10 @@
  */
 package org.terasology.core.world.generator.rasterizers;
 
+import org.joml.Vector3i;
 import org.joml.Vector3ic;
 import org.terasology.core.world.generator.facets.TreeFacet;
 import org.terasology.core.world.generator.trees.TreeGenerator;
-import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;

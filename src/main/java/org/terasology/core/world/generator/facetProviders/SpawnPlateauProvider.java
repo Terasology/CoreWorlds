@@ -6,7 +6,7 @@ import org.joml.Vector2i;
 import org.joml.Vector2ic;
 import org.terasology.core.world.generator.facets.SurfaceRoughnessFacet;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.Rect2i;
+import org.terasology.joml.geom.Rectanglei;
 import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetBorder;
@@ -55,9 +55,9 @@ public class SpawnPlateauProvider implements FacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         BlockRegion reg = region.getRegion();
-        Rect2i rc = Rect2i.createFromMinAndMax(reg.minX(), reg.minZ(), reg.maxX(), reg.maxZ());
+        Rectanglei rc = new Rectanglei(reg.minX(), reg.minZ(), reg.maxX(), reg.maxZ());
 
-        if (rc.distanceSquared(centerPos.x(), centerPos.y()) <= OUTER_RADIUS_SQUARED) {
+        if (rc.distanceSquared(centerPos) <= OUTER_RADIUS_SQUARED) {
             ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
             SurfaceRoughnessFacet roughnessFacet = region.getRegionFacet(SurfaceRoughnessFacet.class);
             SeaLevelFacet seaLevel = region.getRegionFacet(SeaLevelFacet.class);
