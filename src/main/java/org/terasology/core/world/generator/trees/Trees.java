@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 package org.terasology.core.world.generator.trees;
 
+import com.google.common.collect.ImmutableMap;
 import org.terasology.math.LSystemRule;
 import org.terasology.world.block.BlockUri;
-
-import com.google.common.collect.ImmutableMap;
 
 /**
  * Creates trees based on the original

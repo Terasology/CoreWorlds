@@ -17,10 +17,8 @@ package org.terasology.core.world.generator.rasterizers;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
-
 import org.joml.Vector3ic;
 import org.terasology.core.world.generator.facets.FloraFacet;
-import org.terasology.math.geom.BaseVector3i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.block.Block;

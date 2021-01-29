@@ -19,7 +19,6 @@ import org.joml.Vector2ic;
 import org.terasology.core.world.CoreBiome;
 import org.terasology.core.world.generator.facets.BiomeFacet;
 import org.terasology.core.world.generator.facets.SurfaceRoughnessFacet;
-import org.terasology.math.geom.BaseVector2i;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;

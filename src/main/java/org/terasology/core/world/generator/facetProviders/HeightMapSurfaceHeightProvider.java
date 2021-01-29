@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.terasology.assets.ResourceUrn;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.BaseVector2i;
 import org.terasology.nui.properties.OneOf.Enum;
 import org.terasology.nui.properties.OneOf.List;
 import org.terasology.nui.properties.Range;
