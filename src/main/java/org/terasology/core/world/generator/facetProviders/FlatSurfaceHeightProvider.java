@@ -16,7 +16,6 @@
 package org.terasology.core.world.generator.facetProviders;
 
 import org.joml.Vector2ic;
-import org.terasology.math.geom.BaseVector2i;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
