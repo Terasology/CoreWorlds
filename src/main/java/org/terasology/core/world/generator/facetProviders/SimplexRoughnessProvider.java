@@ -13,6 +13,7 @@ import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
+import org.terasology.world.generation.ScalableFacetProvider;
 import org.terasology.world.generation.facets.ElevationFacet;
 import org.terasology.world.generation.facets.SeaLevelFacet;
 
@@ -24,7 +25,7 @@ import org.terasology.world.generation.facets.SeaLevelFacet;
     @Facet(ElevationFacet.class),
     @Facet(SeaLevelFacet.class)
 })
-public class SimplexRoughnessProvider implements FacetProvider {
+public class SimplexRoughnessProvider implements ScalableFacetProvider {
     private static final int SAMPLE_RATE = 4;
 
     private Noise noise;
@@ -35,14 +36,14 @@ public class SimplexRoughnessProvider implements FacetProvider {
     }
 
     @Override
-    public void process(GeneratingRegion region) {
+    public void process(GeneratingRegion region, float scale) {
         ElevationFacet elevationFacet = region.getRegionFacet(ElevationFacet.class);
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         SurfaceRoughnessFacet facet = new SurfaceRoughnessFacet(region.getRegion(), region.getBorderForFacet(SurfaceRoughnessFacet.class));
 
         for (Vector2ic pos : facet.getWorldArea()) {
             float height = elevationFacet.getWorld(pos) - seaLevelFacet.getSeaLevel();
-            float value = 0.25f + height * 0.007f + noise.noise(pos.x() / 500f, pos.y() / 500f) * 1.5f;
+            float value = 0.25f + height * 0.007f + noise.noise(pos.x() * scale / 500f, pos.y() * scale / 500f) * 1.5f;
             facet.setWorld(pos, value);
         }
 

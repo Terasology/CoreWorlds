@@ -27,6 +27,7 @@ import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
+import org.terasology.world.generation.ScalableFacetProvider;
 import org.terasology.world.generation.facets.ElevationFacet;
 import org.terasology.world.generation.facets.SeaLevelFacet;
 
@@ -34,7 +35,7 @@ import org.terasology.world.generation.facets.SeaLevelFacet;
  */
 @Produces(ElevationFacet.class)
 @Requires(@Facet(SeaLevelFacet.class))
-public class SimplexBaseSurfaceProvider implements FacetProvider {
+public class SimplexBaseSurfaceProvider implements ScalableFacetProvider {
     private static final int SAMPLE_RATE = 4;
     private static final float BEACH_STEEPNESS = 0.05f;
     private static final float OCEAN_FLOOR_CUTOFF = 0.1f;
@@ -54,12 +55,12 @@ public class SimplexBaseSurfaceProvider implements FacetProvider {
     }
 
     @Override
-    public void process(GeneratingRegion region) {
+    public void process(GeneratingRegion region, float scale) {
         Border3D border = region.getBorderForFacet(ElevationFacet.class);
         ElevationFacet facet = new ElevationFacet(region.getRegion(), border);
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         float seaLevel = seaLevelFacet.getSeaLevel();
-        float[] noise = surfaceNoise.noise(facet.getWorldArea());
+        float[] noise = surfaceNoise.noise(facet.getWorldArea(), scale);
 
         for (int i = 0; i < noise.length; ++i) {
             if (noise[i] > 0) {

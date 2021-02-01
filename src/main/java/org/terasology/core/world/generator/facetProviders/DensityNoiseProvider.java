@@ -17,6 +17,7 @@ import org.terasology.world.generation.FacetBorder;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Requires;
+import org.terasology.world.generation.ScalableFacetProvider;
 import org.terasology.world.generation.Updates;
 import org.terasology.world.generation.facets.DensityFacet;
 import org.terasology.world.generation.facets.SurfacesFacet;
@@ -31,7 +32,7 @@ import org.terasology.world.generation.facets.SurfacesFacet;
     @Facet(value = DensityFacet.class, border = @FacetBorder(top = 1)),
     @Facet(SurfacesFacet.class)
 })
-public class DensityNoiseProvider implements FacetProvider {
+public class DensityNoiseProvider implements ScalableFacetProvider {
     private SubSampledNoise largeNoise;
     private SubSampledNoise smallNoise;
 
@@ -44,14 +45,14 @@ public class DensityNoiseProvider implements FacetProvider {
     }
 
     @Override
-    public void process(GeneratingRegion region) {
+    public void process(GeneratingRegion region, float scale) {
         SurfaceRoughnessFacet surfaceRoughnessFacet = region.getRegionFacet(SurfaceRoughnessFacet.class);
         DensityFacet densityFacet = region.getRegionFacet(DensityFacet.class);
         SurfacesFacet surfacesFacet = region.getRegionFacet(SurfacesFacet.class);
 
         BlockRegion densityRegion = densityFacet.getWorldRegion();
-        float[] smallNoiseValues = smallNoise.noise(densityRegion);
-        float[] largeNoiseValues = largeNoise.noise(densityRegion);
+        float[] smallNoiseValues = smallNoise.noise(densityRegion, scale);
+        float[] largeNoiseValues = largeNoise.noise(densityRegion, scale);
         float[] densityValues = densityFacet.getInternal();
 
         int x = densityRegion.minX();
