@@ -16,6 +16,15 @@ import org.terasology.world.generation.facets.ElevationFacet;
 
 @Requires(@Facet(ElevationFacet.class))
 public class SunlightRasterizer implements ScalableWorldRasterizer {
+    private final float offset;
+
+    /**
+     * @param offset How high above the (ElevationFacet) surface the sunlight should be assumed to stop.
+     */
+    public SunlightRasterizer(float offset) {
+        this.offset = offset;
+    }
+
     @Override
     public void initialize() {
     }
@@ -26,7 +35,7 @@ public class SunlightRasterizer implements ScalableWorldRasterizer {
         int topHeight = chunk.getChunkWorldOffsetY() + Chunks.SIZE_Y - 1;
         for (int x = 0; x < Chunks.SIZE_X; x++) {
             for (int z = 0; z < Chunks.SIZE_Z; z++) {
-                if (elevationFacet.get(x, z) - 20 < topHeight * scale) {
+                if (elevationFacet.get(x, z) + offset < topHeight * scale) {
                     Block block = chunk.getBlock(x, Chunks.SIZE_Y - 1, z);
                     if (block.isTranslucent() && !block.isLiquid()) {
                         ((Chunk) chunk).setSunlightRegen(x, Chunks.SIZE_Y - 1, z, Chunks.MAX_SUNLIGHT_REGEN);

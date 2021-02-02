@@ -73,6 +73,6 @@ public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addPlugins()
                 .addRasterizer(new FloraRasterizer())
                 .addRasterizer(new TreeRasterizer())
-                .addRasterizer(new SunlightRasterizer());
+                .addRasterizer(new SunlightRasterizer(-20));
     }
 }
