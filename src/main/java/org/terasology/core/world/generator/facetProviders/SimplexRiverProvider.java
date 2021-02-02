@@ -25,6 +25,7 @@ import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
+import org.terasology.world.generation.ScalableFacetProvider;
 import org.terasology.world.generation.Updates;
 import org.terasology.world.generation.facets.ElevationFacet;
 
@@ -32,7 +33,7 @@ import org.terasology.world.generation.facets.ElevationFacet;
  * Applies an amount of the max depth for regions that are rivers
  */
 @Updates(@Facet(ElevationFacet.class))
-public class SimplexRiverProvider implements FacetProvider, ConfigurableFacetProvider {
+public class SimplexRiverProvider implements ScalableFacetProvider, ConfigurableFacetProvider {
     private static final int SAMPLE_RATE = 4;
 
     private SubSampledNoise riverNoise;
@@ -44,9 +45,13 @@ public class SimplexRiverProvider implements FacetProvider, ConfigurableFacetPro
     }
 
     @Override
-    public void process(GeneratingRegion region) {
+    public void process(GeneratingRegion region, float scale) {
+        if (scale > 20) {
+            // The scale is so large that rivers wouldn't be visible anyway.
+            return;
+        }
         ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
-        float[] noise = riverNoise.noise(facet.getWorldArea());
+        float[] noise = riverNoise.noise(facet.getWorldArea(), scale);
 
         float[] surfaceHeights = facet.getInternal();
         for (int i = 0; i < noise.length; ++i) {

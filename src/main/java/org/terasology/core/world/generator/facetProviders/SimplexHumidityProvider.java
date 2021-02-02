@@ -26,13 +26,14 @@ import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.ConfigurableFacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
+import org.terasology.world.generation.ScalableFacetProvider;
 import org.terasology.world.generation.facets.SurfaceHumidityFacet;
 
 /**
  * Defines surface humidity in the range [0..1] based on random noise.
  */
 @Produces(SurfaceHumidityFacet.class)
-public class SimplexHumidityProvider implements ConfigurableFacetProvider {
+public class SimplexHumidityProvider implements ConfigurableFacetProvider, ScalableFacetProvider {
     private static final int SAMPLE_RATE = 4;
 
     private SubSampledNoise humidityNoise;
@@ -59,11 +60,11 @@ public class SimplexHumidityProvider implements ConfigurableFacetProvider {
     }
 
     @Override
-    public void process(GeneratingRegion region) {
+    public void process(GeneratingRegion region, float scale) {
         Border3D border = region.getBorderForFacet(SurfaceHumidityFacet.class);
         SurfaceHumidityFacet facet = new SurfaceHumidityFacet(region.getRegion(), border);
 
-        float[] noise = humidityNoise.noise(facet.getWorldArea());
+        float[] noise = humidityNoise.noise(facet.getWorldArea(), scale);
         for (int i = 0; i < noise.length; ++i) {
             noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);
         }

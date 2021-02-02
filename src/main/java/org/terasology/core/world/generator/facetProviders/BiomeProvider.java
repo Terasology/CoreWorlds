@@ -25,6 +25,7 @@ import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
+import org.terasology.world.generation.ScalableFacetProvider;
 import org.terasology.world.generation.facets.ElevationFacet;
 import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generation.facets.SurfaceHumidityFacet;
@@ -40,14 +41,14 @@ import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
     @Facet(SurfaceRoughnessFacet.class),
     @Facet(SurfaceTemperatureFacet.class),
     @Facet(SurfaceHumidityFacet.class)})
-public class BiomeProvider implements FacetProvider {
+public class BiomeProvider implements ScalableFacetProvider {
 
     @Override
     public void setSeed(long seed) {
     }
 
     @Override
-    public void process(GeneratingRegion region) {
+    public void process(GeneratingRegion region, float scale) {
         SeaLevelFacet seaLevelFacet = region.getRegionFacet(SeaLevelFacet.class);
         ElevationFacet elevationFacet = region.getRegionFacet(ElevationFacet.class);
         SurfaceRoughnessFacet roughnessFacet = region.getRegionFacet(SurfaceRoughnessFacet.class);
