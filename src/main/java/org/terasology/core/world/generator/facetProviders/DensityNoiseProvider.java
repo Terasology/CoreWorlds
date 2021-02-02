@@ -4,10 +4,8 @@
 package org.terasology.core.world.generator.facetProviders;
 
 import org.joml.Vector3f;
-import org.joml.Vector3i;
 import org.joml.Vector3ic;
 import org.terasology.core.world.generator.facets.SurfaceRoughnessFacet;
-import org.terasology.math.JomlUtil;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.SimplexNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;

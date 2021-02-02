@@ -19,8 +19,6 @@ package org.terasology.core.world.viewer.layers;
 import org.joml.Vector3ic;
 import org.terasology.core.world.generator.facets.FloraFacet;
 import org.terasology.core.world.generator.rasterizers.FloraType;
-import org.terasology.math.Region3i;
-import org.terasology.math.geom.BaseVector3i;
 import org.terasology.nui.Color;
 import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Region;

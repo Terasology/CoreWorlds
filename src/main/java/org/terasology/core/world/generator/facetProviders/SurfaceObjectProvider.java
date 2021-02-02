@@ -23,7 +23,6 @@ import com.google.common.collect.Table;
 import org.joml.Vector3i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
-import org.terasology.world.block.BlockRegion;
 import org.terasology.world.block.BlockRegionc;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.facets.SurfacesFacet;
