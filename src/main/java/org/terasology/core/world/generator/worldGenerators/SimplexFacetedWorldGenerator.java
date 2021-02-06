@@ -19,6 +19,7 @@ import org.terasology.core.world.generator.facetProviders.SpawnPlateauProvider;
 import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
+import org.terasology.core.world.generator.rasterizers.SunlightRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
 import org.terasology.entitySystem.entity.EntityRef;
@@ -71,6 +72,7 @@ public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
                 .addRasterizer(new SolidRasterizer())
                 .addPlugins()
                 .addRasterizer(new FloraRasterizer())
-                .addRasterizer(new TreeRasterizer());
+                .addRasterizer(new TreeRasterizer())
+                .addRasterizer(new SunlightRasterizer(-20));
     }
 }

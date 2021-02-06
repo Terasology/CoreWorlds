@@ -23,12 +23,13 @@ import org.terasology.utilities.procedural.SubSampledNoise;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
+import org.terasology.world.generation.ScalableFacetProvider;
 import org.terasology.world.generation.facets.SurfaceTemperatureFacet;
 
 /**
  */
 @Produces(SurfaceTemperatureFacet.class)
-public class SimplexSurfaceTemperatureProvider implements FacetProvider {
+public class SimplexSurfaceTemperatureProvider implements ScalableFacetProvider {
     private static final int SAMPLE_RATE = 4;
 
     private SubSampledNoise temperatureNoise;
@@ -39,9 +40,9 @@ public class SimplexSurfaceTemperatureProvider implements FacetProvider {
     }
 
     @Override
-    public void process(GeneratingRegion region) {
+    public void process(GeneratingRegion region, float scale) {
         SurfaceTemperatureFacet facet = new SurfaceTemperatureFacet(region.getRegion(), region.getBorderForFacet(SurfaceTemperatureFacet.class));
-        float[] noise = this.temperatureNoise.noise(facet.getWorldArea());
+        float[] noise = this.temperatureNoise.noise(facet.getWorldArea(), scale);
 
         for (int i = 0; i < noise.length; ++i) {
             noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);

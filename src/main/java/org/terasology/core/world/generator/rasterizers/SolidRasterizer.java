@@ -26,14 +26,23 @@ import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.Chunks;
 import org.terasology.world.chunks.CoreChunk;
+import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.Region;
+import org.terasology.world.generation.Requires;
+import org.terasology.world.generation.ScalableWorldRasterizer;
 import org.terasology.world.generation.WorldRasterizer;
 import org.terasology.world.generation.facets.DensityFacet;
 import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generation.facets.SurfaceDepthFacet;
 import org.terasology.world.generation.facets.SurfacesFacet;
 
-public class SolidRasterizer implements WorldRasterizer {
+@Requires({
+    @Facet(DensityFacet.class),
+    @Facet(SurfacesFacet.class),
+    @Facet(BiomeFacet.class),
+    @Facet(SeaLevelFacet.class)
+})
+public class SolidRasterizer implements ScalableWorldRasterizer {
 
     private Block water;
     private Block ice;
@@ -58,7 +67,7 @@ public class SolidRasterizer implements WorldRasterizer {
     }
 
     @Override
-    public void generateChunk(CoreChunk chunk, Region chunkRegion) {
+    public void generateChunk(CoreChunk chunk, Region chunkRegion, float scale) {
         DensityFacet solidityFacet = chunkRegion.getFacet(DensityFacet.class);
         SurfacesFacet surfacesFacet = chunkRegion.getFacet(SurfacesFacet.class);
         SurfaceDepthFacet surfaceDepthFacet = chunkRegion.getFacet(SurfaceDepthFacet.class);
@@ -69,7 +78,9 @@ public class SolidRasterizer implements WorldRasterizer {
         Vector2i pos2d = new Vector2i();
         for (Vector3ic pos : Chunks.CHUNK_REGION) {
             pos2d.set(pos.x(), pos.z());
-            int posY = pos.y() + chunk.getChunkWorldOffsetY();
+            float density = solidityFacet.get(pos);
+            float basePosY = (pos.y() + chunk.getChunkWorldOffsetY()) * scale;
+            float posY = basePosY + Math.max(0, Math.min(scale, density));
 
             // Check for an optional depth for this layer - if defined stop generating below that level
             if (surfaceDepthFacet != null && posY < surfaceDepthFacet.get(pos2d)) {
@@ -79,24 +90,24 @@ public class SolidRasterizer implements WorldRasterizer {
             Biome biome = biomeFacet.get(pos2d);
             biomeRegistry.setBiome(biome, chunk, pos.x(), pos.y(), pos.z());
 
-            float density = solidityFacet.get(pos);
-
-            if (density > 0 && surfacesFacet.get(pos)) {
+            if (posY < seaLevel && basePosY + scale > seaLevel && seaLevel < scale) {
+                // ensure that the ocean is at least 1 block thick.
+                chunk.setBlock(pos, water);
+            } else if (density > 0 && surfacesFacet.get(pos)) {
                 chunk.setBlock(pos, getSurfaceBlock(biome, posY - seaLevel));
             } else if (density > 0) {
                 chunk.setBlock(pos, getBelowSurfaceBlock(density, biome));
-            } else {
-                // fill up terrain up to sealevel height with water or ice
-                if (posY == seaLevel && CoreBiome.SNOW == biome) {
+            } else if (posY <= seaLevel) {         // either OCEAN or SNOW
+                if (posY + scale > seaLevel && CoreBiome.SNOW == biome) {
                     chunk.setBlock(pos, ice);
-                } else if (posY <= seaLevel) {         // either OCEAN or SNOW
+                } else {
                     chunk.setBlock(pos, water);
                 }
             }
         }
     }
 
-    private Block getSurfaceBlock(Biome type, int heightAboveSea) {
+    private Block getSurfaceBlock(Biome type, float heightAboveSea) {
         if (type instanceof CoreBiome) {
             switch ((CoreBiome) type) {
                 case FOREST:

@@ -19,12 +19,13 @@ import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
+import org.terasology.world.generation.ScalableFacetProvider;
 import org.terasology.world.generation.facets.SeaLevelFacet;
 
 /**
  */
 @Produces(SeaLevelFacet.class)
-public class SeaLevelProvider implements FacetProvider {
+public class SeaLevelProvider implements ScalableFacetProvider {
 
     private int seaLevel;
 
@@ -41,7 +42,7 @@ public class SeaLevelProvider implements FacetProvider {
     }
 
     @Override
-    public void process(GeneratingRegion region) {
+    public void process(GeneratingRegion region, float scale) {
         Border3D border = region.getBorderForFacet(SeaLevelFacet.class);
         SeaLevelFacet facet = new SeaLevelFacet(region.getRegion(), border);
         facet.setSeaLevel(seaLevel);
