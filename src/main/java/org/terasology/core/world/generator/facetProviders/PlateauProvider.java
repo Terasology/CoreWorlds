@@ -6,7 +6,7 @@ import com.google.common.base.Preconditions;
 import org.joml.Vector2i;
 import org.joml.Vector2ic;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.Rect2i;
+import org.terasology.joml.geom.Rectanglei;
 import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
@@ -59,9 +59,9 @@ public class PlateauProvider implements FacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         BlockRegion reg = region.getRegion();
-        Rect2i rc = Rect2i.createFromMinAndMax(reg.minX(), reg.minZ(), reg.maxX(), reg.maxZ());
+        Rectanglei rc = new Rectanglei(reg.minX(), reg.minZ(), reg.maxX(), reg.maxZ());
 
-        if (rc.distanceSquared(centerPos.x(), centerPos.y()) <= outerRadius * outerRadius) {
+        if (rc.distanceSquared(centerPos) <= outerRadius * outerRadius) {
             ElevationFacet facet = region.getRegionFacet(ElevationFacet.class);
 
             // update the surface height

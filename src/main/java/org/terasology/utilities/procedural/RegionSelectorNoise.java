@@ -3,8 +3,8 @@
 
 package org.terasology.utilities.procedural;
 
+import org.joml.Vector2f;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.Vector2f;
 
 /**
  * Uses Simplex Noise to select an amoeba-shaped(or perhaps a wobbly-circle-shaped) area
@@ -61,7 +61,7 @@ public class RegionSelectorNoise {
     public float noise(int x, int y) {
         Vector2f relative = new Vector2f((float) x - xCenter, (float) y - yCenter);
 
-        if (relative.equals(Vector2f.zero())) {
+        if (relative.equals(new Vector2f(0, 0))) {
             return 1.0f;
         }
 
