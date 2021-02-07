@@ -3,6 +3,7 @@
 
 package org.terasology.world.generator;
 
+import org.joml.Vector2ic;
 import org.joml.Vector3i;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,12 +13,11 @@ import org.mockito.Mockito;
 import org.terasology.context.internal.ContextImpl;
 import org.terasology.core.world.generator.trees.TreeGenerator;
 import org.terasology.core.world.generator.trees.Trees;
-import org.terasology.math.geom.BaseVector2i;
-import org.terasology.math.geom.Rect2i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.random.MersenneRandom;
 import org.terasology.utilities.random.Random;
 import org.terasology.world.block.Block;
+import org.terasology.world.block.BlockArea;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.block.BlockUri;
 import org.terasology.world.chunks.Chunk;
@@ -85,9 +85,9 @@ public class TreeTests {
         final Vector3i min = new Vector3i(pos);
         final Vector3i max = new Vector3i(pos);
 
-        Rect2i chunks = Rect2i.createFromMinAndMax(-1, -1, 1, 1);
-        for (BaseVector2i chunkPos : chunks.contents()) {
-            Chunk chunk = new ChunkImpl(chunkPos.getX(), 0, chunkPos.getY(), blockManager, extraDataManager) {
+        BlockArea chunks = new BlockArea(-1, -1, 1, 1);
+        for (Vector2ic chunkPos : chunks) {
+            Chunk chunk = new ChunkImpl(chunkPos.x(), 0, chunkPos.y(), blockManager, extraDataManager) {
                 @Override
                 public Block setBlock(int x, int y, int z, Block block) {
                     Vector3i world = chunkToWorldPosition(x, y, z, new Vector3i());
