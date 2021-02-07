@@ -1,4 +1,4 @@
-// Copyright 2020 The Terasology Foundation
+// Copyright 2021 The Terasology Foundation
 // SPDX-License-Identifier: Apache-2.0
 
 package org.terasology.world.generator;
@@ -21,7 +21,7 @@ import org.terasology.world.block.BlockArea;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.block.BlockUri;
 import org.terasology.world.chunks.Chunk;
-import org.terasology.world.chunks.ChunkConstants;
+import org.terasology.world.chunks.Chunks;
 import org.terasology.world.chunks.blockdata.ExtraBlockDataManager;
 import org.terasology.world.chunks.internal.ChunkImpl;
 
@@ -80,7 +80,7 @@ public class TreeTests {
     }
 
     private Vector3i computeAABB(TreeGenerator treeGen, long seed) {
-        Vector3i pos = new Vector3i(ChunkConstants.SIZE_X / 2, 0, ChunkConstants.SIZE_Z / 2);
+        Vector3i pos = new Vector3i(Chunks.SIZE_X / 2, 0, Chunks.SIZE_Z / 2);
 
         final Vector3i min = new Vector3i(pos);
         final Vector3i max = new Vector3i(pos);
