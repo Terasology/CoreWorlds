@@ -5,7 +5,6 @@ package org.terasology.world.generator;
 
 import org.joml.Vector2ic;
 import org.joml.Vector3i;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -26,6 +25,8 @@ import org.terasology.world.chunks.blockdata.ExtraBlockDataManager;
 import org.terasology.world.chunks.internal.ChunkImpl;
 
 import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TreeTests {
 
@@ -108,8 +109,9 @@ public class TreeTests {
     }
 
     private void assertIsLessOrEqual(final Vector3i actual, final Vector3i maximum) {
-        Assert.assertTrue("Maximum extent " + actual + " should be less or equal to " + maximum,
-                actual.x <= maximum.x && actual.y <= maximum.y && actual.z <= maximum.z);
+        assertTrue(
+                actual.x <= maximum.x && actual.y <= maximum.y && actual.z <= maximum.z,
+                "Maximum extent " + actual + " should be less or equal to " + maximum);
     }
 
 }
