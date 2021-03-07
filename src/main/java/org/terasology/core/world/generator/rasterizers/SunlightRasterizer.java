@@ -3,16 +3,15 @@
 
 package org.terasology.core.world.generator.rasterizers;
 
-import org.terasology.world.block.Block;
-import org.terasology.world.chunks.Chunk;
-import org.terasology.world.chunks.Chunks;
-import org.terasology.world.chunks.CoreChunk;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.Region;
-import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.ScalableWorldRasterizer;
-import org.terasology.world.generation.WorldRasterizer;
-import org.terasology.world.generation.facets.ElevationFacet;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.chunks.Chunk;
+import org.terasology.engine.world.chunks.Chunks;
+import org.terasology.engine.world.chunks.CoreChunk;
+import org.terasology.engine.world.generation.Facet;
+import org.terasology.engine.world.generation.Region;
+import org.terasology.engine.world.generation.Requires;
+import org.terasology.engine.world.generation.ScalableWorldRasterizer;
+import org.terasology.engine.world.generation.facets.ElevationFacet;
 
 @Requires(@Facet(ElevationFacet.class))
 public class SunlightRasterizer implements ScalableWorldRasterizer {

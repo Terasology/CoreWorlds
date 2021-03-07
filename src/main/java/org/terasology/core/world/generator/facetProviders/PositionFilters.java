@@ -18,9 +18,9 @@ package org.terasology.core.world.generator.facetProviders;
 
 import com.google.common.base.Predicate;
 import org.joml.Vector3i;
-import org.terasology.utilities.procedural.Noise;
-import org.terasology.world.generation.facets.DensityFacet;
-import org.terasology.world.generation.facets.SurfacesFacet;
+import org.terasology.engine.utilities.procedural.Noise;
+import org.terasology.engine.world.generation.facets.DensityFacet;
+import org.terasology.engine.world.generation.facets.SurfacesFacet;
 
 import java.util.Set;
 

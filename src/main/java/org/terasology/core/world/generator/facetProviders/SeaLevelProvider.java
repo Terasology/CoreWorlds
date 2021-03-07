@@ -15,12 +15,11 @@
  */
 package org.terasology.core.world.generator.facetProviders;
 
-import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.ScalableFacetProvider;
-import org.terasology.world.generation.facets.SeaLevelFacet;
+import org.terasology.engine.world.generation.Border3D;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.Produces;
+import org.terasology.engine.world.generation.ScalableFacetProvider;
+import org.terasology.engine.world.generation.facets.SeaLevelFacet;
 
 /**
  */

@@ -1,7 +1,7 @@
 // Copyright 2020 The Terasology Foundation
 // SPDX-License-Identifier: Apache-2.0
 
-package org.terasology.utilities.procedural;
+package org.terasology.engine.utilities.procedural;
 
 import org.joml.Vector2f;
 import org.terasology.math.TeraMath;

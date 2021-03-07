@@ -16,9 +16,9 @@
 package org.terasology.core.world;
 
 import org.terasology.biomesAPI.BiomeRegistry;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
-import org.terasology.entitySystem.systems.RegisterSystem;
-import org.terasology.registry.In;
+import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.registry.In;
 
 import java.util.stream.Stream;
 

@@ -3,9 +3,9 @@
 
 package org.terasology.core.world.generator.trees;
 
-import org.terasology.world.block.Block;
-import org.terasology.world.chunks.Chunks;
-import org.terasology.world.chunks.CoreChunk;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.chunks.Chunks;
+import org.terasology.engine.world.chunks.CoreChunk;
 
 /**
  * Object generators are used to generate objects like trees etc.

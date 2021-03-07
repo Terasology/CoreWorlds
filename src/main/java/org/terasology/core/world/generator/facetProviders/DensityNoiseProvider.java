@@ -6,19 +6,18 @@ package org.terasology.core.world.generator.facetProviders;
 import org.joml.Vector3f;
 import org.joml.Vector3ic;
 import org.terasology.core.world.generator.facets.SurfaceRoughnessFacet;
-import org.terasology.utilities.procedural.BrownianNoise;
-import org.terasology.utilities.procedural.SimplexNoise;
-import org.terasology.utilities.procedural.SubSampledNoise;
-import org.terasology.world.block.BlockRegion;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetBorder;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.ScalableFacetProvider;
-import org.terasology.world.generation.Updates;
-import org.terasology.world.generation.facets.DensityFacet;
-import org.terasology.world.generation.facets.SurfacesFacet;
+import org.terasology.engine.utilities.procedural.BrownianNoise;
+import org.terasology.engine.utilities.procedural.SimplexNoise;
+import org.terasology.engine.utilities.procedural.SubSampledNoise;
+import org.terasology.engine.world.block.BlockRegion;
+import org.terasology.engine.world.generation.Facet;
+import org.terasology.engine.world.generation.FacetBorder;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.Requires;
+import org.terasology.engine.world.generation.ScalableFacetProvider;
+import org.terasology.engine.world.generation.Updates;
+import org.terasology.engine.world.generation.facets.DensityFacet;
+import org.terasology.engine.world.generation.facets.SurfacesFacet;
 
 /**
  * Adds some additional 3D noise to the DensityFacet, so as to introduce cliffs and overhangs and things.

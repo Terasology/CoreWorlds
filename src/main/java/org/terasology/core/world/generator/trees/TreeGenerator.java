@@ -16,9 +16,9 @@
 
 package org.terasology.core.world.generator.trees;
 
-import org.terasology.utilities.random.Random;
-import org.terasology.world.block.BlockManager;
-import org.terasology.world.chunks.CoreChunk;
+import org.terasology.engine.utilities.random.Random;
+import org.terasology.engine.world.block.BlockManager;
+import org.terasology.engine.world.chunks.CoreChunk;
 
 /**
  * Object generators are used to generate objects like trees etc.

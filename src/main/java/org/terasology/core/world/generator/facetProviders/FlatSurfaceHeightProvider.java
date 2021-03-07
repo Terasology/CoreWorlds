@@ -16,10 +16,10 @@
 package org.terasology.core.world.generator.facetProviders;
 
 import org.joml.Vector2ic;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.facets.ElevationFacet;
+import org.terasology.engine.world.generation.FacetProvider;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.Produces;
+import org.terasology.engine.world.generation.facets.ElevationFacet;
 
 @Produces(ElevationFacet.class)
 public class FlatSurfaceHeightProvider implements FacetProvider {

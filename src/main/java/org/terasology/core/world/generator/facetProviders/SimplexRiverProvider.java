@@ -16,18 +16,17 @@
 package org.terasology.core.world.generator.facetProviders;
 
 import org.joml.Vector2f;
-import org.terasology.entitySystem.Component;
+import org.terasology.engine.entitySystem.Component;
 import org.terasology.nui.properties.Range;
-import org.terasology.utilities.procedural.BrownianNoise;
-import org.terasology.utilities.procedural.SimplexNoise;
-import org.terasology.utilities.procedural.SubSampledNoise;
-import org.terasology.world.generation.ConfigurableFacetProvider;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.ScalableFacetProvider;
-import org.terasology.world.generation.Updates;
-import org.terasology.world.generation.facets.ElevationFacet;
+import org.terasology.engine.utilities.procedural.BrownianNoise;
+import org.terasology.engine.utilities.procedural.SimplexNoise;
+import org.terasology.engine.utilities.procedural.SubSampledNoise;
+import org.terasology.engine.world.generation.ConfigurableFacetProvider;
+import org.terasology.engine.world.generation.Facet;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.ScalableFacetProvider;
+import org.terasology.engine.world.generation.Updates;
+import org.terasology.engine.world.generation.facets.ElevationFacet;
 
 /**
  * Applies an amount of the max depth for regions that are rivers

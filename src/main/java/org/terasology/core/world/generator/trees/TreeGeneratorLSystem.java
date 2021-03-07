@@ -4,13 +4,13 @@ package org.terasology.core.world.generator.trees;
 
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
-import org.terasology.math.LSystemRule;
-import org.terasology.utilities.collection.CharSequenceIterator;
-import org.terasology.utilities.random.Random;
-import org.terasology.world.block.Block;
-import org.terasology.world.block.BlockManager;
-import org.terasology.world.block.BlockUri;
-import org.terasology.world.chunks.CoreChunk;
+import org.terasology.engine.math.LSystemRule;
+import org.terasology.engine.utilities.collection.CharSequenceIterator;
+import org.terasology.engine.utilities.random.Random;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.BlockManager;
+import org.terasology.engine.world.block.BlockUri;
+import org.terasology.engine.world.chunks.CoreChunk;
 
 import java.util.Map;
 
