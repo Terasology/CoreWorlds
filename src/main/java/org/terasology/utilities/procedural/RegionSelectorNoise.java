@@ -1,9 +1,11 @@
 // Copyright 2020 The Terasology Foundation
 // SPDX-License-Identifier: Apache-2.0
 
-package org.terasology.engine.utilities.procedural;
+package org.terasology.utilities.procedural;
 
 import org.joml.Vector2f;
+import org.terasology.engine.utilities.procedural.Noise;
+import org.terasology.engine.utilities.procedural.SimplexNoise;
 import org.terasology.math.TeraMath;
 
 /**

@@ -1,7 +1,7 @@
 // Copyright 2021 The Terasology Foundation
 // SPDX-License-Identifier: Apache-2.0
 
-package org.terasology.engine.world.generator;
+package org.terasology.world.generator;
 
 import org.joml.Vector2ic;
 import org.joml.Vector3i;
