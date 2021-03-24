@@ -93,9 +93,9 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
                 // ensure that the ocean is at least 1 block thick.
                 chunk.setBlock(pos, water);
             } else if (density > 0 && surfacesFacet.get(pos)) {
-                chunk.setBlock(pos, getSurfaceBlock(biome, posY - seaLevel));
+                chunk.setBlock(pos, biome.getSurfaceBlock(pos, seaLevel));
             } else if (density > 0) {
-                chunk.setBlock(pos, getBelowSurfaceBlock(density, biome));
+                chunk.setBlock(pos, biome.getBelowSurfaceBlock(pos, density));
             } else if (posY <= seaLevel) {         // either OCEAN or SNOW
                 if (posY + scale > seaLevel && CoreBiome.SNOW == biome) {
                     chunk.setBlock(pos, ice);
@@ -103,60 +103,6 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
                     chunk.setBlock(pos, water);
                 }
             }
-        }
-    }
-
-    private Block getSurfaceBlock(Biome type, float heightAboveSea) {
-        if (type instanceof CoreBiome) {
-            switch ((CoreBiome) type) {
-                case FOREST:
-                case PLAINS:
-                case MOUNTAINS:
-                    if (heightAboveSea > 96) {
-                        return snow;
-                    } else if (heightAboveSea >= 0) {
-                        return grass;
-                    } else {
-                        return dirt;
-                    }
-                case SNOW:
-                    if (heightAboveSea >= 0) {
-                        return snow;
-                    } else {
-                        return dirt;
-                    }
-                case DESERT:
-                case OCEAN:
-                case BEACH:
-                    return sand;
-            }
-        }
-        return dirt;
-    }
-
-    private Block getBelowSurfaceBlock(float density, Biome type) {
-        if (type instanceof CoreBiome) {
-            switch ((CoreBiome) type) {
-                case DESERT:
-                    if (density > 8) {
-                        return stone;
-                    } else {
-                        return sand;
-                    }
-                case BEACH:
-                    if (density > 2) {
-                        return stone;
-                    } else {
-                        return sand;
-                    }
-                case OCEAN:
-                    return stone;
-            }
-        }
-        if (density > 32) {
-            return stone;
-        } else {
-            return dirt;
         }
     }
 }
