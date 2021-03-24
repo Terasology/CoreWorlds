@@ -11,7 +11,7 @@ import org.terasology.math.TeraMath;
 import org.terasology.engine.utilities.collection.CharSequenceIterator;
 import org.terasology.engine.utilities.random.Random;
 import org.terasology.engine.world.block.Block;
-import org.terasology.engine.world.chunks.CoreChunk;
+import org.terasology.engine.world.chunks.Chunk;
 
 import java.util.Map;
 
@@ -37,7 +37,7 @@ public class RecursiveTreeGeneratorLSystem {
         this(maxDepth, angle, ruleSet, 3);
     }
 
-    public void recurse(CoreChunk view, Random rand,
+    public void recurse(Chunk view, Random rand,
                         int posX, int posY, int posZ,
                         float angleOffset,
                         CharSequenceIterator axiomIterator,
