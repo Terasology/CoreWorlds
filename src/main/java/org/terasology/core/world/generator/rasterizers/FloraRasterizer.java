@@ -23,7 +23,7 @@ import org.terasology.engine.registry.CoreRegistry;
 import org.terasology.engine.utilities.procedural.WhiteNoise;
 import org.terasology.engine.world.block.Block;
 import org.terasology.engine.world.block.BlockManager;
-import org.terasology.engine.world.chunks.CoreChunk;
+import org.terasology.engine.world.chunks.Chunk;
 import org.terasology.engine.world.generation.Region;
 import org.terasology.engine.world.generation.WorldRasterizer;
 
@@ -64,7 +64,7 @@ public class FloraRasterizer implements WorldRasterizer {
     }
 
     @Override
-    public void generateChunk(CoreChunk chunk, Region chunkRegion) {
+    public void generateChunk(Chunk chunk, Region chunkRegion) {
         FloraFacet facet = chunkRegion.getFacet(FloraFacet.class);
 
         WhiteNoise noise = new WhiteNoise(chunk.getPosition().hashCode());
