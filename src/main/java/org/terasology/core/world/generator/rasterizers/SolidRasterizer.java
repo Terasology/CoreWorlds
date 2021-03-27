@@ -45,24 +45,14 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
 
     private Block water;
     private Block ice;
-    private Block stone;
-    private Block sand;
-    private Block grass;
-    private Block snow;
-    private Block dirt;
     private BiomeRegistry biomeRegistry;
 
     @Override
     public void initialize() {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
         biomeRegistry = CoreRegistry.get(BiomeRegistry.class);
-        stone = blockManager.getBlock("CoreAssets:Stone");
         water = blockManager.getBlock("CoreAssets:Water");
         ice = blockManager.getBlock("CoreAssets:Ice");
-        sand = blockManager.getBlock("CoreAssets:Sand");
-        grass = blockManager.getBlock("CoreAssets:Grass");
-        snow = blockManager.getBlock("CoreAssets:Snow");
-        dirt = blockManager.getBlock("CoreAssets:Dirt");
     }
 
     @Override
