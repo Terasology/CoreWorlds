@@ -16,7 +16,7 @@
 package org.terasology.core.world;
 
 import org.terasology.biomesAPI.Biome;
-import org.terasology.naming.Name;
+import org.terasology.gestalt.naming.Name;
 
 public enum CoreBiome implements Biome {
     MOUNTAINS("Mountains"),
