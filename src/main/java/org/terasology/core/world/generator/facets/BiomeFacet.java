@@ -16,9 +16,9 @@
 package org.terasology.core.world.generator.facets;
 
 import org.terasology.biomesAPI.Biome;
-import org.terasology.world.block.BlockRegion;
-import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.facets.base.BaseObjectFacet2D;
+import org.terasology.engine.world.block.BlockRegion;
+import org.terasology.engine.world.generation.Border3D;
+import org.terasology.engine.world.generation.facets.base.BaseObjectFacet2D;
 
 /**
  */

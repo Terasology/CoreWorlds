@@ -16,17 +16,16 @@
 package org.terasology.core.world.generator.facetProviders;
 
 import org.joml.Vector2ic;
-import org.terasology.world.block.BlockArea;
-import org.terasology.world.block.BlockRegion;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.ScalableFacetProvider;
-import org.terasology.world.generation.facets.DensityFacet;
-import org.terasology.world.generation.facets.ElevationFacet;
-import org.terasology.world.generation.facets.SurfacesFacet;
+import org.terasology.engine.world.block.BlockArea;
+import org.terasology.engine.world.block.BlockRegion;
+import org.terasology.engine.world.generation.Facet;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.Produces;
+import org.terasology.engine.world.generation.Requires;
+import org.terasology.engine.world.generation.ScalableFacetProvider;
+import org.terasology.engine.world.generation.facets.DensityFacet;
+import org.terasology.engine.world.generation.facets.ElevationFacet;
+import org.terasology.engine.world.generation.facets.SurfacesFacet;
 
 /**
  * Sets density based on its distance from the surface.

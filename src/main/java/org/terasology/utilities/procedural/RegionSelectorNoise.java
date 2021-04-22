@@ -4,6 +4,8 @@
 package org.terasology.utilities.procedural;
 
 import org.joml.Vector2f;
+import org.terasology.engine.utilities.procedural.Noise;
+import org.terasology.engine.utilities.procedural.SimplexNoise;
 import org.terasology.math.TeraMath;
 
 /**

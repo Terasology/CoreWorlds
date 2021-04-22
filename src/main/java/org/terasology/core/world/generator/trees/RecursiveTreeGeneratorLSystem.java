@@ -6,12 +6,12 @@ package org.terasology.core.world.generator.trees;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
-import org.terasology.math.LSystemRule;
+import org.terasology.engine.math.LSystemRule;
 import org.terasology.math.TeraMath;
-import org.terasology.utilities.collection.CharSequenceIterator;
-import org.terasology.utilities.random.Random;
-import org.terasology.world.block.Block;
-import org.terasology.world.chunks.CoreChunk;
+import org.terasology.engine.utilities.collection.CharSequenceIterator;
+import org.terasology.engine.utilities.random.Random;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.chunks.Chunk;
 
 import java.util.Map;
 
@@ -37,7 +37,7 @@ public class RecursiveTreeGeneratorLSystem {
         this(maxDepth, angle, ruleSet, 3);
     }
 
-    public void recurse(CoreChunk view, Random rand,
+    public void recurse(Chunk view, Random rand,
                         int posX, int posY, int posZ,
                         float angleOffset,
                         CharSequenceIterator axiomIterator,

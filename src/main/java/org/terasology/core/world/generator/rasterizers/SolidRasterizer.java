@@ -21,20 +21,19 @@ import org.terasology.biomesAPI.Biome;
 import org.terasology.biomesAPI.BiomeRegistry;
 import org.terasology.core.world.CoreBiome;
 import org.terasology.core.world.generator.facets.BiomeFacet;
-import org.terasology.registry.CoreRegistry;
-import org.terasology.world.block.Block;
-import org.terasology.world.block.BlockManager;
-import org.terasology.world.chunks.Chunks;
-import org.terasology.world.chunks.CoreChunk;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.Region;
-import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.ScalableWorldRasterizer;
-import org.terasology.world.generation.WorldRasterizer;
-import org.terasology.world.generation.facets.DensityFacet;
-import org.terasology.world.generation.facets.SeaLevelFacet;
-import org.terasology.world.generation.facets.SurfaceDepthFacet;
-import org.terasology.world.generation.facets.SurfacesFacet;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.BlockManager;
+import org.terasology.engine.world.chunks.Chunk;
+import org.terasology.engine.world.chunks.Chunks;
+import org.terasology.engine.world.generation.Facet;
+import org.terasology.engine.world.generation.Region;
+import org.terasology.engine.world.generation.Requires;
+import org.terasology.engine.world.generation.ScalableWorldRasterizer;
+import org.terasology.engine.world.generation.facets.DensityFacet;
+import org.terasology.engine.world.generation.facets.SeaLevelFacet;
+import org.terasology.engine.world.generation.facets.SurfaceDepthFacet;
+import org.terasology.engine.world.generation.facets.SurfacesFacet;
 
 @Requires({
     @Facet(DensityFacet.class),
@@ -67,7 +66,7 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
     }
 
     @Override
-    public void generateChunk(CoreChunk chunk, Region chunkRegion, float scale) {
+    public void generateChunk(Chunk chunk, Region chunkRegion, float scale) {
         DensityFacet solidityFacet = chunkRegion.getFacet(DensityFacet.class);
         SurfacesFacet surfacesFacet = chunkRegion.getFacet(SurfacesFacet.class);
         SurfaceDepthFacet surfaceDepthFacet = chunkRegion.getFacet(SurfaceDepthFacet.class);

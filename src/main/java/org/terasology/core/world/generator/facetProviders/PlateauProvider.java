@@ -7,12 +7,12 @@ import org.joml.Vector2i;
 import org.joml.Vector2ic;
 import org.terasology.math.TeraMath;
 import org.terasology.joml.geom.Rectanglei;
-import org.terasology.world.block.BlockRegion;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Updates;
-import org.terasology.world.generation.facets.ElevationFacet;
+import org.terasology.engine.world.block.BlockRegion;
+import org.terasology.engine.world.generation.Facet;
+import org.terasology.engine.world.generation.FacetProvider;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.Updates;
+import org.terasology.engine.world.generation.facets.ElevationFacet;
 
 
 /**

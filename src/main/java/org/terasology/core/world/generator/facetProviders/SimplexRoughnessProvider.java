@@ -4,17 +4,16 @@ package org.terasology.core.world.generator.facetProviders;
 
 import org.joml.Vector2ic;
 import org.terasology.core.world.generator.facets.SurfaceRoughnessFacet;
-import org.terasology.utilities.procedural.BrownianNoise;
-import org.terasology.utilities.procedural.Noise;
-import org.terasology.utilities.procedural.SimplexNoise;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.Requires;
-import org.terasology.world.generation.ScalableFacetProvider;
-import org.terasology.world.generation.facets.ElevationFacet;
-import org.terasology.world.generation.facets.SeaLevelFacet;
+import org.terasology.engine.utilities.procedural.BrownianNoise;
+import org.terasology.engine.utilities.procedural.Noise;
+import org.terasology.engine.utilities.procedural.SimplexNoise;
+import org.terasology.engine.world.generation.Facet;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.Produces;
+import org.terasology.engine.world.generation.Requires;
+import org.terasology.engine.world.generation.ScalableFacetProvider;
+import org.terasology.engine.world.generation.facets.ElevationFacet;
+import org.terasology.engine.world.generation.facets.SeaLevelFacet;
 
 /**
  * Determines the surface roughness. Generally, higher areas are rougher, but there's some noise too.

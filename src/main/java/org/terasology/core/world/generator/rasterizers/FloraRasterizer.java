@@ -19,13 +19,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import org.joml.Vector3ic;
 import org.terasology.core.world.generator.facets.FloraFacet;
-import org.terasology.registry.CoreRegistry;
-import org.terasology.utilities.procedural.WhiteNoise;
-import org.terasology.world.block.Block;
-import org.terasology.world.block.BlockManager;
-import org.terasology.world.chunks.CoreChunk;
-import org.terasology.world.generation.Region;
-import org.terasology.world.generation.WorldRasterizer;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.engine.utilities.procedural.WhiteNoise;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.BlockManager;
+import org.terasology.engine.world.chunks.Chunk;
+import org.terasology.engine.world.generation.Region;
+import org.terasology.engine.world.generation.WorldRasterizer;
 
 import java.util.List;
 import java.util.Map;
@@ -64,7 +64,7 @@ public class FloraRasterizer implements WorldRasterizer {
     }
 
     @Override
-    public void generateChunk(CoreChunk chunk, Region chunkRegion) {
+    public void generateChunk(Chunk chunk, Region chunkRegion) {
         FloraFacet facet = chunkRegion.getFacet(FloraFacet.class);
 
         WhiteNoise noise = new WhiteNoise(chunk.getPosition().hashCode());

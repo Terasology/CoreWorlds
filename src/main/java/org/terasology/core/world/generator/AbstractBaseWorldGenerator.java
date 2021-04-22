@@ -18,14 +18,14 @@ package org.terasology.core.world.generator;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.terasology.engine.SimpleUri;
-import org.terasology.world.chunks.CoreChunk;
-import org.terasology.world.generation.EntityBuffer;
-import org.terasology.world.generation.World;
-import org.terasology.world.generator.ChunkGenerationPass;
-import org.terasology.world.generator.WorldConfigurator;
-import org.terasology.world.generator.WorldConfiguratorAdapter;
-import org.terasology.world.generator.WorldGenerator;
+import org.terasology.engine.core.SimpleUri;
+import org.terasology.engine.world.chunks.Chunk;
+import org.terasology.engine.world.generation.EntityBuffer;
+import org.terasology.engine.world.generation.World;
+import org.terasology.engine.world.generator.ChunkGenerationPass;
+import org.terasology.engine.world.generator.WorldConfigurator;
+import org.terasology.engine.world.generator.WorldConfiguratorAdapter;
+import org.terasology.engine.world.generator.WorldGenerator;
 
 import java.util.List;
 
@@ -80,7 +80,7 @@ public abstract class AbstractBaseWorldGenerator implements WorldGenerator {
     }
 
     @Override
-    public void createChunk(final CoreChunk chunk, EntityBuffer buffer) {
+    public void createChunk(final Chunk chunk, EntityBuffer buffer) {
         for (final ChunkGenerationPass generator : generationPasses) {
             try {
                 generator.generateChunk(chunk);

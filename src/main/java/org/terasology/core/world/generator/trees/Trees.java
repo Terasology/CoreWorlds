@@ -3,8 +3,8 @@
 package org.terasology.core.world.generator.trees;
 
 import com.google.common.collect.ImmutableMap;
-import org.terasology.math.LSystemRule;
-import org.terasology.world.block.BlockUri;
+import org.terasology.engine.math.LSystemRule;
+import org.terasology.engine.world.block.BlockUri;
 
 /**
  * Creates trees based on the original

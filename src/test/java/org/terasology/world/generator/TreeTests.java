@@ -5,34 +5,35 @@ package org.terasology.world.generator;
 
 import org.joml.Vector2ic;
 import org.joml.Vector3i;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.terasology.context.internal.ContextImpl;
+import org.terasology.engine.context.internal.ContextImpl;
 import org.terasology.core.world.generator.trees.TreeGenerator;
 import org.terasology.core.world.generator.trees.Trees;
-import org.terasology.registry.CoreRegistry;
-import org.terasology.utilities.random.MersenneRandom;
-import org.terasology.utilities.random.Random;
-import org.terasology.world.block.Block;
-import org.terasology.world.block.BlockArea;
-import org.terasology.world.block.BlockManager;
-import org.terasology.world.block.BlockUri;
-import org.terasology.world.chunks.Chunk;
-import org.terasology.world.chunks.Chunks;
-import org.terasology.world.chunks.blockdata.ExtraBlockDataManager;
-import org.terasology.world.chunks.internal.ChunkImpl;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.engine.utilities.random.MersenneRandom;
+import org.terasology.engine.utilities.random.Random;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.BlockArea;
+import org.terasology.engine.world.block.BlockManager;
+import org.terasology.engine.world.block.BlockUri;
+import org.terasology.engine.world.chunks.Chunk;
+import org.terasology.engine.world.chunks.Chunks;
+import org.terasology.engine.world.chunks.blockdata.ExtraBlockDataManager;
+import org.terasology.engine.world.chunks.internal.ChunkImpl;
 
 import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TreeTests {
 
     private BlockManager blockManager;
     private ExtraBlockDataManager extraDataManager;
 
-    @Before
+    @BeforeEach
     public void setup() {
         ContextImpl context = new ContextImpl();
         CoreRegistry.setContext(context);
@@ -108,8 +109,9 @@ public class TreeTests {
     }
 
     private void assertIsLessOrEqual(final Vector3i actual, final Vector3i maximum) {
-        Assert.assertTrue("Maximum extent " + actual + " should be less or equal to " + maximum,
-                actual.x <= maximum.x && actual.y <= maximum.y && actual.z <= maximum.z);
+        assertTrue(
+                actual.x <= maximum.x && actual.y <= maximum.y && actual.z <= maximum.z,
+                "Maximum extent " + actual + " should be less or equal to " + maximum);
     }
 
 }
