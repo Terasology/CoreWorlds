@@ -57,7 +57,7 @@ public class DensityNoiseProvider implements ScalableFacetProvider {
         int z = densityRegion.minZ();
         for (int i = 0; i < densityValues.length; i++) {
             float intensity = Math.max(0f, surfaceRoughnessFacet.getWorld(x, z));
-            float smallIntensity = Math.min(intensity, 1f);
+            float smallIntensity = Math.min(intensity, (1 + intensity) / 2);
             float largeIntensity = intensity - smallIntensity;
             densityValues[i] += smallNoiseValues[i] * intensity * 20 + largeNoiseValues[i] * largeIntensity * 60;
 
