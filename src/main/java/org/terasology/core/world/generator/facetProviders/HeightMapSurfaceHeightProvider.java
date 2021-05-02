@@ -19,7 +19,7 @@ import com.google.common.math.IntMath;
 import org.joml.Vector2ic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.terasology.assets.ResourceUrn;
+import org.terasology.gestalt.assets.ResourceUrn;
 import org.terasology.engine.entitySystem.Component;
 import org.terasology.math.TeraMath;
 import org.terasology.nui.properties.OneOf.Enum;
