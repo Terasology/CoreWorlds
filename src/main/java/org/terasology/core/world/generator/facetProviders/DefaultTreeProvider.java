@@ -1,18 +1,5 @@
-/*
- * Copyright 2014 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.core.world.generator.facetProviders;
 
 import com.google.common.base.Predicate;
@@ -24,8 +11,6 @@ import org.terasology.core.world.generator.facets.BiomeFacet;
 import org.terasology.core.world.generator.facets.TreeFacet;
 import org.terasology.core.world.generator.trees.TreeGenerator;
 import org.terasology.core.world.generator.trees.Trees;
-import org.terasology.engine.entitySystem.Component;
-import org.terasology.nui.properties.Range;
 import org.terasology.engine.utilities.procedural.Noise;
 import org.terasology.engine.utilities.procedural.WhiteNoise;
 import org.terasology.engine.world.generation.Border3D;
@@ -37,6 +22,8 @@ import org.terasology.engine.world.generation.Produces;
 import org.terasology.engine.world.generation.Requires;
 import org.terasology.engine.world.generation.facets.SeaLevelFacet;
 import org.terasology.engine.world.generation.facets.SurfacesFacet;
+import org.terasology.gestalt.entitysystem.component.Component;
+import org.terasology.nui.properties.Range;
 
 import java.util.List;
 
@@ -133,8 +120,13 @@ public class DefaultTreeProvider extends SurfaceObjectProvider<Biome, TreeGenera
         this.configuration = (Configuration) configuration;
     }
 
-    public static class Configuration implements Component {
+    public static class Configuration implements Component<Configuration> {
         @Range(min = 0, max = 1.0f, increment = 0.05f, precision = 2, description = "Define the overall tree density")
         public float density = 0.2f;
+
+        @Override
+        public void copy(Configuration other) {
+            this.density = other.density;
+        }
     }
 }

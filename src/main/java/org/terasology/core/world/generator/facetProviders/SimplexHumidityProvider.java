@@ -1,24 +1,8 @@
-/*
- * Copyright 2014 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.core.world.generator.facetProviders;
 
 import org.joml.Vector2f;
-import org.terasology.engine.entitySystem.Component;
-import org.terasology.math.TeraMath;
-import org.terasology.nui.properties.Range;
 import org.terasology.engine.utilities.procedural.BrownianNoise;
 import org.terasology.engine.utilities.procedural.SimplexNoise;
 import org.terasology.engine.utilities.procedural.SubSampledNoise;
@@ -28,6 +12,9 @@ import org.terasology.engine.world.generation.GeneratingRegion;
 import org.terasology.engine.world.generation.Produces;
 import org.terasology.engine.world.generation.ScalableFacetProvider;
 import org.terasology.engine.world.generation.facets.SurfaceHumidityFacet;
+import org.terasology.gestalt.entitysystem.component.Component;
+import org.terasology.math.TeraMath;
+import org.terasology.nui.properties.Range;
 
 /**
  * Defines surface humidity in the range [0..1] based on random noise.
@@ -95,11 +82,17 @@ public class SimplexHumidityProvider implements ConfigurableFacetProvider, Scala
         humidityNoise = new SubSampledNoise(brown, scale, SAMPLE_RATE);
     }
 
-    public static class Configuration implements Component {
+    public static class Configuration implements Component<Configuration> {
         @Range(min = 0, max = 10.0f, increment = 1f, precision = 0, description = "The number of noise octaves")
         public int octaves = 8;
 
         @Range(min = 0.01f, max = 5f, increment = 0.01f, precision = 2, description = "The noise scale")
         public float scale = 0.05f;
+
+        @Override
+        public void copy(Configuration other) {
+            this.octaves = other.octaves;
+            this.scale = other.scale;
+        }
     }
 }
