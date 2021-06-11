@@ -6,7 +6,6 @@ package org.terasology.core.world.generator.rasterizers;
 import org.terasology.engine.world.block.Block;
 import org.terasology.engine.world.chunks.Chunk;
 import org.terasology.engine.world.chunks.Chunks;
-import org.terasology.engine.world.chunks.CoreChunk;
 import org.terasology.engine.world.generation.Facet;
 import org.terasology.engine.world.generation.Region;
 import org.terasology.engine.world.generation.Requires;
@@ -29,7 +28,7 @@ public class SunlightRasterizer implements ScalableWorldRasterizer {
     }
 
     @Override
-    public void generateChunk(CoreChunk chunk, Region chunkRegion, float scale) {
+    public void generateChunk(Chunk chunk, Region chunkRegion, float scale) {
         ElevationFacet elevationFacet = chunkRegion.getFacet(ElevationFacet.class);
         int topHeight = chunk.getChunkWorldOffsetY() + Chunks.SIZE_Y - 1;
         for (int x = 0; x < Chunks.SIZE_X; x++) {
@@ -37,7 +36,7 @@ public class SunlightRasterizer implements ScalableWorldRasterizer {
                 if (elevationFacet.get(x, z) + offset < topHeight * scale) {
                     Block block = chunk.getBlock(x, Chunks.SIZE_Y - 1, z);
                     if (block.isTranslucent() && !block.isLiquid()) {
-                        ((Chunk) chunk).setSunlightRegen(x, Chunks.SIZE_Y - 1, z, Chunks.MAX_SUNLIGHT_REGEN);
+                        chunk.setSunlightRegen(x, Chunks.SIZE_Y - 1, z, Chunks.MAX_SUNLIGHT_REGEN);
                     }
                 }
             }

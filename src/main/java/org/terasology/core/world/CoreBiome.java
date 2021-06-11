@@ -20,7 +20,7 @@ import org.terasology.biomesAPI.Biome;
 import org.terasology.engine.registry.CoreRegistry;
 import org.terasology.engine.world.block.Block;
 import org.terasology.engine.world.block.BlockManager;
-import org.terasology.naming.Name;
+import org.terasology.gestalt.naming.Name;
 
 public enum CoreBiome implements Biome {
     MOUNTAINS("Mountains"),

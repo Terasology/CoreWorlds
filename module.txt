@@ -1,13 +1,19 @@
 {
     "id": "CoreWorlds",
-    "version": "2.0.0-SNAPSHOT",
+    "version": "2.1.0-SNAPSHOT",
     "isReleaseManaged": true,
     "author": "The Terasology Foundation",
     "displayName": "CoreWorlds",
     "description": "A basic set of world generators and facets.",
     "dependencies": [
-        { "id": "BiomesAPI", "minVersion": "4.1.0" },
-        { "id": "CoreAssets", "minVersion": "2.1.0-SNAPSHOT" }
+        {
+            "id": "BiomesAPI",
+            "minVersion": "4.1.0"
+        },
+        {
+            "id": "CoreAssets",
+            "minVersion": "2.1.0-SNAPSHOT"
+        }
     ],
     "serverSideOnly": false,
     "isWorld": true
