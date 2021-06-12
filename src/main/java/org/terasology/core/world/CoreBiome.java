@@ -15,7 +15,11 @@
  */
 package org.terasology.core.world;
 
+import org.joml.Vector3ic;
 import org.terasology.biomesAPI.Biome;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.BlockManager;
 import org.terasology.gestalt.naming.Name;
 
 public enum CoreBiome implements Biome {
@@ -30,9 +34,77 @@ public enum CoreBiome implements Biome {
     private final Name id;
     private final String displayName;
 
+    private Block stone;
+    private Block sand;
+    private Block grass;
+    private Block snow;
+    private Block dirt;
+
     CoreBiome(String displayName) {
         this.id = new Name("CoreWorlds:" + name());
         this.displayName = displayName;
+
+        BlockManager blockManager = CoreRegistry.get(BlockManager.class);
+        stone = blockManager.getBlock("CoreAssets:stone");
+        sand = blockManager.getBlock("CoreAssets:Sand");
+        grass = blockManager.getBlock("CoreAssets:Grass");
+        snow = blockManager.getBlock("CoreAssets:Snow");
+        dirt = blockManager.getBlock("CoreAssets:Dirt");
+    }
+
+    @Override
+    public Block getSurfaceBlock(Vector3ic pos, int seaLevel) {
+        int height = pos.y() - seaLevel;
+        switch (this) {
+            case FOREST:
+            case PLAINS:
+            case MOUNTAINS:
+                if (height > 96) {
+                    return snow;
+                } else if (height >= 0) {
+                    return grass;
+                } else {
+                    return dirt;
+                }
+            case SNOW:
+                if (height >= 0) {
+                    return snow;
+                } else {
+                    return dirt;
+                }
+            case DESERT:
+            case OCEAN:
+            case BEACH:
+                return sand;
+            default:
+                return dirt;
+        }
+    }
+
+    @Override
+    public Block getBelowSurfaceBlock(Vector3ic pos, float density) {
+        switch (this) {
+            case DESERT:
+                if (density > 8) {
+                    return stone;
+                } else {
+                    return sand;
+                }
+            case BEACH:
+                if (density > 2) {
+                    return stone;
+                } else {
+                    return sand;
+                }
+            case OCEAN:
+                return stone;
+            default:
+                if (density > 32) {
+                    return stone;
+                } else {
+                    return dirt;
+                }
+        }
     }
 
     @Override
