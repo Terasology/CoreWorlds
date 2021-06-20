@@ -16,6 +16,7 @@
 package org.terasology.core.world.generator.rasterizers;
 
 import org.joml.Vector2i;
+import org.joml.Vector3i;
 import org.joml.Vector3ic;
 import org.terasology.biomesAPI.Biome;
 import org.terasology.biomesAPI.BiomeRegistry;
@@ -65,11 +66,13 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
         int seaLevel = seaLevelFacet.getSeaLevel();
 
         Vector2i pos2d = new Vector2i();
+        Vector3i worldPos = new Vector3i();
         for (Vector3ic pos : Chunks.CHUNK_REGION) {
             pos2d.set(pos.x(), pos.z());
             float density = solidityFacet.get(pos);
             float basePosY = (pos.y() + chunk.getChunkWorldOffsetY()) * scale;
             float posY = basePosY + Math.max(0, Math.min(scale, density));
+            chunk.chunkToWorldPosition(pos,  worldPos);
 
             // Check for an optional depth for this layer - if defined stop generating below that level
             if (surfaceDepthFacet != null && posY < surfaceDepthFacet.get(pos2d)) {
@@ -83,9 +86,9 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
                 // ensure that the ocean is at least 1 block thick.
                 chunk.setBlock(pos, water);
             } else if (density > 0 && surfacesFacet.get(pos)) {
-                chunk.setBlock(pos, biome.getSurfaceBlock(pos, seaLevel));
+                chunk.setBlock(pos, biome.getSurfaceBlock(worldPos, seaLevel));
             } else if (density > 0) {
-                chunk.setBlock(pos, biome.getBelowSurfaceBlock(pos, density));
+                chunk.setBlock(pos, biome.getBelowSurfaceBlock(worldPos, density));
             } else if (posY <= seaLevel) {         // either OCEAN or SNOW
                 if (posY + scale > seaLevel && CoreBiome.SNOW == biome) {
                     chunk.setBlock(pos, ice);
