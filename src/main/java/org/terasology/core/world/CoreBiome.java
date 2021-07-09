@@ -43,7 +43,10 @@ public enum CoreBiome implements Biome {
     CoreBiome(String displayName) {
         this.id = new Name("CoreWorlds:" + name());
         this.displayName = displayName;
+    }
 
+    @Override
+    public void initialize() {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
         stone = blockManager.getBlock("CoreAssets:stone");
         sand = blockManager.getBlock("CoreAssets:Sand");
