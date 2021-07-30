@@ -56,6 +56,47 @@ public enum CoreBiome implements Biome {
     }
 
     @Override
+    public float getHumidity() {
+        switch (this) {
+            case MOUNTAINS:
+                return 0.3f;
+            case SNOW:
+                return 0.4f;
+            case DESERT:
+                return 0.1f;
+            case FOREST:
+                return 0.7f;
+            case OCEAN:
+                return 1;
+            case BEACH:
+                return 0.8f;
+            case PLAINS:
+                return 0.5f;
+        }
+        return 0.5f;
+    }
+    @Override
+    public float getTemperature() {
+        switch (this) {
+            case MOUNTAINS:
+                return 0.2f;
+            case SNOW:
+                return 0;
+            case DESERT:
+                return 0.9f;
+            case FOREST:
+                return 0.6f;
+            case OCEAN:
+                return 0.4f;
+            case BEACH:
+                return 0.7f;
+            case PLAINS:
+                return 0.5f;
+        }
+        return 0.5f;
+    }
+
+    @Override
     public Block getSurfaceBlock(Vector3ic pos, int seaLevel) {
         int height = pos.y() - seaLevel;
         switch (this) {
