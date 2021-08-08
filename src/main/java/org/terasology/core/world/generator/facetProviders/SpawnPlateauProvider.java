@@ -5,6 +5,7 @@ package org.terasology.core.world.generator.facetProviders;
 import org.joml.Vector2i;
 import org.joml.Vector2ic;
 import org.terasology.core.world.generator.facets.SurfaceRoughnessFacet;
+import org.terasology.engine.world.generation.UpdatePriority;
 import org.terasology.math.TeraMath;
 import org.terasology.joml.geom.Rectanglei;
 import org.terasology.engine.world.block.BlockRegion;
@@ -33,10 +34,10 @@ import org.terasology.engine.world.generation.facets.SeaLevelFacet;
  * </pre>
  */
 @Requires(@Facet(SeaLevelFacet.class))
-@Updates({
+@Updates(value = {
     @Facet(value = ElevationFacet.class, border = @FacetBorder(sides = SpawnPlateauProvider.OUTER_RADIUS)),
     @Facet(SurfaceRoughnessFacet.class)
-})
+}, priority = UpdatePriority.PRIORITY_REQUIRES - 10)
 public class SpawnPlateauProvider implements FacetProvider {
 
     public static final int OUTER_RADIUS = 16;
