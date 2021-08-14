@@ -169,7 +169,7 @@ public class HeightMapSurfaceHeightProvider implements ConfigurableFacetProvider
         private int terrainScale = 8;
 
         @Override
-        public void copy(HeightMapConfiguration other) {
+        public void copyFrom(HeightMapConfiguration other) {
             this.wrapMode = other.wrapMode;
             this.heightMap = other.heightMap;
             this.heightOffset = other.heightOffset;

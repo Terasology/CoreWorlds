@@ -64,7 +64,7 @@ public class PerlinRiverProvider implements FacetProvider, ConfigurableFacetProv
         public float maxDepth = 16;
 
         @Override
-        public void copy(PerlinRiverProviderConfiguration other) {
+        public void copyFrom(PerlinRiverProviderConfiguration other) {
             this.maxDepth = other.maxDepth;
         }
     }

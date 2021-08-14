@@ -88,7 +88,7 @@ public class PerlinHillsAndMountainsProvider implements ConfigurableFacetProvide
         public float hillAmplitude = 1f;
 
         @Override
-        public void copy(PerlinHillsAndMountainsProviderConfiguration other) {
+        public void copyFrom(PerlinHillsAndMountainsProviderConfiguration other) {
             this.mountainAmplitude = other.mountainAmplitude;
             this.hillAmplitude = other.hillAmplitude;
         }

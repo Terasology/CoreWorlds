@@ -132,7 +132,7 @@ public class DefaultFloraProvider extends SurfaceObjectProvider<Biome, FloraType
         public float density = 0.4f;
 
         @Override
-        public void copy(Configuration other) {
+        public void copyFrom(Configuration other) {
             this.density = other.density;
         }
     }

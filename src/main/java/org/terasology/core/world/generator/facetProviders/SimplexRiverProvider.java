@@ -65,7 +65,7 @@ public class SimplexRiverProvider implements ScalableFacetProvider, Configurable
         public float maxDepth = 16;
 
         @Override
-        public void copy(SimplexRiverProviderConfiguration other) {
+        public void copyFrom(SimplexRiverProviderConfiguration other) {
             this.maxDepth = other.maxDepth;
         }
     }

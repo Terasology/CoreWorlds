@@ -62,7 +62,7 @@ public class PerlinOceanProvider implements ConfigurableFacetProvider {
         public float maxDepth = 32;
 
         @Override
-        public void copy(PerlinOceanConfiguration other) {
+        public void copyFrom(PerlinOceanConfiguration other) {
             this.maxDepth = other.maxDepth;
         }
     }
