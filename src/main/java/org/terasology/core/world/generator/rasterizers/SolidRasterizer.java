@@ -16,6 +16,7 @@
 package org.terasology.core.world.generator.rasterizers;
 
 import org.joml.Vector2i;
+import org.joml.Vector3i;
 import org.joml.Vector3ic;
 import org.terasology.biomesAPI.Biome;
 import org.terasology.biomesAPI.BiomeRegistry;
@@ -45,24 +46,14 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
 
     private Block water;
     private Block ice;
-    private Block stone;
-    private Block sand;
-    private Block grass;
-    private Block snow;
-    private Block dirt;
     private BiomeRegistry biomeRegistry;
 
     @Override
     public void initialize() {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
         biomeRegistry = CoreRegistry.get(BiomeRegistry.class);
-        stone = blockManager.getBlock("CoreAssets:Stone");
         water = blockManager.getBlock("CoreAssets:Water");
         ice = blockManager.getBlock("CoreAssets:Ice");
-        sand = blockManager.getBlock("CoreAssets:Sand");
-        grass = blockManager.getBlock("CoreAssets:Grass");
-        snow = blockManager.getBlock("CoreAssets:Snow");
-        dirt = blockManager.getBlock("CoreAssets:Dirt");
     }
 
     @Override
@@ -75,11 +66,13 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
         int seaLevel = seaLevelFacet.getSeaLevel();
 
         Vector2i pos2d = new Vector2i();
+        Vector3i worldPos = new Vector3i();
         for (Vector3ic pos : Chunks.CHUNK_REGION) {
             pos2d.set(pos.x(), pos.z());
             float density = solidityFacet.get(pos);
             float basePosY = (pos.y() + chunk.getChunkWorldOffsetY()) * scale;
             float posY = basePosY + Math.max(0, Math.min(scale, density));
+            chunk.chunkToWorldPosition(pos,  worldPos);
 
             // Check for an optional depth for this layer - if defined stop generating below that level
             if (surfaceDepthFacet != null && posY < surfaceDepthFacet.get(pos2d)) {
@@ -93,9 +86,9 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
                 // ensure that the ocean is at least 1 block thick.
                 chunk.setBlock(pos, water);
             } else if (density > 0 && surfacesFacet.get(pos)) {
-                chunk.setBlock(pos, getSurfaceBlock(biome, posY - seaLevel));
+                chunk.setBlock(pos, biome.getSurfaceBlock(worldPos, seaLevel));
             } else if (density > 0) {
-                chunk.setBlock(pos, getBelowSurfaceBlock(density, biome));
+                chunk.setBlock(pos, biome.getBelowSurfaceBlock(worldPos, density));
             } else if (posY <= seaLevel) {         // either OCEAN or SNOW
                 if (posY + scale > seaLevel && CoreBiome.SNOW == biome) {
                     chunk.setBlock(pos, ice);
@@ -103,60 +96,6 @@ public class SolidRasterizer implements ScalableWorldRasterizer {
                     chunk.setBlock(pos, water);
                 }
             }
-        }
-    }
-
-    private Block getSurfaceBlock(Biome type, float heightAboveSea) {
-        if (type instanceof CoreBiome) {
-            switch ((CoreBiome) type) {
-                case FOREST:
-                case PLAINS:
-                case MOUNTAINS:
-                    if (heightAboveSea > 96) {
-                        return snow;
-                    } else if (heightAboveSea >= 0) {
-                        return grass;
-                    } else {
-                        return dirt;
-                    }
-                case SNOW:
-                    if (heightAboveSea >= 0) {
-                        return snow;
-                    } else {
-                        return dirt;
-                    }
-                case DESERT:
-                case OCEAN:
-                case BEACH:
-                    return sand;
-            }
-        }
-        return dirt;
-    }
-
-    private Block getBelowSurfaceBlock(float density, Biome type) {
-        if (type instanceof CoreBiome) {
-            switch ((CoreBiome) type) {
-                case DESERT:
-                    if (density > 8) {
-                        return stone;
-                    } else {
-                        return sand;
-                    }
-                case BEACH:
-                    if (density > 2) {
-                        return stone;
-                    } else {
-                        return sand;
-                    }
-                case OCEAN:
-                    return stone;
-            }
-        }
-        if (density > 32) {
-            return stone;
-        } else {
-            return dirt;
         }
     }
 }
