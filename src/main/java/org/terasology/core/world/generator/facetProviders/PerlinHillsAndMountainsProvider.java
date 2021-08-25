@@ -1,25 +1,9 @@
-/*
- * Copyright 2014 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.core.world.generator.facetProviders;
 
 import org.joml.Vector2f;
 import org.joml.Vector2ic;
-import org.terasology.engine.entitySystem.Component;
-import org.terasology.math.TeraMath;
-import org.terasology.nui.properties.Range;
 import org.terasology.engine.utilities.procedural.BrownianNoise;
 import org.terasology.engine.utilities.procedural.PerlinNoise;
 import org.terasology.engine.utilities.procedural.SubSampledNoise;
@@ -31,6 +15,9 @@ import org.terasology.engine.world.generation.Updates;
 import org.terasology.engine.world.generation.facets.ElevationFacet;
 import org.terasology.engine.world.generation.facets.SurfaceHumidityFacet;
 import org.terasology.engine.world.generation.facets.SurfaceTemperatureFacet;
+import org.terasology.gestalt.entitysystem.component.Component;
+import org.terasology.math.TeraMath;
+import org.terasology.nui.properties.Range;
 
 import java.util.Iterator;
 
@@ -92,12 +79,18 @@ public class PerlinHillsAndMountainsProvider implements ConfigurableFacetProvide
         this.configuration = (PerlinHillsAndMountainsProviderConfiguration) configuration;
     }
 
-    private static class PerlinHillsAndMountainsProviderConfiguration implements Component {
+    private static class PerlinHillsAndMountainsProviderConfiguration implements Component<PerlinHillsAndMountainsProviderConfiguration> {
 
         @Range(min = 0, max = 3f, increment = 0.01f, precision = 2, description = "Mountain Amplitude")
         public float mountainAmplitude = 1f;
 
         @Range(min = 0, max = 2f, increment = 0.01f, precision = 2, description = "Hill Amplitude")
         public float hillAmplitude = 1f;
+
+        @Override
+        public void copyFrom(PerlinHillsAndMountainsProviderConfiguration other) {
+            this.mountainAmplitude = other.mountainAmplitude;
+            this.hillAmplitude = other.hillAmplitude;
+        }
     }
 }
