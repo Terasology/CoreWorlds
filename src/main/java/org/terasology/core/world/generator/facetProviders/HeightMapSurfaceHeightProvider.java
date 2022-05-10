@@ -56,7 +56,7 @@ public class HeightMapSurfaceHeightProvider implements ConfigurableFacetProvider
     private void reloadHeightmap() {
         logger.info("Reading height map '{}'", configuration.heightMap);
 
-        ResourceUrn urn = new ResourceUrn("core", configuration.heightMap);
+        ResourceUrn urn = new ResourceUrn("CoreWorlds", configuration.heightMap);
         Texture texture = Assets.getTexture(urn).get();
         ByteBuffer[] bb = texture.getData().getBuffers();
         IntBuffer intBuf = bb[0].asIntBuffer();
