@@ -19,10 +19,10 @@ import org.terasology.core.world.generator.facetProviders.BiomeProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultFloraProvider;
 import org.terasology.core.world.generator.facetProviders.DefaultTreeProvider;
 import org.terasology.core.world.generator.facetProviders.FlatSurfaceHeightProvider;
-import org.terasology.core.world.generator.facetProviders.PerlinHumidityProvider;
-import org.terasology.core.world.generator.facetProviders.PerlinSurfaceTemperatureProvider;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexHumidityProvider;
 import org.terasology.core.world.generator.facetProviders.SimplexRoughnessProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexSurfaceTemperatureProvider;
 import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
@@ -48,10 +48,10 @@ public class FlatWorldGenerator extends BaseFacetedWorldGenerator {
     protected WorldBuilder createWorld() {
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 .addProvider(new SeaLevelProvider(32))
-                        // height of 40 so that it is far enough from sea level so that it doesnt just create beachfront
+                        // height of 40 so that it is far enough from sea level so that it doesn't just create beachfront
                 .addProvider(new FlatSurfaceHeightProvider(40))
-                .addProvider(new PerlinHumidityProvider())
-                .addProvider(new PerlinSurfaceTemperatureProvider())
+                .addProvider(new SimplexHumidityProvider())
+                .addProvider(new SimplexSurfaceTemperatureProvider())
                 .addProvider(new SimplexRoughnessProvider())
                 .addProvider(new BiomeProvider())
                 .addProvider(new SurfaceToDensityProvider())
