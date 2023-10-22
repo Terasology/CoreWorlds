@@ -43,8 +43,7 @@ public class CoreBiomeColors implements Function<Biome, Color> {
 
     @Override
     public Color apply(Biome biome) {
-        Color color = biomeColors.get(biome);
-        return color;
+        return biomeColors.get(biome);
     }
 
     /**
