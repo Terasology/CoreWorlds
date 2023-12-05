@@ -60,7 +60,7 @@ public class SimplexRiverProvider implements ScalableFacetProvider, Configurable
         this.configuration = (SimplexRiverProviderConfiguration) configuration;
     }
 
-    private static class SimplexRiverProviderConfiguration implements Component<SimplexRiverProviderConfiguration> {
+    public static class SimplexRiverProviderConfiguration implements Component<SimplexRiverProviderConfiguration> {
         @Range(min = 0, max = 64f, increment = 1f, precision = 0, description = "River Depth")
         public float maxDepth = 16;
 
