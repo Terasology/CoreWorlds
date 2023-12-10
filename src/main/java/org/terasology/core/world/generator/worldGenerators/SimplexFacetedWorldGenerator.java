@@ -33,7 +33,7 @@ import org.terasology.engine.world.generator.plugin.WorldGeneratorPluginLibrary;
 @RegisterWorldGenerator(id = "facetedsimplex", displayName = "Simplex", description = "Experimental world generator based on Simplex noise")
 public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
 
-    private static final Vector2ic SPAWN_POS = new Vector2i(0,0);
+    private static final Vector2ic SPAWN_POS = new Vector2i(0, 0);
 
     private final FixedSpawner spawner = new FixedSpawner(SPAWN_POS.x(), SPAWN_POS.y());
 

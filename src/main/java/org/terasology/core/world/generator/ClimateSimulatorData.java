@@ -30,7 +30,7 @@ public class ClimateSimulatorData {
     public float[][] initDist(String fromWhat) {
 
         float[][] distArr = new float[size][size];
-        switch(fromWhat) {
+        switch (fromWhat) {
         case "water":
             distanceFromWater(distArr);
             break;
