@@ -13,8 +13,6 @@ import org.terasology.engine.world.generation.Produces;
 import org.terasology.engine.world.generation.ScalableFacetProvider;
 import org.terasology.engine.world.generation.facets.SurfaceTemperatureFacet;
 
-/**
- */
 @Produces(SurfaceTemperatureFacet.class)
 public class SimplexSurfaceTemperatureProvider implements ScalableFacetProvider {
     private static final int SAMPLE_RATE = 4;

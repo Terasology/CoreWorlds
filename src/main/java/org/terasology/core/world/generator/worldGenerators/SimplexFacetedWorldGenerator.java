@@ -30,8 +30,6 @@ import org.terasology.engine.world.generation.WorldBuilder;
 import org.terasology.engine.world.generator.RegisterWorldGenerator;
 import org.terasology.engine.world.generator.plugin.WorldGeneratorPluginLibrary;
 
-/**
- */
 @RegisterWorldGenerator(id = "facetedsimplex", displayName = "Simplex", description = "Experimental world generator based on Simplex noise")
 public class SimplexFacetedWorldGenerator extends BaseFacetedWorldGenerator {
 

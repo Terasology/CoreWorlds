@@ -16,8 +16,6 @@ import org.terasology.engine.world.generation.ScalableFacetProvider;
 import org.terasology.engine.world.generation.facets.ElevationFacet;
 import org.terasology.engine.world.generation.facets.SeaLevelFacet;
 
-/**
- */
 @Produces(ElevationFacet.class)
 @Requires(@Facet(SeaLevelFacet.class))
 public class SimplexBaseSurfaceProvider implements ScalableFacetProvider {

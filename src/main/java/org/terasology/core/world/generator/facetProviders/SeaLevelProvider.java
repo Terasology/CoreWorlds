@@ -9,8 +9,6 @@ import org.terasology.engine.world.generation.Produces;
 import org.terasology.engine.world.generation.ScalableFacetProvider;
 import org.terasology.engine.world.generation.facets.SeaLevelFacet;
 
-/**
- */
 @Produces(SeaLevelFacet.class)
 public class SeaLevelProvider implements ScalableFacetProvider {
 

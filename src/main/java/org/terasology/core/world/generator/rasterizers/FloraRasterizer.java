@@ -18,8 +18,6 @@ import org.terasology.engine.world.generation.WorldRasterizer;
 import java.util.List;
 import java.util.Map;
 
-/**
- */
 public class FloraRasterizer implements WorldRasterizer {
 
     private final Map<FloraType, List<Block>> flora = Maps.newEnumMap(FloraType.class);
