@@ -151,22 +151,22 @@ public class HeightMapSurfaceHeightProvider implements ConfigurableFacetProvider
         }
     }
 
-    private static class HeightMapConfiguration implements Component<HeightMapConfiguration> {
+    public static class HeightMapConfiguration implements Component<HeightMapConfiguration> {
 
         @Enum(description = "Wrap Mode")
-        private WrapMode wrapMode = WrapMode.REPEAT;
+        public WrapMode wrapMode = WrapMode.REPEAT;
 
         @List(items = { "platec_heightmap", "opposing_islands" }, description = "Height Map")
-        private String heightMap = "platec_heightmap";
+        public String heightMap = "platec_heightmap";
 
         @Range(min = 0, max = 50f, increment = 1f, precision = 0, description = "Height Offset")
-        private float heightOffset = 12;
+        public float heightOffset = 12;
 
         @Range(min = 10, max = 200f, increment = 1f, precision = 0, description = "Height Scale Factor")
-        private float heightScale = 70;
+        public float heightScale = 70;
 
         @Range(min = 1, max = 32, increment = 1, precision = 0, description = "Terrain Scale Factor")
-        private int terrainScale = 8;
+        public int terrainScale = 8;
 
         @Override
         public void copyFrom(HeightMapConfiguration other) {
