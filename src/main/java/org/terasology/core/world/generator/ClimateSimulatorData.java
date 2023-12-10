@@ -109,9 +109,12 @@ public class ClimateSimulatorData {
                             distArr[width][height] = currentDistance + 1;
                         } else if (
                                 distArr[posW][posH] + (heightmap[posW][posH] - currHeight) * heightInfluence <= currentDistance + 0.41421
-                                        || distArr[negW][posH] + (heightmap[negW][posH] - currHeight) * heightInfluence <= currentDistance + 0.41421
-                                        || distArr[posW][negH] + (heightmap[posW][negH] - currHeight) * heightInfluence <= currentDistance + 0.41421
-                                        || distArr[negW][negH] + (heightmap[negW][negH] - currHeight) * heightInfluence <= currentDistance + 0.41421) {
+                                        || distArr[negW][posH] + (heightmap[negW][posH] - currHeight) * heightInfluence
+                                        <= currentDistance + 0.41421
+                                        || distArr[posW][negH] + (heightmap[posW][negH] - currHeight) * heightInfluence
+                                        <= currentDistance + 0.41421
+                                        || distArr[negW][negH] + (heightmap[negW][negH] - currHeight) * heightInfluence
+                                        <= currentDistance + 0.41421) {
                             //Updates over the corner
                             distArr[width][height] = currentDistance + 1.41421f;
                         }

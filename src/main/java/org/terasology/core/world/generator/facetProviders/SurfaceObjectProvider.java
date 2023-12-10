@@ -43,7 +43,10 @@ public abstract class SurfaceObjectProvider<B, T> implements FacetProvider {
      * @param typeFacet    the facet that provides the environment
      * @param filters      a set of filters
      */
-    protected void populateFacet(ObjectFacet3D<T> facet, SurfacesFacet surfaceFacet, ObjectFacet2D<? extends B> typeFacet, List<Predicate<Vector3i>> filters) {
+    protected void populateFacet(ObjectFacet3D<T> facet,
+                                 SurfacesFacet surfaceFacet,
+                                 ObjectFacet2D<? extends B> typeFacet,
+                                 List<Predicate<Vector3i>> filters) {
 
         BlockRegionc worldRegion = facet.getWorldRegion();
 
