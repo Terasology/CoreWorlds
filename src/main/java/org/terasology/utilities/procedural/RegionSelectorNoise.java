@@ -67,7 +67,10 @@ public class RegionSelectorNoise {
             return 1.0f;
         }
 
-        float scaledAngle = (((float) Math.atan2(relative.y, relative.x) + (float) Math.PI) * ((float) gridSize * SimplexNoise.TILEABLE1DMAGICNUMBER)) / (2.0f * (float) Math.PI);
+        float scaledAngle =
+                (((float) Math.atan2(relative.y, relative.x) + (float) Math.PI) * ((float) gridSize * SimplexNoise.TILEABLE1DMAGICNUMBER))
+                /
+                (2.0f * (float) Math.PI);
 
         float b = 1.0f / minDistance;
         float a = 1.0f / maxDistance - b;
